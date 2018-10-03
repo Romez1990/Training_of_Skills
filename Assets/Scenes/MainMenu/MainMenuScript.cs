@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Quit : MonoBehaviour {
+public class MainMenuScript : MonoBehaviour {
 
-	private void onClickQuit () {
+	public void onClickQuit () {
 		Application.Quit();
 	}
 
