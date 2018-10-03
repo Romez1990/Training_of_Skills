@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 177013693}
   - component: {fileID: 177013692}
   m_Layer: 5
-  m_Name: PlayMixedMode
+  m_Name: SelectMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,7 +222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 60}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 302.8, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &177013692
@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 379859710}
   - component: {fileID: 379859709}
   m_Layer: 5
-  m_Name: PlayMixedMode (3)
+  m_Name: Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -334,7 +334,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -210}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 302.8, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &379859709
@@ -479,7 +479,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play mixed mode
+  m_Text: Quit
 --- !u!222 &458726098
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 792714757}
   - component: {fileID: 792714756}
   m_Layer: 5
-  m_Name: PlayMixedMode (1)
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -733,7 +733,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -60}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 302.8, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &792714756
@@ -823,7 +823,7 @@ GameObject:
   - component: {fileID: 1067278541}
   - component: {fileID: 1067278540}
   m_Layer: 5
-  m_Name: PlayMixedMode (2)
+  m_Name: PlayMixedMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -845,7 +845,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 140}
+  m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: 302.8, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1067278540
@@ -990,7 +990,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play mixed mode
+  m_Text: Settings
 --- !u!222 &1288528617
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1065,7 +1065,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play mixed mode
+  m_Text: Selext mode
 --- !u!222 &1330656022
 CanvasRenderer:
   m_ObjectHideFlags: 0
