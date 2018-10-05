@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Settings/Settings.unity
+    guid: 967fb3bf6f2b5df4a80aefd7173be8ad
+  - enabled: 1
+    path: Assets/Scenes/MixedMode/MixedMode.unity
+    guid: 1c4482bc3aa9b4e4ea1cd786d7f52b84
   m_configObjects: {}
