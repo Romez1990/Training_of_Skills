@@ -18,33 +18,48 @@ public class MainMenuScript : MonoBehaviour {
 
 	#region Moving selection
 
+	bool down;
+	bool up;
+
+	struct Move {
+		public Move (ref bool _b, Action _method) {
+			b = _b;
+			method = _method;
+		}
+
+		public bool b;
+		public Action method;
+	}
+
 	private void checkKeyToMoveOn () {
 
 		bool downDown = Input.GetKeyDown(KeyCode.DownArrow);
-		bool down = Input.GetKey(KeyCode.DownArrow);
-		bool downUp = Input.GetKeyUp(KeyCode.DownArrow);
+		down = Input.GetKey(KeyCode.DownArrow);
 
 		if (downDown) {
 			moveSelectionDown();
 
-			//Thread check = new Thread(checkHold);
-			//check.Start(ref down, moveSelectionDown);
+			Thread check = new Thread(checkHold);
+			Move m = new Move(ref down, moveSelectionDown);
+			object obj = m;
+			check.Start(obj);
 		}
 
 		bool upDown = Input.GetKeyDown(KeyCode.UpArrow);
-		bool up = Input.GetKey(KeyCode.UpArrow);
-		bool upUp = Input.GetKeyUp(KeyCode.UpArrow);
+		up = Input.GetKey(KeyCode.UpArrow);
 
 		if (upDown) {
 			moveSelectionUp();
 		}
 	}
 
-	private void checkHold (ref bool isPressing, Action methodToMove) {
+	private void checkHold (object str) {
+		Move move = (Move)str;
+
 		Thread.Sleep(300);
 
-		while (isPressing) {
-			methodToMove();
+		while (move.b) {
+			move.method();
 			Thread.Sleep(50);
 		}
 	}
