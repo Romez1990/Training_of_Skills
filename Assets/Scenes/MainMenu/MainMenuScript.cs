@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,7 @@ public class MainMenuScript : MonoBehaviour {
 
 	[UsedImplicitly]
 	private void Start () {
-
+		Debug.Log(nameof(Start));
 	}
 
 	[UsedImplicitly]
