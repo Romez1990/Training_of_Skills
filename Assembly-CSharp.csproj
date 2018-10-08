@@ -58,6 +58,7 @@
     <Compile Include="Assets\Scenes\MainMenu\MainMenuScript.cs" />
     <Compile Include="Assets\Scenes\MixedMode\ScriptMixedMode.cs" />
     <Compile Include="Assets\Scenes\Repeater.cs" />
+    <Compile Include="Assets\Scenes\SelectMode\SelectModeScript.cs" />
     <Compile Include="Assets\Scenes\Settings\SettingsScript.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/WorkingFiles/UnityGames/Traning_of_Skills/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

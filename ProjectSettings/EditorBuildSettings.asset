@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MixedMode/MixedMode.unity
     guid: 1c4482bc3aa9b4e4ea1cd786d7f52b84
+  - enabled: 1
+    path: Assets/Scenes/SelectMode/SelectMode.unity
+    guid: 5fa14c8c3fe821b42bb05ad0a6e541e8
   m_configObjects: {}

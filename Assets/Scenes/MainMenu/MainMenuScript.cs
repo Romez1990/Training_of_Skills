@@ -58,6 +58,10 @@ namespace Assets.Scenes.MainMenu {
 			SceneManager.LoadScene("MixedMode");
 		}
 
+		public void onClickSelect () {
+			SceneManager.LoadScene("SelectMode");
+		}
+
 		public void onClickSettings () {
 			SceneManager.LoadScene("Settings");
 		}
