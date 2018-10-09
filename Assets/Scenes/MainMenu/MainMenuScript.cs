@@ -8,14 +8,11 @@ namespace Assets.Scenes.MainMenu {
 		[UsedImplicitly]
 		private void Start () {
 			intializingRepeators();
+			intializingPanels();
 		}
 
-		[UsedImplicitly]
-		private void Update () {
-			checkKeyToMoveSelection();
-		}
-
-		#region Moving selection
+		Repeater repeaterDown;
+		Repeater repeaterUp;
 
 		private unsafe void intializingRepeators () {
 			fixed (bool* b = &down) { repeaterDown = new Repeater(b, 450, 75); }
@@ -24,8 +21,16 @@ namespace Assets.Scenes.MainMenu {
 			repeaterUp.Act += moveSelectionUp;
 		}
 
-		Repeater repeaterDown;
-		Repeater repeaterUp;
+		private void intializingPanels () {
+
+		}
+
+		[UsedImplicitly]
+		private void Update () {
+			checkKeyToMoveSelection();
+		}
+
+		#region Moving selection
 
 		bool down;
 		bool up;
