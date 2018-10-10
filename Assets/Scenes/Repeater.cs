@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 
 namespace Assets.Scenes {
 	internal class Repeater {
-		public unsafe Repeater (bool* c, int FirstDelay, int TheRestDelay) {
+		public unsafe Repeater (SynchronizationContext context, bool* c, int FirstDelay, int TheRestDelay) {
 			Condition = c;
 			this.FirstDelay = FirstDelay;
 			this.TheRestDelay = TheRestDelay;
+			this.context = context;
 		}
 
+		private readonly SynchronizationContext context;
 		public unsafe bool* Condition { get; set; }
 		public int FirstDelay { get; set; }
 		public int TheRestDelay { get; set; }
@@ -21,12 +23,16 @@ namespace Assets.Scenes {
 		public event Action Act;
 
 		private unsafe void looping () {
-			Act?.Invoke();
+			context?.Send(onAct, null);
 			Thread.Sleep(FirstDelay);
 			while (*Condition) {
-				Act?.Invoke();
+				context?.Send(onAct, null);
 				Thread.Sleep(TheRestDelay);
 			}
+		}
+
+		private void onAct (object b) {
+			Act?.Invoke();
 		}
 	}
 }

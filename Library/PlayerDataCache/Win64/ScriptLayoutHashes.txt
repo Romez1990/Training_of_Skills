@@ -1,6 +1,6 @@
 WindowsStandalone
 PlayerPath?
-D:/WorkingFiles/UnityGames/Traning_of_Skills/Build/Traning of Skills.exe
+D:/Documents/Unity Games/Traning_of_Skills/Build/Traning of Skills.exe
 SceneListBegin?
 Assets/Scenes/MainMenu/MainMenu.unity
 Assets/Scenes/MixedMode/MixedMode.unity
@@ -191,6 +191,7 @@ c31ff9acb65f7a15b5c6fd77c3314d83 Vuforia.UnityExtensions.dll:Vuforia.WireframeBe
 486cd95c82d8305219c352c06b776e1f Vuforia.UnityExtensions.dll:Vuforia.WireframeTrackableEventHandler
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.ScriptMixedMode
 f16835701e71dd5d6fb1fed4b7aff1d8 Unity.TextMeshPro.dll:TMPro.TMP_Asset
+486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:Assets.Scenes.MainMenu.Buttons
 486cd95c82d8305219c352c06b776e1f Unity.TextMeshPro.dll:TMPro.TMP_SpriteAnimator
 201273fb4f889724fb090164b7d6c657 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 486cd95c82d8305219c352c06b776e1f UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour

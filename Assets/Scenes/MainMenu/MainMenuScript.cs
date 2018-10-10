@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Threading;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -10,15 +11,17 @@ namespace Assets.Scenes.MainMenu {
 		private void Start () {
 			intializingRepeators();
 			intializingPanels();
+			context = SynchronizationContext.Current;
 		}
 
+		private SynchronizationContext context;
 		private Repeater repeaterDown;
 		private Repeater repeaterUp;
 
 		private unsafe void intializingRepeators () {
-			fixed (bool* b = &down) { repeaterDown = new Repeater(b, 450, 75); }
+			fixed (bool* b = &down) { repeaterDown = new Repeater(context, b, 450, 75); }
 			repeaterDown.Act += moveSelectionDown;
-			fixed (bool* b = &up) { repeaterUp = new Repeater(b, 450, 75); }
+			fixed (bool* b = &up) { repeaterUp = new Repeater(context, b, 450, 75); }
 			repeaterUp.Act += moveSelectionUp;
 		}
 
