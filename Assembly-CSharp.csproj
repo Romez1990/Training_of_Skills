@@ -55,6 +55,7 @@
     <Compile Include="Assets\CSharp vNext Support\AsyncTools\AsyncTools.cs" />
     <Compile Include="Assets\CSharp vNext Support\AsyncTools\NextFrameHelper.cs" />
     <Compile Include="Assets\CSharp vNext Support\AsyncTools\UnityTaskScheduler.cs" />
+    <Compile Include="Assets\Scenes\MainMenu\Buttons.cs" />
     <Compile Include="Assets\Scenes\MainMenu\MainMenuScript.cs" />
     <Compile Include="Assets\Scenes\MixedMode\ScriptMixedMode.cs" />
     <Compile Include="Assets\Scenes\Repeater.cs" />

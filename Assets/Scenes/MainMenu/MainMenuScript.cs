@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.MainMenu {
@@ -11,8 +12,8 @@ namespace Assets.Scenes.MainMenu {
 			intializingPanels();
 		}
 
-		Repeater repeaterDown;
-		Repeater repeaterUp;
+		private Repeater repeaterDown;
+		private Repeater repeaterUp;
 
 		private unsafe void intializingRepeators () {
 			fixed (bool* b = &down) { repeaterDown = new Repeater(b, 450, 75); }
@@ -21,13 +22,27 @@ namespace Assets.Scenes.MainMenu {
 			repeaterUp.Act += moveSelectionUp;
 		}
 
-		private void intializingPanels () {
+		private GameObject[,] PanelsAndButtons;
 
+		private void intializingPanels () {
+			PanelsAndButtons = new GameObject[transform.childCount, 6];
+			int i = 0;
+			foreach (Transform childPanel in transform) {
+				PanelsAndButtons[i, 0] = childPanel.gameObject;
+				int j = 1;
+				foreach (Transform childButton in PanelsAndButtons[i, 0].transform) {
+					PanelsAndButtons[i, j] = childButton.gameObject;
+					PanelsAndButtons[i, j].AddComponent<Script>();
+					j++;
+				}
+				i++;
+			}
 		}
 
 		[UsedImplicitly]
 		private void Update () {
 			checkKeyToMoveSelection();
+			checkButtons();
 		}
 
 		#region Moving selection
@@ -58,6 +73,12 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		#endregion
+
+		public GameObject current;
+
+		private void checkButtons () {
+			current = EventSystem.current.currentSelectedGameObject;
+		}
 
 		public void onClickPlay () {
 			SceneManager.LoadScene("MixedMode");
