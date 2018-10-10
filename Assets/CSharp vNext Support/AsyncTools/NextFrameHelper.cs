@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NextFrameHelper : MonoBehaviour
-{
-	private struct Job
-	{
+public class NextFrameHelper : MonoBehaviour {
+	private struct Job {
 		public int frame;
 		public Action action;
 	}
@@ -14,26 +12,22 @@ public class NextFrameHelper : MonoBehaviour
 	private static readonly Queue<Job> queue = new Queue<Job>();
 
 	[RuntimeInitializeOnLoadMethod]
-	private static void Initialize()
-	{
+	private static void Initialize () {
 		var go = new GameObject();
 		go.hideFlags = HideFlags.HideAndDontSave;
 		go.AddComponent<NextFrameHelper>();
 		DontDestroyOnLoad(go);
 	}
 
-	public static void Enqueue(Action action) => queue.Enqueue(new Job { frame = Time.frameCount, action = action });
+	public static void Enqueue (Action action) => queue.Enqueue(new Job { frame = Time.frameCount, action = action });
 
-	private void Update()
-	{
+	private void Update () {
 		((UnityTaskScheduler)AsyncTools.MainThreadScheduler).ExecutePendingTasks();
 
 		int currentFrame = Time.frameCount;
-		while (queue.Count > 0)
-		{
+		while (queue.Count > 0) {
 			var job = queue.Peek();
-			if (job.frame == currentFrame)
-			{
+			if (job.frame == currentFrame) {
 				break;
 			}
 			queue.Dequeue();

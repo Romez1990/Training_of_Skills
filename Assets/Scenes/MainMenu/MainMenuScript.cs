@@ -22,27 +22,35 @@ namespace Assets.Scenes.MainMenu {
 			repeaterUp.Act += moveSelectionUp;
 		}
 
-		private GameObject[,] PanelsAndButtons;
+		private GameObject[] Panels;
+		private GameObject[,] Buttons;
 
 		private void intializingPanels () {
-			PanelsAndButtons = new GameObject[transform.childCount, 6];
-			int i = 0;
-			foreach (Transform childPanel in transform) {
-				PanelsAndButtons[i, 0] = childPanel.gameObject;
-				int j = 1;
-				foreach (Transform childButton in PanelsAndButtons[i, 0].transform) {
-					PanelsAndButtons[i, j] = childButton.gameObject;
-					PanelsAndButtons[i, j].AddComponent<Script>();
-					j++;
+			Panels = new GameObject[transform.childCount];
+			int max = 0;
+
+			for (int i = 0; i < transform.childCount; i++) {
+				Panels[i] = transform.GetChild(i).gameObject;
+
+				if (max < Panels[i].transform.childCount) {
+					max = Panels[i].transform.childCount;
 				}
-				i++;
+			}
+
+			Buttons = new GameObject[Panels.Length, max];
+
+			for (int i = 0; i < Panels.Length; i++) {
+				for (int j = 0; j < max; j++) {
+					if (j >= Panels[i].transform.childCount) { break; }
+					Buttons[i, j] = Panels[i].transform.GetChild(j).gameObject;
+					Buttons[i, j].AddComponent<Buttons>(); // Add script component
+				}
 			}
 		}
 
 		[UsedImplicitly]
 		private void Update () {
 			checkKeyToMoveSelection();
-			checkButtons();
 		}
 
 		#region Moving selection
@@ -65,31 +73,36 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		private void moveSelectionDown () {
-			Debug.Log("Moved down");
+			for (int i = 0; i < Panels[_currentPanel].transform.childCount; i++) {
+				if (Buttons[_currentPanel, i] == EventSystem.current.currentSelectedGameObject) {
+					Debug.Log("I found");
+				}
+			}
 		}
 
 		private void moveSelectionUp () {
-			Debug.Log("Moved up");
+
+
+
 		}
 
 		#endregion
 
-		public GameObject current;
+		private int _currentPanel = 0;
 
-		private void checkButtons () {
-			current = EventSystem.current.currentSelectedGameObject;
+		public int CurrentPanel {
+			get => _currentPanel;
+			set {
+				if (_currentPanel >= Panels.Length) { return; }
+
+				Panels[_currentPanel].SetActive(false);
+				Panels[value].SetActive(true);
+				_currentPanel = value;
+			}
 		}
 
 		public void onClickPlay () {
 			SceneManager.LoadScene("MixedMode");
-		}
-
-		public void onClickSelect () {
-			SceneManager.LoadScene("SelectMode");
-		}
-
-		public void onClickSettings () {
-			SceneManager.LoadScene("Settings");
 		}
 
 		public void onClickQuit () {
