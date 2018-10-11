@@ -1,11 +1,13 @@
-﻿using System.Threading;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
+
+		#region Start
 
 		[UsedImplicitly]
 		private void Start () {
@@ -13,6 +15,10 @@ namespace Assets.Scenes.MainMenu {
 			intializingPanels();
 			context = SynchronizationContext.Current;
 		}
+
+		#endregion
+
+		#region Repeators
 
 		private SynchronizationContext context;
 		private Repeater repeaterDown;
@@ -25,36 +31,38 @@ namespace Assets.Scenes.MainMenu {
 			repeaterUp.Act += moveSelectionUp;
 		}
 
+		#endregion
+
+		#region Buttons and panels
+
 		private GameObject[] Panels;
-		private GameObject[,] Buttons;
+		private List<GameObject>[] Buttons;
 
 		private void intializingPanels () {
 			Panels = new GameObject[transform.childCount];
-			int max = 0;
-
-			for (int i = 0; i < transform.childCount; i++) {
-				Panels[i] = transform.GetChild(i).gameObject;
-
-				if (max < Panels[i].transform.childCount) {
-					max = Panels[i].transform.childCount;
-				}
-			}
-
-			Buttons = new GameObject[Panels.Length, max];
+			Buttons = new List<GameObject>[Panels.Length];
 
 			for (int i = 0; i < Panels.Length; i++) {
-				for (int j = 0; j < max; j++) {
-					if (j >= Panels[i].transform.childCount) { break; }
-					Buttons[i, j] = Panels[i].transform.GetChild(j).gameObject;
-					Buttons[i, j].AddComponent<Buttons>(); // Add script component
+				Panels[i] = transform.GetChild(i).gameObject;
+				Buttons[i] = new List<GameObject>();
+
+				for (int j = 0; j < Panels[i].transform.childCount; j++) {
+					Buttons[i].Add(Panels[i].transform.GetChild(j).gameObject);
+					Buttons[i][j].AddComponent<Buttons>(); // Add script component
 				}
 			}
 		}
+
+		#endregion
+
+		#region Update
 
 		[UsedImplicitly]
 		private void Update () {
 			checkKeyToMoveSelection();
 		}
+
+		#endregion
 
 		#region Moving selection
 
@@ -76,9 +84,11 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		private void moveSelectionDown () {
+			Debug.Log("I found");
+
 			for (int i = 0; i < Panels[_currentPanel].transform.childCount; i++) {
-				if (Buttons[_currentPanel, i] == EventSystem.current.currentSelectedGameObject) {
-					Debug.Log("I found");
+				if (Buttons[_currentPanel][i] == EventSystem.current.currentSelectedGameObject) {
+					//Debug.Log("I found");
 				}
 			}
 		}
@@ -90,6 +100,8 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		#endregion
+
+		#region Properties
 
 		private int _currentPanel = 0;
 
@@ -104,13 +116,31 @@ namespace Assets.Scenes.MainMenu {
 			}
 		}
 
+		#endregion
+
+		#region Button clicks
+
 		public void onClickPlay () {
-			SceneManager.LoadScene("MixedMode");
+			//SceneManager.LoadScene("MixedMode");
+		}
+
+		public void onClickSelectMode () {
+			//CurrentPanel = 1;
+		}
+
+		public void onClickSettings () {
+			CurrentPanel = 1;
 		}
 
 		public void onClickQuit () {
 			Application.Quit();
 		}
+
+		public void onClickBack () {
+			CurrentPanel = 0;
+		}
+
+		#endregion
 
 	}
 }

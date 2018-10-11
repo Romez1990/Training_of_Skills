@@ -1,6 +1,6 @@
 WindowsStandalone
 PlayerPath?
-D:/Documents/Unity Games/Traning_of_Skills/Build/Traning of Skills.exe
+D:/WorkingFiles/UnityGames/Traning_of_Skills/Build (x86)/Traning of Skills.exe
 SceneListBegin?
 Assets/Scenes/MainMenu/MainMenu.unity
 Assets/Scenes/MixedMode/MixedMode.unity

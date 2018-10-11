@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 91086435}
   - component: {fileID: 91086434}
   m_Layer: 5
-  m_Name: Settings
+  m_Name: Control
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -387,8 +387,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2042809827}
-        m_MethodName: 
+      - m_Target: {fileID: 2042809832}
+        m_MethodName: onClickSelectMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2042809832}
         m_MethodName: onClickQuit
         m_Mode: 1
         m_Arguments:
@@ -624,7 +624,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Settings
+  m_Text: Control
 --- !u!222 &394657367
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -858,7 +858,7 @@ GameObject:
   - component: {fileID: 535835296}
   - component: {fileID: 535835295}
   m_Layer: 5
-  m_Name: Settings
+  m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1107,7 +1107,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2042809832}
         m_MethodName: onClickSettings
         m_Mode: 1
         m_Arguments:
@@ -1229,7 +1229,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1067278541}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2042809832}
+        m_MethodName: onClickPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1067278541
@@ -1351,7 +1362,7 @@ GameObject:
   - component: {fileID: 1288330275}
   - component: {fileID: 1288330274}
   m_Layer: 5
-  m_Name: SelectMode
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1679,7 +1690,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Select mode
+  m_Text: Game
 --- !u!222 &1387372155
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1754,7 +1765,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quit
+  m_Text: Back
 --- !u!222 &1389407089
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1829,7 +1840,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Settings
+  m_Text: Screen
 --- !u!222 &1954905270
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1956,7 +1967,7 @@ GameObject:
   - component: {fileID: 2077009206}
   - component: {fileID: 2077009205}
   m_Layer: 5
-  m_Name: Quit
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2020,8 +2031,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: onClickQuit
+      - m_Target: {fileID: 2042809832}
+        m_MethodName: onClickBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
