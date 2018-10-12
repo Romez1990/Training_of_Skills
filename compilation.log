@@ -1,21 +1,67 @@
 ********************************************************************************
-*                          11 октября 2018 г. 9:08:11                          *
+*                         12 октября 2018 г. 18:36:27                          *
 ********************************************************************************
 CSharpCompilerWrapper.exe version: 4.0.4.230
 Unity version: 2018.2.10f1
 Platform: Windows
 Target assembly: Assembly-CSharp.dll
-Project directory: D:\WorkingFiles\UnityGames\Traning_of_Skills
+Project directory: D:\Documents\Unity Games\Traning_of_Skills
 Target profile directory: C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unityjit
 Unity Mono executable: C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\bin\mono.exe
 Compiler: Microsoft C# 7.3 (2.8.0.62830)
 
 - Compilation ------------------------------------------------
 
-Process: D:\WorkingFiles\UnityGames\Traning_of_Skills\CSharp70Support\Roslyn\csc.exe
-Arguments: -noconfig @Temp/UnityTempFile-3ec0150fa9c23c7408309ce875c128ff
+Process: D:\Documents\Unity Games\Traning_of_Skills\CSharp70Support\Roslyn\csc.exe
+Arguments: -noconfig @Temp/UnityTempFile-47e1dd33ec45366498abc1ca5ef99fc1
 Exit code: 0
-Elapsed time: 8,42 sec
+Elapsed time: 1,42 sec
+
+- Output (0 lines):
+
+- Errors (0 lines):
+
+********************************************************************************
+*                         12 октября 2018 г. 18:36:57                          *
+********************************************************************************
+CSharpCompilerWrapper.exe version: 4.0.4.230
+Unity version: 2018.2.10f1
+Platform: Windows
+Target assembly: Assembly-CSharp.dll
+Project directory: D:\Documents\Unity Games\Traning_of_Skills
+Target profile directory: C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unityjit
+Unity Mono executable: C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\bin\mono.exe
+Compiler: Microsoft C# 7.3 (2.8.0.62830)
+
+- Compilation ------------------------------------------------
+
+Process: D:\Documents\Unity Games\Traning_of_Skills\CSharp70Support\Roslyn\csc.exe
+Arguments: -noconfig @Temp/UnityTempFile-5bd473bf7713dc541b7f8aeca9c8e1f3
+Exit code: 0
+Elapsed time: 1,02 sec
+
+- Output (0 lines):
+
+- Errors (0 lines):
+
+********************************************************************************
+*                         12 октября 2018 г. 18:41:57                          *
+********************************************************************************
+CSharpCompilerWrapper.exe version: 4.0.4.230
+Unity version: 2018.2.10f1
+Platform: Windows
+Target assembly: Assembly-CSharp.dll
+Project directory: D:\Documents\Unity Games\Traning_of_Skills
+Target profile directory: C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unityjit
+Unity Mono executable: C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\bin\mono.exe
+Compiler: Microsoft C# 7.3 (2.8.0.62830)
+
+- Compilation ------------------------------------------------
+
+Process: D:\Documents\Unity Games\Traning_of_Skills\CSharp70Support\Roslyn\csc.exe
+Arguments: -noconfig @Temp/UnityTempFile-e353093448ab107479eb573806b8192b
+Exit code: 0
+Elapsed time: 1,66 sec
 
 - Output (0 lines):
 

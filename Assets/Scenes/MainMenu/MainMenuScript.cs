@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
@@ -121,7 +122,26 @@ namespace Assets.Scenes.MainMenu {
 		#region Button clicks
 
 		public void onClickPlay () {
-			//SceneManager.LoadScene("MixedMode");
+			System.Random random = new System.Random();
+			int select = random.Next(1);
+
+			switch (select) {
+				case 0:
+					SceneManager.LoadScene("FastMath");
+					break;
+				case 2:
+					SceneManager.LoadScene("");
+					break;
+				case 3:
+					SceneManager.LoadScene("");
+					break;
+				case 4:
+					SceneManager.LoadScene("");
+					break;
+				case 5:
+					SceneManager.LoadScene("");
+					break;
+			}
 		}
 
 		public void onClickSelectMode () {
