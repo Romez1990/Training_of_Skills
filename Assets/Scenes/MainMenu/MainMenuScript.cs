@@ -121,8 +121,9 @@ namespace Assets.Scenes.MainMenu {
 
 		#region Button clicks
 
+		private readonly System.Random random = new System.Random();
+
 		public void onClickPlay () {
-			System.Random random = new System.Random();
 			int select = random.Next(1);
 
 			switch (select) {
