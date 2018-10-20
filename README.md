@@ -1,1 +1,2 @@
-# Traning_of_Skills
+# Traning of Skills
+My course project game on Unity.
