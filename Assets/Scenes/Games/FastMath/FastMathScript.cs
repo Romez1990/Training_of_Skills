@@ -35,8 +35,9 @@ namespace Assets.Scenes.Games.FastMath {
 			Expression.text = expression;
 		}
 
+		private readonly char[] signs = { '+', '-', '×', '÷' };
+
 		private char GetSign() {
-			char[] signs = { '+', '-', '×', '÷' };
 			int[] signsProbabitily = { 25, 25, 25, 25 };
 			return signs[DistributedProbability.RandomByProbabitity(signsProbabitily)];
 		}
@@ -81,10 +82,35 @@ namespace Assets.Scenes.Games.FastMath {
 
 		[UsedImplicitly]
 		void Update() {
-
+			CheckPause();
 		}
 
+		private void CheckPause() {
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				UserAnswer.text = PreviousAnswer2;
+				Pause();
+			}
+		}
+
+		public GameObject Blur;
+		public GameObject PausePanel;
+
+		public void Pause() {
+			Debug.Log("Pressed");
+			Image BlurMaterial = Blur.GetComponent<Image>();
+			//Shader a = BlurMaterial.material.shader;
+			
+			BlurMaterial.material.SetFloat("Size", 5);
+		}
+
+		private string PreviousAnswer1;
+		private string PreviousAnswer2;
+
 		public void onTextChanged() {
+			// For saving value to pause
+			PreviousAnswer2 = PreviousAnswer1;
+			PreviousAnswer1 = UserAnswer.text;
+
 			Color color = Indicator.color;
 
 			if (UserAnswer.text == string.Empty) {

@@ -3,6 +3,7 @@
 # =============== #
 Temp/
 Library/
+compilation.log
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
