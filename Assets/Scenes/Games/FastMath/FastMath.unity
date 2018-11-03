@@ -1527,7 +1527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1878434108
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1543,8 +1543,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.5, y: 2}
+  m_SizeDelta: {x: 1, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1878434109
 MonoBehaviour:
@@ -1557,8 +1557,8 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: fae1aa7bd886d9f46a5a5d40ac7081ba, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Material: {fileID: 2100000, guid: afe0495dc0640ff48a738e9b3f909659, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1685,13 +1685,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d30aaa480a0fc547a0bb2a53c4284c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Blur: {fileID: 1878434107}
+  PausePanel: {fileID: 837269785}
   Expression: {fileID: 125451654}
   UserAnswer: {fileID: 731956316}
+  UserAnswerInput: {fileID: 731956314}
   Indicator: {fileID: 393479020}
   TrueIndicator: {fileID: 21300000, guid: 599debed4aac9af48907061da447ab9e, type: 3}
   FalseIndicator: {fileID: 21300000, guid: d50366420bd61e5419adb22b66c9bd90, type: 3}
-  Blur: {fileID: 1878434107}
-  PausePanel: {fileID: 837269785}
 --- !u!114 &2095163014
 MonoBehaviour:
   m_ObjectHideFlags: 0

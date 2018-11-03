@@ -1,44 +1,44 @@
 ﻿using JetBrains.Annotations;
 using System;
+using Assets.Scenes.Games.BaseScene;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scenes.Games.FastMath {
-	public class FastMathScript : MonoBehaviour {
+	public class FastMathScript : BaseSceneScript {
 
 		[UsedImplicitly]
 		void Start() {
-			SetExpression();
+			Expression.text = GetExpression();
 		}
 
 		public Text Expression;
 		public (int FirstNumber, char Operation, int SecondNumber, int Answer) ExpressionElements;
 		public InputField UserAnswer;
+		public GameObject UserAnswerInput;
 		public Image Indicator;
 		public Sprite TrueIndicator;
 		public Sprite FalseIndicator;
 
-		private void SetExpression() {
+		#region Get expression
+
+		private string GetExpression() {
+			ExpressionElements = SetNumbers(ExpressionElements.Operation = GetSign());
+
 			string expression = string.Empty;
-
-			ExpressionElements.Operation = GetSign();
-
-			ExpressionElements = SetNumbers(ExpressionElements.Operation);
-
 			expression += ExpressionElements.FirstNumber;
 			expression += " ";
 			expression += ExpressionElements.Operation;
 			expression += " ";
 			expression += ExpressionElements.SecondNumber;
 			expression += " = ";
-
-			Expression.text = expression;
+			return expression;
 		}
 
 		private readonly char[] signs = { '+', '-', '×', '÷' };
+		private readonly int[] signsProbabitily = { 25, 25, 25, 25 };
 
 		private char GetSign() {
-			int[] signsProbabitily = { 25, 25, 25, 25 };
 			return signs[DistributedProbability.RandomByProbabitity(signsProbabitily)];
 		}
 
@@ -80,31 +80,30 @@ namespace Assets.Scenes.Games.FastMath {
 			return (a, operation, b, answer);
 		}
 
+		#endregion
+
 		[UsedImplicitly]
 		void Update() {
 			CheckPause();
 		}
 
-		private void CheckPause() {
-			if (Input.GetKeyDown(KeyCode.Escape)) {
-				UserAnswer.text = PreviousAnswer2;
-				Pause();
-			}
-		}
+		#region Pause
 
-		public GameObject Blur;
-		public GameObject PausePanel;
-
-		public void Pause() {
-			Debug.Log("Pressed");
-			Image BlurMaterial = Blur.GetComponent<Image>();
-			//Shader a = BlurMaterial.material.shader;
+		protected override void Pause() {
+			UserAnswer.text = PreviousAnswer2;
+			PreviousAnswer2 = PreviousAnswer1;
 			
-			BlurMaterial.material.SetFloat("Size", 5);
+			bool pause = PausePanel.activeSelf;
+			Blur.SetActive(!pause);
+			PausePanel.SetActive(!pause);
 		}
 
 		private string PreviousAnswer1;
 		private string PreviousAnswer2;
+
+		#endregion
+
+		#region Check answer
 
 		public void onTextChanged() {
 			// For saving value to pause
@@ -124,10 +123,18 @@ namespace Assets.Scenes.Games.FastMath {
 			} else {
 				Indicator.sprite = TrueIndicator;
 				GameObject.Find("CorrectSound").GetComponent<AudioSource>().Play();
+
+				Win();
 			}
 
 			color.a = 1;
 			Indicator.color = color;
+		}
+
+		#endregion
+
+		private void Win() {
+
 		}
 
 	}
