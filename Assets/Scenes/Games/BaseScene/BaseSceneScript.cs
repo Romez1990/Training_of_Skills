@@ -22,7 +22,7 @@ namespace Assets.Scenes.Games.BaseScene {
 		private bool IsPause = false;
 
 		protected virtual void Pause() {
-			Debug.Log(123);
+			Debug.Log("Pause");
 			Blur.SetActive(!IsPause);
 			PausePanel.SetActive(!IsPause);
 			IsPause = !IsPause;
