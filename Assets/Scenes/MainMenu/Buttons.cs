@@ -6,26 +6,32 @@ using UnityEngine.SceneManagement;
 namespace Assets.Scenes.MainMenu {
 	public class Buttons : MonoBehaviour {
 
+		#region Start
+
 		[UsedImplicitly]
-		void Start() {
+		private void Start() {
 			AddEvents();
 			Canvas = GameObject.Find("Canvas");
 		}
 
 		private GameObject Canvas;
 
-		private readonly System.Random random = new System.Random();
-
 		private void AddEvents() {
+			var t = gameObject.AddComponent<EventTrigger>().triggers;
+
 			EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
 			entry.callback.AddListener(eventData =>
 				EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(gameObject));
-			gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
+			t.Add(entry);
 
 			EventTrigger.Entry entry2 = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
 			entry2.callback.AddListener(eventData => Click());
-			gameObject.AddComponent<EventTrigger>().triggers.Add(entry2);
+			t.Add(entry2);
 		}
+
+		#endregion
+
+		#region Click
 
 		private void Click() {
 			switch (gameObject.name) {
@@ -68,10 +74,15 @@ namespace Assets.Scenes.MainMenu {
 			set => Canvas.GetComponent<MainMenuScript>().CurrentPanel = value;
 		}
 
-		private readonly string[] Games = { "FastMath" };
+		private readonly string[] Games = { "FastMath", "FastCircles" };
 
 		private void PlayMode() {
-			SceneManager.LoadScene(Games[random.Next(Games.Length)]);
+			SceneManager.LoadScene(Games[Random.Range(0, Games.Length)]);
+			PlayerPrefs.SetString("Mode", "Mixed");
+			PlayerPrefs.SetInt("Score", 0);
 		}
+
+		#endregion
+
 	}
 }

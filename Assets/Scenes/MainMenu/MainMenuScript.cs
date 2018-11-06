@@ -1,9 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
@@ -11,7 +8,7 @@ namespace Assets.Scenes.MainMenu {
 		#region Start
 
 		[UsedImplicitly]
-		private void Start () {
+		private void Start() {
 			IntializingPanels();
 		}
 
@@ -22,7 +19,7 @@ namespace Assets.Scenes.MainMenu {
 		private GameObject[] Panels;
 		private List<GameObject>[] Buttons;
 
-		private void IntializingPanels () {
+		private void IntializingPanels() {
 			Panels = new GameObject[transform.childCount];
 			Buttons = new List<GameObject>[Panels.Length];
 

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Games/FastMath/FastMath.unity
     guid: 85d01a68e3076c344a9b3503133f8b0b
+  - enabled: 1
+    path: Assets/Scenes/Games/FastCircles/FastCircles.unity
+    guid: 4ee44a2326977ca45adea2ecfae83226
   m_configObjects: {}

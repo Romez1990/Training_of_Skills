@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Assets.Scenes.Games.FastCircles {

@@ -208,6 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Blur: {fileID: 836890169}
   PausePanel: {fileID: 695684032}
+  Score: {fileID: 1692769567}
 --- !u!1 &695684032 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1544038550996048, guid: 200023c03ee6280429ca335ed2255ec3,
@@ -266,6 +267,11 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!1 &1692769567 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1919316717543812, guid: 200023c03ee6280429ca335ed2255ec3,
+    type: 2}
+  m_PrefabInternal: {fileID: 2025637906}
 --- !u!1001 &2025637906
 Prefab:
   m_ObjectHideFlags: 0
