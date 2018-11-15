@@ -1685,8 +1685,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d30aaa480a0fc547a0bb2a53c4284c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Score: {fileID: 706532015}
   Blur: {fileID: 1878434107}
   PausePanel: {fileID: 837269785}
+  Timer: {fileID: 354094596}
   Expression: {fileID: 125451654}
   UserAnswer: {fileID: 731956316}
   UserAnswerInput: {fileID: 731956314}

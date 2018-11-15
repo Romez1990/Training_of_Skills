@@ -8,7 +8,8 @@ namespace Assets.Scenes.Games.FastMath {
 	public class FastMathScript : BaseSceneScript {
 
 		[UsedImplicitly]
-		void Start() {
+		private void Start() {
+			BaseStart();
 			Expression.text = GetExpression();
 		}
 
@@ -83,8 +84,8 @@ namespace Assets.Scenes.Games.FastMath {
 		#endregion
 
 		[UsedImplicitly]
-		void Update() {
-			CheckPause();
+		private void Update() {
+			BaseUpdate();
 		}
 
 		#region Pause
@@ -124,7 +125,7 @@ namespace Assets.Scenes.Games.FastMath {
 				Indicator.sprite = TrueIndicator;
 				GameObject.Find("CorrectSound").GetComponent<AudioSource>().Play();
 
-				Win();
+				MainFunctions.Win();
 			}
 
 			color.a = 1;
@@ -132,10 +133,6 @@ namespace Assets.Scenes.Games.FastMath {
 		}
 
 		#endregion
-
-		private void Win() {
-
-		}
 
 	}
 }

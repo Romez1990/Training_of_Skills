@@ -36,7 +36,7 @@ namespace Assets.Scenes.MainMenu {
 			switch (gameObject.name) {
 				// Main menu
 				case "Play":
-					BaseSceneScript.LoadRandomGame();
+					MainFunctions.LoadRandomGame();
 					break;
 
 				case "SelectGame":

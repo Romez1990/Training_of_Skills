@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes {
-	public class MainFunctions : MonoBehaviour {
+	public class MainFunctions {
 
 		private static readonly string[] Games = {
 			"FastMath",
