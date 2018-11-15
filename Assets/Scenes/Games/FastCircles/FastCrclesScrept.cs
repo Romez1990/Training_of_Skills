@@ -8,14 +8,18 @@ namespace Assets.Scenes.Games.FastCircles {
 
 		#region
 
+		private float GivenTime = 7;
+		private float TimeLeft;
+		public GameObject Score;
+		public GameObject Timer;
+
 		[UsedImplicitly]
 		private void Start() {
-			if (PlayerPrefs.GetString("Mode") == "Mixed") {
-				Score.GetComponent<Text>().text = PlayerPrefs.GetInt("Score").ToString();
-			}
-		}
+			TimerText = Timer.GetComponent<Text>();
+			TimeLeft = GivenTime;
 
-		public GameObject Score;
+			Score.GetComponent<Text>().text = PlayerPrefs.GetInt("Score").ToString();
+		}
 
 		#endregion
 
@@ -24,6 +28,27 @@ namespace Assets.Scenes.Games.FastCircles {
 		[UsedImplicitly]
 		private void Update() {
 			BaseUpdate();
+			TickTimer();
+		}
+
+		private Text TimerText;
+		private int LastTime;
+
+		private void TickTimer() {
+			TimeLeft -= Time.deltaTime;
+			if (LastTime == (int)TimeLeft) { return; }
+
+			if (TimeLeft < 0.2) {
+				GameOver();
+			}
+
+			int Second = (int)TimeLeft % 60;
+			int Minute = ((int)TimeLeft - Second) / 60;
+			TimerText.text = (Minute < 10 ? '0' + Minute.ToString() : Minute.ToString()) +
+									':' +
+								  (Second < 10 ? '0' + Second.ToString() : Second.ToString());
+
+			LastTime = (int)TimeLeft;
 		}
 
 		#endregion

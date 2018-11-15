@@ -29,7 +29,9 @@ namespace Assets.Scenes.Games.FastCircles {
 		}
 
 		private void Win() {
-			Debug.Log("Win");
+			PlayerPrefs.GetInt("Score");
+
+			MainFunctions.Win();
 		}
 	}
 }

@@ -1,7 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseScene;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.MainMenu {
 	public class Buttons : MonoBehaviour {
@@ -12,9 +12,8 @@ namespace Assets.Scenes.MainMenu {
 		private void Start() {
 			AddEvents();
 			Canvas = GameObject.Find("Canvas");
+			MainMenuScript = Canvas.GetComponent<MainMenuScript>();
 		}
-
-		private GameObject Canvas;
 
 		private void AddEvents() {
 			var t = gameObject.AddComponent<EventTrigger>().triggers;
@@ -35,8 +34,9 @@ namespace Assets.Scenes.MainMenu {
 
 		private void Click() {
 			switch (gameObject.name) {
+				// Main menu
 				case "Play":
-					PlayMode();
+					BaseSceneScript.LoadRandomGame();
 					break;
 
 				case "SelectGame":
@@ -51,6 +51,7 @@ namespace Assets.Scenes.MainMenu {
 					Application.Quit();
 					break;
 
+				// Settings
 				case "Screen":
 
 					break;
@@ -69,17 +70,12 @@ namespace Assets.Scenes.MainMenu {
 			}
 		}
 
+		private GameObject Canvas;
+		private MainMenuScript MainMenuScript;
+
 		public int CurrentPanel {
-			get => Canvas.GetComponent<MainMenuScript>().CurrentPanel;
-			set => Canvas.GetComponent<MainMenuScript>().CurrentPanel = value;
-		}
-
-		private readonly string[] Games = { "FastMath", "FastCircles" };
-
-		private void PlayMode() {
-			SceneManager.LoadScene(Games[Random.Range(0, Games.Length)]);
-			PlayerPrefs.SetString("Mode", "Mixed");
-			PlayerPrefs.SetInt("Score", 0);
+			get => MainMenuScript.CurrentPanel;
+			set => MainMenuScript.CurrentPanel = value;
 		}
 
 		#endregion
