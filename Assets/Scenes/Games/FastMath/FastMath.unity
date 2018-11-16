@@ -481,7 +481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &558223115
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1689,6 +1689,8 @@ MonoBehaviour:
   Blur: {fileID: 1878434107}
   PausePanel: {fileID: 837269785}
   Timer: {fileID: 354094596}
+  GivenTime: 7
+  TimeLeft: 0
   Expression: {fileID: 125451654}
   UserAnswer: {fileID: 731956316}
   UserAnswerInput: {fileID: 731956314}

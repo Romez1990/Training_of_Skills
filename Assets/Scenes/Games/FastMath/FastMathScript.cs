@@ -125,7 +125,7 @@ namespace Assets.Scenes.Games.FastMath {
 				Indicator.sprite = TrueIndicator;
 				GameObject.Find("CorrectSound").GetComponent<AudioSource>().Play();
 
-				MainFunctions.Win();
+				Win(20, 50);
 			}
 
 			color.a = 1;

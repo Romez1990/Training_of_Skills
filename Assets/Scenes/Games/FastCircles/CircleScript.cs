@@ -29,9 +29,8 @@ namespace Assets.Scenes.Games.FastCircles {
 		}
 
 		private void Win() {
-			PlayerPrefs.GetInt("Score");
-
-			MainFunctions.Win();
+			GameObject.Find("Canvas").GetComponent<FastCrclesScrept>().Win(20, 50);
 		}
+
 	}
 }

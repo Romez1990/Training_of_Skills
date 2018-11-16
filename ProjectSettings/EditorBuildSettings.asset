@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Games/FastCircles/FastCircles.unity
     guid: 4ee44a2326977ca45adea2ecfae83226
+  - enabled: 1
+    path: Assets/Scenes/Scoreboard/Scoreboard.unity
+    guid: ef67edd3c62f1014f859b13c350fd32b
   m_configObjects: {}
