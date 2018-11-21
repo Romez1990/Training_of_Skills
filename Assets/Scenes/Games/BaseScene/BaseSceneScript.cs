@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Web.Script.Serialization;
+using System.IO;
+using Functions;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -111,6 +114,25 @@ namespace Assets.Scenes.Games.BaseScene {
 				MainFunctions.LoadRandomGame();
 			} else if (PlayerPrefs.GetString("Mode") == "Single") {
 				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			}
+		}
+
+		private static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
+
+
+		private static void Write(ToNextScene ToNextScene) {
+			string JSON = Serializer.Serialize(ToNextScene);
+			string СipherText = Encryption.Encrypt(JSON);
+			File.WriteAllText(@"ToNextScene.dat", СipherText);
+		}
+
+		private static ToNextScene Read() {
+			try {
+				string CipherText = File.ReadAllText(@"ToNextScene.dat");
+				string JSON = Encryption.Decrypt(CipherText);
+				return Serializer.Deserialize<ToNextScene>(JSON);
+			} catch {
+				return new ToNextScene();
 			}
 		}
 
