@@ -1,6 +1,6 @@
-﻿using System.Web.Script.Serialization;
+﻿using Functions;
 using System.IO;
-using Functions;
+using System.Web.Script.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -118,7 +118,6 @@ namespace Assets.Scenes.Games.BaseScene {
 		}
 
 		private static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
-
 
 		private static void Write(ToNextScene ToNextScene) {
 			string JSON = Serializer.Serialize(ToNextScene);

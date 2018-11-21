@@ -1,5 +1,5 @@
 ﻿namespace Assets.Scenes.Games.BaseScene {
-	public enum GameMode { Mixed, Single }
+	public enum GameMode { Single, Mixed }
 
 	public struct ToNextScene {
 
