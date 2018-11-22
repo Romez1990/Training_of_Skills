@@ -1,5 +1,4 @@
-﻿using AuthLib.Functions;
-using System;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -71,7 +70,7 @@ namespace Functions {
 						cs.Write(cipherBytes, 0, cipherBytes.Length);
 						try {
 							cs.Close();
-						} catch (CryptographicException CE) {
+						} catch {
 							File.Delete("autologin.data");
 							return "";
 						}

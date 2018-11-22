@@ -1,6 +1,5 @@
 ﻿using Functions;
 using System.IO;
-using System.Web.Script.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -117,12 +116,12 @@ namespace Assets.Scenes.Games.BaseScene {
 			}
 		}
 
-		private static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
-
 		private static void Write(ToNextScene ToNextScene) {
-			string JSON = Serializer.Serialize(ToNextScene);
-			string СipherText = Encryption.Encrypt(JSON);
-			File.WriteAllText(@"ToNextScene.dat", СipherText);
+			DataSever.
+
+			//string JSON = Serializer.Serialize(ToNextScene);
+			//string СipherText = Encryption.Encrypt(JSON);
+			//File.WriteAllText(@"ToNextScene.dat", СipherText);
 		}
 
 		private static ToNextScene Read() {

@@ -1,21 +1,20 @@
 ﻿using Assets.Scenes.Games.BaseScene;
 using Functions;
-using System.IO;
-using System.Web.Script.Serialization;
 using JetBrains.Annotations;
+using System.IO;
 using UnityEngine;
 
-namespace Assets.Scenes.MainMenu {
+namespace Assets.Scenes.Test {
 	public class TestWrite : MonoBehaviour {
 
 		[UsedImplicitly]
 		private void Start() {
-			Write(new ToNextScene(555, GameMode.Single));
+			Debug.Log("Write");
+			//Write(new ToNextScene(555, GameMode.Single));
 			Debug.Log("Write");
 		}
 
-		private static readonly JavaScriptSerializer Serializer = new JavaScriptSerializer();
-
+		/*
 		private static void Write(ToNextScene ToNextScene) {
 			string JSON = Serializer.Serialize(ToNextScene);
 			string СipherText = Encryption.Encrypt(JSON);
@@ -31,6 +30,7 @@ namespace Assets.Scenes.MainMenu {
 				return new ToNextScene();
 			}
 		}
+		*/
 
 	}
 }
