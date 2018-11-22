@@ -123,7 +123,7 @@ namespace Assets.Scenes.Games.FastMath {
 				Indicator.sprite = FalseIndicator;
 			} else {
 				Indicator.sprite = TrueIndicator;
-				GameObject.Find("CorrectSound").GetComponent<AudioSource>().Play();
+				//GameObject.Find("CorrectSound").GetComponent<AudioSource>().Play();
 
 				Win(20, 50);
 			}

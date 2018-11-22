@@ -36,6 +36,7 @@ namespace Assets.Scenes.MainMenu {
 			switch (gameObject.name) {
 				// Main menu
 				case "Play":
+					ToNextScene.Save(new ToNextScene(0, GameMode.Mixed));
 					MainFunctions.LoadRandomGame();
 					break;
 

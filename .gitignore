@@ -1,22 +1,28 @@
+# ========= #
+# Game data #
+# ========= #
+/Data
+
 # =============== #
 # Unity generated #
 # =============== #
-Temp/
 Library/
-compilation.log
+Temp/
+/compilation.log
+/Build
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
 ExportedObj/
-obj/
+/*.sln
+/*.csproj
+/.vs
+/obj
+*.suo
+*.pidb
 *.svd
 *.userprefs
-/*.csproj
-*.pidb
-*.suo
-/*.sln
-/.vs/
 *.user
 *.unityproj
 *.booproj
