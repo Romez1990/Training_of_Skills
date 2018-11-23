@@ -1,19 +1,20 @@
 ﻿using Assets.Scenes.Games.BaseScene;
 using System;
 using System.IO;
+using Assets.Scenes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class MainFunctions {
 
-	public static readonly string[] Games = {
-		//"FastMath",
-		"FastCircles"
+	public static readonly Game[] Games = {
+		new Game("FastMath", null),
+		new Game("FastCircles", null)
 	};
 
 	public static void LoadRandomGame() {
-		SceneManager.LoadScene(Games[Random.Range(0, Games.Length)]);
+		SceneManager.LoadScene(Games[Random.Range(0, Games.Length)].Name);
 	}
 
 	public static void GameOver() {

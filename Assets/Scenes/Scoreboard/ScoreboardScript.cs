@@ -11,6 +11,7 @@ namespace Assets.Scenes.Scoreboard {
 		private void Start() {
 			ToNextScene = ToNextScene.Load();
 			Debug.Log("Score" + ToNextScene.Score);
+			ToNextScene.Delete();
 		}
 
 		[UsedImplicitly]
