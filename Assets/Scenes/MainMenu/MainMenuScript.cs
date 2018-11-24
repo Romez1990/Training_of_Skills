@@ -1,18 +1,17 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseScene;
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
-
-		#region Start
 
 		[UsedImplicitly]
 		private void Start() {
 			IntializingPanels();
 		}
-
-		#endregion
 
 		#region Buttons and panels
 
@@ -29,22 +28,61 @@ namespace Assets.Scenes.MainMenu {
 
 				for (int j = 0; j < Panels[i].transform.childCount; j++) {
 					Buttons[i].Add(Panels[i].transform.GetChild(j).gameObject);
-					Buttons[i][j].AddComponent<Buttons>(); // Add script component
+					AddEvents(Buttons[i][j]);
 				}
 			}
 		}
 
-		private int _currentPanel = 0;
+		private void AddEvents(GameObject Button) {
+			var t = Button.AddComponent<EventTrigger>().triggers;
+
+			EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+			entry.callback.AddListener(eventData =>
+				EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(Button));
+			t.Add(entry);
+		}
+
+		private int currentPanel = 0;
 
 		public int CurrentPanel {
-			get => _currentPanel;
+			get => currentPanel;
 			set {
-				if (_currentPanel >= Panels.Length) { return; }
+				if (currentPanel >= Panels.Length) { return; }
 
-				Panels[_currentPanel].SetActive(false);
+				Panels[currentPanel].SetActive(false);
 				Panels[value].SetActive(true);
-				_currentPanel = value;
+				currentPanel = value;
 			}
+		}
+
+		#endregion
+
+		#region Clicks
+
+		public void Play() {
+			ToNextScene.Save(new ToNextScene(0, GameMode.Mixed));
+			MainFunctions.LoadRandomGame();
+		}
+
+		public void SelectGame() {
+			CurrentPanel = 1;
+		}
+
+		public void PlaySelectedGame(string GameName) {
+			SceneManager.LoadScene(GameName);
+			ToNextScene.Save(new ToNextScene(0, GameMode.Single));
+		}
+
+		public void Settings() {
+			CurrentPanel = 2;
+		}
+
+		public void Quit() {
+			Application.Quit();
+		}
+
+		public void Back() {
+			CurrentPanel = 0;
 		}
 
 		#endregion

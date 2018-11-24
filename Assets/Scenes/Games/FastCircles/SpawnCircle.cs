@@ -19,8 +19,7 @@ namespace Assets.Scenes.Games.FastCircles {
 			var Height = GamePanelRectTransform.rect.height;
 
 			for (int i = 0; i < Amount; i++) {
-				var Circle = Instantiate(CirclePrefub, transform);
-
+				GameObject Circle = Instantiate(CirclePrefub, transform);
 				RectTransform CircleRectTransform = Circle.GetComponent<RectTransform>();
 
 				int Diameter = Random.Range(75, 125);
