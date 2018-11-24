@@ -34,12 +34,12 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		private void AddEvents(GameObject Button) {
-			var t = Button.AddComponent<EventTrigger>().triggers;
-
-			EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+			EventTrigger.Entry entry = new EventTrigger.Entry {
+				eventID = EventTriggerType.PointerEnter
+			};
 			entry.callback.AddListener(eventData =>
 				EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(Button));
-			t.Add(entry);
+			Button.AddComponent<EventTrigger>().triggers.Add(entry);
 		}
 
 		private int currentPanel = 0;

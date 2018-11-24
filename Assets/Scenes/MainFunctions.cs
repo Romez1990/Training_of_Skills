@@ -1,5 +1,4 @@
-﻿using Assets.Scenes.MainMenu.Select;
-using System;
+﻿using System;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,10 +9,15 @@ namespace Assets.Scenes {
 
 		public static readonly string[] Games = {
 			"FastMath",
-			//"FastCircles"
-			//*
+			"FastCircles"
+			/*
 			"Some Game1",
 			"Some Game2",
+			"Some Game3",
+			"Some Game4",
+			"Some Game5",
+			"Some Game6",
+			"Some Game7",
 			"Some Game99"
 			//*/
 		};
