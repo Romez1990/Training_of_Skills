@@ -10,7 +10,7 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		private void Start() {
-			IntializingPanels();
+			InitializingPanels();
 		}
 
 		#region Buttons and panels
@@ -18,7 +18,7 @@ namespace Assets.Scenes.MainMenu {
 		private GameObject[] Panels;
 		private List<GameObject>[] Buttons;
 
-		private void IntializingPanels() {
+		private void InitializingPanels() {
 			Panels = new GameObject[transform.childCount];
 			Buttons = new List<GameObject>[Panels.Length];
 
@@ -42,16 +42,16 @@ namespace Assets.Scenes.MainMenu {
 			Button.AddComponent<EventTrigger>().triggers.Add(entry);
 		}
 
-		private int currentPanel = 0;
+		private int _CurrentPanel = 0;
 
 		public int CurrentPanel {
-			get => currentPanel;
+			get => _CurrentPanel;
 			set {
-				if (currentPanel >= Panels.Length) { return; }
+				if (_CurrentPanel >= Panels.Length) { return; }
 
-				Panels[currentPanel].SetActive(false);
+				Panels[_CurrentPanel].SetActive(false);
 				Panels[value].SetActive(true);
-				currentPanel = value;
+				_CurrentPanel = value;
 			}
 		}
 
@@ -59,28 +59,34 @@ namespace Assets.Scenes.MainMenu {
 
 		#region Clicks
 
+		[UsedImplicitly]
 		public void Play() {
 			ToNextScene.Save(new ToNextScene(0, GameMode.Mixed));
 			MainFunctions.LoadRandomGame();
 		}
 
+		[UsedImplicitly]
 		public void SelectGame() {
 			CurrentPanel = 1;
 		}
 
+		[UsedImplicitly]
 		public void PlaySelectedGame(string GameName) {
 			SceneManager.LoadScene(GameName);
 			ToNextScene.Save(new ToNextScene(0, GameMode.Single));
 		}
 
+		[UsedImplicitly]
 		public void Settings() {
 			CurrentPanel = 2;
 		}
 
+		[UsedImplicitly]
 		public void Quit() {
 			Application.Quit();
 		}
 
+		[UsedImplicitly]
 		public void Back() {
 			CurrentPanel = 0;
 		}
