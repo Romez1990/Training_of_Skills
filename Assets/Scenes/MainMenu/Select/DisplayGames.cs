@@ -8,7 +8,6 @@ namespace Assets.Scenes.MainMenu.Select {
 
 		public GameObject PanelPrefab;
 		public Sprite[] SceneImages;
-		public GameObject ScrollContent;
 
 		[UsedImplicitly]
 		private void Start() {
@@ -33,7 +32,7 @@ namespace Assets.Scenes.MainMenu.Select {
 
 				GameObject NameScene = Panel.transform.GetChild(1).gameObject;
 				Text Name = NameScene.GetComponent<Text>();
-				Name.text = MainFunctions.Games[i];
+				Name.text = MainFunctions.Games[i].ToNormalCase();
 			}
 		}
 
