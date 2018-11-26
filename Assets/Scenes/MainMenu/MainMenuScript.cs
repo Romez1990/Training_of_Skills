@@ -12,8 +12,6 @@ namespace Assets.Scenes.MainMenu {
 		private void Start() {
 			EventSystem = EventSystem.current.GetComponent<EventSystem>();
 			InitializingPanels();
-			CurrentPanel = 0;
-			//EventSystem.SetSelectedGameObject(Buttons[0][0]);
 		}
 
 		#region Buttons and panels
@@ -42,27 +40,24 @@ namespace Assets.Scenes.MainMenu {
 			EventTrigger.Entry entry = new EventTrigger.Entry {
 				eventID = EventTriggerType.PointerEnter
 			};
-			entry.callback.AddListener(eventData =>
-				EventSystem.SetSelectedGameObject(Button));
+			entry.callback.AddListener(PointerEventData => {
+
+				EventSystem.SetSelectedGameObject(Button);
+			});
 			Button.AddComponent<EventTrigger>().triggers.Add(entry);
 		}
 
-		private int? _CurrentPanel = null;
+		private int _CurrentPanel = 0;
 
 		public int CurrentPanel {
-			get => _CurrentPanel ?? -1;
+			get => _CurrentPanel;
 			set {
-				//Debug.Log("Set");
-
 				if (_CurrentPanel == value) { return; }
 
-				if (_CurrentPanel != null)
-					Panels[(int)_CurrentPanel].SetActive(false);
+				Panels[_CurrentPanel].SetActive(false);
 				Panels[value].SetActive(true);
-				_CurrentPanel = value;
-
 				EventSystem.SetSelectedGameObject(Buttons[value][0]);
-				//Debug.Log("Set EventSystem");
+				_CurrentPanel = value;
 			}
 		}
 
@@ -89,6 +84,7 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		public void Settings() {
+			EventSystem.SetSelectedGameObject(null);
 			CurrentPanel = 2;
 		}
 
