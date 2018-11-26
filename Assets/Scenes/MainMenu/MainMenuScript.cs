@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
@@ -84,7 +85,12 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		public void Settings() {
-			EventSystem.SetSelectedGameObject(null);
+			//Buttons[0][2].GetComponent<Button>().enabled = false;
+			//Buttons[0][2].GetComponent<Button>().enabled = true;
+			//Buttons[0][2].GetComponent<Animator>().SetTrigger("Normal");
+
+			//EventSystem.SetSelectedGameObject(null);
+
 			CurrentPanel = 2;
 		}
 
