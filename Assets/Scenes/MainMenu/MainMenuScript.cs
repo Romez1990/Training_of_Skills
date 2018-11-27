@@ -1,10 +1,8 @@
 ﻿using Assets.Scenes.Games.BaseScene;
 using JetBrains.Annotations;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
@@ -12,39 +10,45 @@ namespace Assets.Scenes.MainMenu {
 		[UsedImplicitly]
 		private void Start() {
 			EventSystem = EventSystem.current.GetComponent<EventSystem>();
-			InitializingPanels();
+			InitializePanelsAndButtons();
+			AddEventsToButtons();
 		}
 
 		#region Buttons and panels
 
 		private GameObject[] Panels;
-		private List<GameObject>[] Buttons;
+		private GameObject[][] Buttons;
 
-		private void InitializingPanels() {
+		private void InitializePanelsAndButtons() {
 			Panels = new GameObject[transform.childCount];
-			Buttons = new List<GameObject>[Panels.Length];
+			Buttons = new GameObject[Panels.Length][];
 
 			for (int i = 0; i < Panels.Length; i++) {
 				Panels[i] = transform.GetChild(i).gameObject;
-				Buttons[i] = new List<GameObject>();
+				Buttons[i] = new GameObject[Panels[i].transform.childCount];
 
 				for (int j = 0; j < Panels[i].transform.childCount; j++) {
-					Buttons[i].Add(Panels[i].transform.GetChild(j).gameObject);
-					AddEvents(Buttons[i][j]);
+					Buttons[i][j] = Panels[i].transform.GetChild(j).gameObject;
 				}
 			}
 		}
 
 		private EventSystem EventSystem;
 
-		private void AddEvents(GameObject Button) {
-			EventTrigger.Entry entry = new EventTrigger.Entry {
-				eventID = EventTriggerType.PointerEnter
-			};
-			entry.callback.AddListener(PointerEventData => {
-				EventSystem.SetSelectedGameObject(Button);
-			});
-			Button.AddComponent<EventTrigger>().triggers.Add(entry);
+		private void AddEventsToButtons() {
+			foreach (GameObject[] Row in Buttons)
+				foreach (GameObject Button in Row)
+					AddEvent(Button);
+
+			void AddEvent(GameObject Button) {
+				EventTrigger.Entry entry = new EventTrigger.Entry {
+					eventID = EventTriggerType.PointerEnter
+				};
+				entry.callback.AddListener(PointerEventData => {
+					EventSystem.SetSelectedGameObject(Button);
+				});
+				Button.AddComponent<EventTrigger>().triggers.Add(entry);
+			}
 		}
 
 		private int _CurrentPanel = 0;
