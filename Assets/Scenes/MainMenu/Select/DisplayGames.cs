@@ -8,11 +8,14 @@ namespace Assets.Scenes.MainMenu.Select {
 
 		public GameObject PanelPrefab;
 		public Sprite[] SceneImages;
+		public static int AmountInRow = 3;
 
 		[UsedImplicitly]
 		private void Start() {
-			int VerticalQuantity = (int)Math.Ceiling(MainFunctions.Games.Length / 3f);
-			float Height = VerticalQuantity * GameObject.Find("Canvas").GetComponent<RectTransform>().rect.height / 2;
+			const float AspectRatio = 3 / 4f;
+
+			int VerticalQuantity = (int)Math.Ceiling(MainFunctions.Games.Length / (float)AmountInRow);
+			float Height = VerticalQuantity * GameObject.Find("Canvas").GetComponent<RectTransform>().rect.width / AmountInRow * AspectRatio;
 			RectTransform RectTransform = GetComponent<RectTransform>();
 			RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, Height);
 
@@ -20,9 +23,9 @@ namespace Assets.Scenes.MainMenu.Select {
 				GameObject Panel = Instantiate(PanelPrefab, transform);
 
 				RectTransform PanelRectTransform = Panel.GetComponent<RectTransform>();
-				int v = VerticalQuantity - i / 3;
-				PanelRectTransform.anchorMin = new Vector2(i % 3 / 3f, (float)(v - 1) / VerticalQuantity);
-				PanelRectTransform.anchorMax = new Vector2((i % 3 + 1) / 3f, (float)v / VerticalQuantity);
+				int v = VerticalQuantity - i / AmountInRow;
+				PanelRectTransform.anchorMin = new Vector2(i % AmountInRow / (float)AmountInRow, (float)(v - 1) / VerticalQuantity);
+				PanelRectTransform.anchorMax = new Vector2((i % AmountInRow + 1) / (float)AmountInRow, (float)v / VerticalQuantity);
 
 				if (i < SceneImages.Length) {
 					GameObject SceneImage = Panel.transform.GetChild(0).gameObject;
