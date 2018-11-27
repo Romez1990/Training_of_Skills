@@ -42,7 +42,6 @@ namespace Assets.Scenes.MainMenu {
 				eventID = EventTriggerType.PointerEnter
 			};
 			entry.callback.AddListener(PointerEventData => {
-
 				EventSystem.SetSelectedGameObject(Button);
 			});
 			Button.AddComponent<EventTrigger>().triggers.Add(entry);
@@ -85,12 +84,6 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		public void Settings() {
-			//Buttons[0][2].GetComponent<Button>().enabled = false;
-			//Buttons[0][2].GetComponent<Button>().enabled = true;
-			//Buttons[0][2].GetComponent<Animator>().SetTrigger("Normal");
-
-			//EventSystem.SetSelectedGameObject(null);
-
 			CurrentPanel = 2;
 		}
 
