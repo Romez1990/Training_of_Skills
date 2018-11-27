@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine;
 
 namespace Assets.Scenes.Games.BaseScene {
 	public enum GameMode { Single, Mixed }
@@ -22,9 +21,10 @@ namespace Assets.Scenes.Games.BaseScene {
 
 		public static void Save(ToNextScene ToNextScene) {
 			Directory.CreateDirectory(MainFunctions.PathToData);
-			FileStream FileStream = new FileStream(PathToFle, FileMode.Create);
-			BinaryFormatter.Serialize(FileStream, ToNextScene);
-			FileStream.Close();
+			using (FileStream FileStream = new FileStream(PathToFle, FileMode.Create)) {
+				BinaryFormatter.Serialize(FileStream, ToNextScene);
+				FileStream.Close();
+			}
 		}
 
 		public static ToNextScene Load() {
@@ -32,14 +32,15 @@ namespace Assets.Scenes.Games.BaseScene {
 				return new ToNextScene();
 			}
 
-			FileStream FileStream = new FileStream(PathToFle, FileMode.Open);
 			ToNextScene ToNextScene;
-			try {
-				ToNextScene = (ToNextScene)BinaryFormatter.Deserialize(FileStream);
-			} catch {
-				ToNextScene = new ToNextScene();
+			using (FileStream FileStream = new FileStream(PathToFle, FileMode.Open)) {
+				try {
+					ToNextScene = (ToNextScene)BinaryFormatter.Deserialize(FileStream);
+				} catch {
+					ToNextScene = new ToNextScene();
+				}
+				FileStream.Close();
 			}
-			FileStream.Close();
 
 			return ToNextScene;
 		}
