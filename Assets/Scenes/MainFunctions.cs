@@ -10,8 +10,8 @@ namespace Assets.Scenes {
 
 		public static readonly string[] Games = {
 			"FastMath",
-			"FastCircles"
-			/*
+			"FastCircles",
+			//*
 			"Some Game1",
 			"Some Game2",
 			"Some Game3",
@@ -51,9 +51,9 @@ namespace Assets.Scenes {
 			return string.Concat(Str.Select((x, i) =>
 				i == 0 ?
 					x.ToString() :
-					i > 0 && char.IsUpper(x) ?
-						" " + x.ToString().ToLower() :
-						x.ToString())
+				i > 0 && char.IsUpper(x) ?
+					" " + x.ToString().ToLower() :
+					x.ToString())
 			);//*/
 
 			/*string NewStr = string.Empty;

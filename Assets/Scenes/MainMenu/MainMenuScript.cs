@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
 
+		#region Start
+
 		[UsedImplicitly]
 		private void Start() {
 			EventSystem = EventSystem.current.GetComponent<EventSystem>();
@@ -14,19 +16,21 @@ namespace Assets.Scenes.MainMenu {
 			AddEventsToButtons();
 		}
 
-		#region Buttons and panels
-
-		private GameObject[] Panels;
-		private GameObject[][] Buttons;
+		public static GameObject[] Panels;
+		public static GameObject[][] Buttons;
 
 		private void InitializePanelsAndButtons() {
 			Panels = new GameObject[transform.childCount];
-			Buttons = new GameObject[Panels.Length][];
+			if (Buttons == null)
+				Buttons = new GameObject[Panels.Length][];
+
 
 			for (int i = 0; i < Panels.Length; i++) {
 				Panels[i] = transform.GetChild(i).gameObject;
-				Buttons[i] = new GameObject[Panels[i].transform.childCount];
 
+				if (i == 1) { continue; }
+
+				Buttons[i] = new GameObject[Panels[i].transform.childCount];
 				for (int j = 0; j < Panels[i].transform.childCount; j++) {
 					Buttons[i][j] = Panels[i].transform.GetChild(j).gameObject;
 				}
@@ -51,6 +55,8 @@ namespace Assets.Scenes.MainMenu {
 			}
 		}
 
+		#endregion
+
 		private int _CurrentPanel = 0;
 
 		public int CurrentPanel {
@@ -60,12 +66,11 @@ namespace Assets.Scenes.MainMenu {
 
 				Panels[_CurrentPanel].SetActive(false);
 				Panels[value].SetActive(true);
+				//EventSystem.SetSelectedGameObject(value == 1 ? DisplayGames.Games[0] : Buttons[value][0]);
 				EventSystem.SetSelectedGameObject(Buttons[value][0]);
 				_CurrentPanel = value;
 			}
 		}
-
-		#endregion
 
 		#region Clicks
 
@@ -103,12 +108,20 @@ namespace Assets.Scenes.MainMenu {
 
 		#endregion
 
+		#region Update
+
 		[UsedImplicitly]
 		private void Update() {
+			CheckBack();
+		}
+
+		private void CheckBack() {
 			if (Input.GetKeyDown(KeyCode.Backspace)) {
 				Back();
 			}
 		}
+
+		#endregion
 
 	}
 }
