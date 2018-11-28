@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: f2357543fc49b8247a96df0c0715ad49
+guid: 8396f54133ad753419bae360adb5acc2
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - PanelPrefab: {fileID: 1736074200424360, guid: 70aba87cdd09e2e438ce087d582ee30b,
-      type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

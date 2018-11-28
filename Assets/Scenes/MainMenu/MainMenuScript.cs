@@ -1,8 +1,8 @@
-﻿using Assets.Scenes.Games.BaseScene;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using static Assets.Scenes.MainMenu.UIElements;
 
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
@@ -11,18 +11,15 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		private void Start() {
-			EventSystem = EventSystem.current.GetComponent<EventSystem>();
 			InitializePanelsAndButtons();
 			AddEventsToButtons();
 		}
 
-		public static GameObject[] Panels;
-		public static GameObject[][] Buttons;
+		public GameObject SelectGameContent;
 
 		private void InitializePanelsAndButtons() {
 			Panels = new GameObject[transform.childCount];
-			if (Buttons == null)
-				Buttons = new GameObject[Panels.Length][];
+			Buttons = new GameObject[Panels.Length][];
 
 
 			for (int i = 0; i < Panels.Length; i++) {
@@ -35,76 +32,54 @@ namespace Assets.Scenes.MainMenu {
 					Buttons[i][j] = Panels[i].transform.GetChild(j).gameObject;
 				}
 			}
-		}
 
-		private EventSystem EventSystem;
-
-		private void AddEventsToButtons() {
-			foreach (GameObject[] Row in Buttons)
-				foreach (GameObject Button in Row)
-					AddEvent(Button);
-
-			void AddEvent(GameObject Button) {
-				EventTrigger.Entry entry = new EventTrigger.Entry {
-					eventID = EventTriggerType.PointerEnter
-				};
-				entry.callback.AddListener(PointerEventData => {
-					EventSystem.SetSelectedGameObject(Button);
-				});
-				Button.AddComponent<EventTrigger>().triggers.Add(entry);
-			}
+			DisplayAndInitializeGames();
 		}
 
 		#endregion
 
-		private int _CurrentPanel = 0;
+		#region Select panel
 
-		public int CurrentPanel {
-			get => _CurrentPanel;
-			set {
-				if (_CurrentPanel == value) { return; }
+		public GameObject PanelPrefab;
+		public Sprite[] SceneImages;
+		public GameObject BackButton;
+		private const int AmountInRow = 3;
+		private const float AspectRatio = 3 / 4f;
 
-				Panels[_CurrentPanel].SetActive(false);
-				Panels[value].SetActive(true);
-				//EventSystem.SetSelectedGameObject(value == 1 ? DisplayGames.Games[0] : Buttons[value][0]);
-				EventSystem.SetSelectedGameObject(Buttons[value][0]);
-				_CurrentPanel = value;
+		private void DisplayAndInitializeGames() {
+			int VerticalQuantity = (int)Math.Ceiling(MainFunctions.Games.Length / (float)AmountInRow);
+			float Height = VerticalQuantity * GetComponent<RectTransform>().rect.width / AmountInRow * AspectRatio;
+			RectTransform RectTransform = SelectGameContent.GetComponent<RectTransform>();
+			RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, Height);
+
+			Buttons[1] = new GameObject[MainFunctions.Games.Length + 1];
+
+			for (int i = 0; i < MainFunctions.Games.Length; i++) {
+				GameObject Game = Instantiate(PanelPrefab, SelectGameContent.transform);
+
+				Game.name = MainFunctions.Games[i];
+
+				RectTransform PanelRectTransform = Game.GetComponent<RectTransform>();
+				int v = VerticalQuantity - i / AmountInRow;
+				PanelRectTransform.anchorMin = new Vector2(i % AmountInRow / (float)AmountInRow, (float)(v - 1) / VerticalQuantity);
+				PanelRectTransform.anchorMax = new Vector2((i % AmountInRow + 1) / (float)AmountInRow, (float)v / VerticalQuantity);
+
+				if (i < SceneImages.Length) {
+					GameObject SceneImage = Game.transform.GetChild(0).gameObject;
+					Image Image = SceneImage.GetComponent<Image>();
+					Image.sprite = SceneImages[i];
+				}
+
+				GameObject NameScene = Game.transform.GetChild(1).gameObject;
+				Text Name = NameScene.GetComponent<Text>();
+				Name.text = MainFunctions.Games[i].ToNormalCase();
+
+				Buttons[1][i] = Game;
 			}
+
+			Buttons[1][Buttons[1].Length - 1] = BackButton;
 		}
 
-		#region Clicks
-
-		[UsedImplicitly]
-		public void Play() {
-			ToNextScene.Save(new ToNextScene(0, GameMode.Mixed));
-			MainFunctions.LoadRandomGame();
-		}
-
-		[UsedImplicitly]
-		public void SelectGame() {
-			CurrentPanel = 1;
-		}
-
-		[UsedImplicitly]
-		public void PlaySelectedGame(string GameName) {
-			SceneManager.LoadScene(GameName);
-			ToNextScene.Save(new ToNextScene(0, GameMode.Single));
-		}
-
-		[UsedImplicitly]
-		public void Settings() {
-			CurrentPanel = 2;
-		}
-
-		[UsedImplicitly]
-		public void Quit() {
-			Application.Quit();
-		}
-
-		[UsedImplicitly]
-		public void Back() {
-			CurrentPanel = 0;
-		}
 
 		#endregion
 
@@ -112,16 +87,15 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		private void Update() {
-			CheckBack();
+			CheckKeystroke();
 		}
 
-		private void CheckBack() {
+		private void CheckKeystroke() {
 			if (Input.GetKeyDown(KeyCode.Backspace)) {
-				Back();
+				OnButtonClick("Back");
 			}
 		}
 
 		#endregion
-
 	}
 }

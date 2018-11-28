@@ -27,6 +27,10 @@ namespace Assets.Scenes {
 			SceneManager.LoadScene(Games[Random.Range(0, Games.Length)]);
 		}
 
+		public static void LoadSelectedGame(string GameName) {
+			SceneManager.LoadScene(GameName);
+		}
+
 		public static void GameOver() {
 			SceneManager.LoadScene("Scoreboard");
 		}
