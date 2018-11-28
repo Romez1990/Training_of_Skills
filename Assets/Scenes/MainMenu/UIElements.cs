@@ -60,7 +60,7 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		private static readonly ButtonClick[] ButtonClicks = {
-			new ButtonClick("Play",       delegate { MainFunctions.LoadRandomGame(); ToNextScene.Save(new ToNextScene(0, GameMode.Mixed)); }),
+			new ButtonClick("Play",       delegate { MainFunctions.LoadRandomGame(); ToNextScene.Score = 0; ToNextScene.GameMode = "Mixed"; }),
 			new ButtonClick("SelectGame", delegate { CurrentPanel = 1; }),
 			new ButtonClick("Settings",   delegate { CurrentPanel = 2; }),
 			new ButtonClick("Quit",       Application.Quit),
@@ -78,7 +78,8 @@ namespace Assets.Scenes.MainMenu {
 			foreach (string Game in MainFunctions.Games) {
 				if (Game == ButtonName) {
 					MainFunctions.LoadSelectedGame(Game);
-					ToNextScene.Save(new ToNextScene(0, GameMode.Single));
+					ToNextScene.Score = 0;
+					ToNextScene.GameMode = Game;
 					return;
 				}
 			}

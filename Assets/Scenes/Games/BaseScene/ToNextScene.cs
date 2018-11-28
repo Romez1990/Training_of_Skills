@@ -1,52 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-
-namespace Assets.Scenes.Games.BaseScene {
-	public enum GameMode { Single, Mixed }
-
-	[Serializable]
+﻿namespace Assets.Scenes.Games.BaseScene {
 	public struct ToNextScene {
 
-		public int Score;
-		public GameMode GameMode;
+		public static int Score;
+		public static string GameMode;
 
-		public ToNextScene(int Score, GameMode GameMode) {
-			this.Score = Score;
-			this.GameMode = GameMode;
+		public static void Reset()
+		{
+			Score = 0;
+			GameMode = null;
 		}
 
-		private static readonly BinaryFormatter BinaryFormatter = new BinaryFormatter();
-		private static readonly string PathToFle = Path.Combine(MainFunctions.PathToData, "ToNextScene.dat");
-
-		public static void Save(ToNextScene ToNextScene) {
-			Directory.CreateDirectory(MainFunctions.PathToData);
-			using (FileStream FileStream = new FileStream(PathToFle, FileMode.Create)) {
-				BinaryFormatter.Serialize(FileStream, ToNextScene);
-				FileStream.Close();
-			}
-		}
-
-		public static ToNextScene Load() {
-			if (!File.Exists(PathToFle)) {
-				return new ToNextScene();
-			}
-
-			ToNextScene ToNextScene;
-			using (FileStream FileStream = new FileStream(PathToFle, FileMode.Open)) {
-				try {
-					ToNextScene = (ToNextScene)BinaryFormatter.Deserialize(FileStream);
-				} catch {
-					ToNextScene = new ToNextScene();
-				}
-				FileStream.Close();
-			}
-
-			return ToNextScene;
-		}
-
-		public static void Delete() {
-			File.Delete(PathToFle);
-		}
 	}
 }

@@ -85,9 +85,9 @@ namespace Assets.Scenes.Games.BaseScene {
 		private void ScoreStart() {
 			ScoreText = Score.GetComponent<Text>();
 
-			ToNextScene = ToNextScene.Load();
 			SetScore(ToNextScene.Score);
 		}
+
 		public void SetScore(int Score) {
 			ScoreText.text = Score.ToString();
 		}
@@ -96,23 +96,15 @@ namespace Assets.Scenes.Games.BaseScene {
 
 		#region Win
 
-		public ToNextScene ToNextScene;
-
 		public void Win(int BaseScore, int TimeScore) {
 			ToNextScene.Score = ToNextScene.Score + MainFunctions.CalculateAddScore(BaseScore, TimeScore, GivenTime, TimeLeft);
-			ToNextScene.Save(ToNextScene);
 
 			SetScore(ToNextScene.Score);
 
-			switch (ToNextScene.GameMode) {
-				case GameMode.Mixed:
-					MainFunctions.LoadRandomGame();
-					break;
-
-				case GameMode.Single:
-					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-					break;
-			}
+			if (ToNextScene.GameMode == "Mixed")
+				MainFunctions.LoadRandomGame();
+			else
+				SceneManager.LoadScene(ToNextScene.GameMode);
 		}
 
 		#endregion

@@ -9,9 +9,8 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		private void Start() {
-			ToNextScene = ToNextScene.Load();
 			Debug.Log("Score" + ToNextScene.Score);
-			ToNextScene.Delete();
+			ToNextScene.Reset();
 		}
 
 		[UsedImplicitly]
