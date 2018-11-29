@@ -72,7 +72,7 @@ namespace Functions {
 							cs.Close();
 						} catch {
 							File.Delete("autologin.data");
-							return "";
+							return string.Empty;
 						}
 					}
 					cipherText = Encoding.Unicode.GetString(ms.ToArray());

@@ -9,7 +9,7 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		private void Start() {
-			Debug.Log("Score" + ToNextScene.Score);
+			Debug.Log("Score: " + ToNextScene.Score);
 			ToNextScene.Reset();
 		}
 

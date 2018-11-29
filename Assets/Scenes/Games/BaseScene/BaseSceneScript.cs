@@ -42,7 +42,7 @@ namespace Assets.Scenes.Games.BaseScene {
 		}
 
 		public Text Timer;
-		protected float GivenTime = 5;
+		protected int GivenTime = 5;
 		protected float TimeLeft;
 		private int LastTime;
 		protected bool GameIsOver = false;
@@ -60,9 +60,9 @@ namespace Assets.Scenes.Games.BaseScene {
 
 			int Second = (int)TimeLeft % 60;
 			int Minute = ((int)TimeLeft - Second) / 60;
-			Timer.text = (Minute < 10 ? "0" : "") + Minute +
+			Timer.text = (Minute < 10 ? "0" : string.Empty) + Minute +
 							 ":" +
-							 (Second < 10 ? "0" : "") + Second;
+							 (Second < 10 ? "0" : string.Empty) + Second;
 
 			LastTime = (int)TimeLeft;
 		}
