@@ -5,55 +5,47 @@ using UnityEngine.UI;
 namespace Assets.Scenes.Games.BaseScene {
 	public class BaseSceneScript : MonoBehaviour {
 
+		#region Start
+
 		protected void BaseStart() {
-			StartTimer();
 			ScoreStart();
+			StartTimer();
 		}
 
-		protected void BaseUpdate() {
-			CheckPause();
-			TickTimer();
+		#region From previous scene
+
+		public Text Score;
+
+		private void ScoreStart() {
+			SetScore(ToNextScene.Score);
 		}
 
-		#region Pause
-
-		protected void CheckPause() {
-			if (Input.GetKeyDown(KeyCode.Escape)) {
-				Pause();
-			}
-		}
-
-		[SerializeField]
-		protected GameObject Blur;
-		[SerializeField]
-		protected GameObject PausePanel;
-		private bool IsPause = false;
-
-		protected virtual void Pause() {
-			Blur.SetActive(!IsPause);
-			PausePanel.SetActive(!IsPause);
-			IsPause = !IsPause;
-
-			//BlurMaterial.GetFloat("Size");
-			//BlurMaterial.SetFloat("Size", 2.8f);
+		public void SetScore(int NewScore) {
+			Score.text = NewScore.ToString();
 		}
 
 		#endregion
 
+		#endregion
+
+		#region Update
+
+		protected void BaseUpdate() {
+			TickTimer();
+			CheckPause();
+		}
+
 		#region Timer
 
-		public GameObject Timer;
-
 		private void StartTimer() {
-			TimerText = Timer.GetComponent<Text>();
 			TimeLeft = GivenTime;
 		}
 
-		public float GivenTime = 5;
-		public float TimeLeft;
-		private Text TimerText;
+		public Text Timer;
+		protected float GivenTime = 5;
+		protected float TimeLeft;
 		private int LastTime;
-		public bool GameIsOver = false;
+		protected bool GameIsOver = false;
 
 		private void TickTimer() {
 			if (IsPause) { return; }
@@ -68,28 +60,34 @@ namespace Assets.Scenes.Games.BaseScene {
 
 			int Second = (int)TimeLeft % 60;
 			int Minute = ((int)TimeLeft - Second) / 60;
-			TimerText.text = (Minute < 10 ? "0" : "") + Minute +
-								  ":" +
-								  (Second < 10 ? "0" : "") + Second;
+			Timer.text = (Minute < 10 ? "0" : "") + Minute +
+							 ":" +
+							 (Second < 10 ? "0" : "") + Second;
 
 			LastTime = (int)TimeLeft;
 		}
 
 		#endregion
 
-		#region Start from previous scene
+		#region Pause
 
-		public GameObject Score;
-		private Text ScoreText;
-
-		private void ScoreStart() {
-			ScoreText = Score.GetComponent<Text>();
-
-			SetScore(ToNextScene.Score);
+		protected void CheckPause() {
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				Pause();
+			}
 		}
 
-		public void SetScore(int Score) {
-			ScoreText.text = Score.ToString();
+		public GameObject Blur;
+		public GameObject PausePanel;
+		protected bool IsPause = false;
+
+		protected virtual void Pause() {
+			Blur.SetActive(!IsPause);
+			PausePanel.SetActive(!IsPause);
+			IsPause = !IsPause;
+
+			//BlurMaterial.GetFloat("Size");
+			//BlurMaterial.SetFloat("Size", 2.8f);
 		}
 
 		#endregion
@@ -108,5 +106,8 @@ namespace Assets.Scenes.Games.BaseScene {
 		}
 
 		#endregion
+
+		#endregion
+
 	}
 }
