@@ -2,7 +2,9 @@
 using JetBrains.Annotations;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scenes.Games.FastMath {
 	public class FastMathScript : BaseSceneScript {
@@ -12,13 +14,13 @@ namespace Assets.Scenes.Games.FastMath {
 		[UsedImplicitly]
 		private void Start() {
 			BaseStart();
+			ExpressionElements = SetNumbers(ExpressionElements.Operation = GetSign());
 			Expression.text = GetExpression();
 		}
 
 		public Text Expression;
-		public (int FirstNumber, char Operation, int SecondNumber, int Answer) ExpressionElements;
+		private (int FirstNumber, char Operation, int SecondNumber, int Answer) ExpressionElements;
 		public InputField UserAnswer;
-		public GameObject UserAnswerInput;
 		public Image Indicator;
 		public Sprite TrueIndicator;
 		public Sprite FalseIndicator;
@@ -26,52 +28,48 @@ namespace Assets.Scenes.Games.FastMath {
 		#region Get expression
 
 		private string GetExpression() {
-			ExpressionElements = SetNumbers(ExpressionElements.Operation = GetSign());
-
-			string expression = string.Empty;
-			expression += ExpressionElements.FirstNumber;
-			expression += " ";
-			expression += ExpressionElements.Operation;
-			expression += " ";
-			expression += ExpressionElements.SecondNumber;
-			expression += " = ";
-			return expression;
+			string NewExpression = string.Empty;
+			NewExpression += ExpressionElements.FirstNumber;
+			NewExpression += " ";
+			NewExpression += ExpressionElements.Operation;
+			NewExpression += " ";
+			NewExpression += ExpressionElements.SecondNumber;
+			NewExpression += " = ";
+			return NewExpression;
 		}
 
-		private readonly char[] signs = { '+', '-', '×', '÷' };
-		private readonly int[] signsProbabitily = { 25, 25, 25, 25 };
+		private readonly char[] Signs = { '+', '-', '×', '÷' };
+		private readonly int[] SignsProbability = { 25, 25, 25, 25 };
 
 		private char GetSign() {
-			return signs[DistributedProbability.RandomByProbabitity(signsProbabitily)];
+			return Signs[DistributedProbability.RandomByProbabitity(SignsProbability)];
 		}
 
-		private readonly System.Random random = new System.Random();
-
-		private (int, char, int, int) SetNumbers(char operation) {
+		private static (int, char, int, int) SetNumbers(char operation) {
 			int a, b, answer;
 
 			switch (operation) {
 				case '+':
-					a = random.Next(20, 51);
-					b = random.Next(20, 51);
+					a = Random.Range(20, 51);
+					b = Random.Range(20, 51);
 					answer = a + b;
 					break;
 
 				case '-':
-					a = random.Next(20, 100);
-					b = random.Next(20, a + 1);
+					a = Random.Range(20, 100);
+					b = Random.Range(20, a + 1);
 					answer = a - b;
 					break;
 
 				case '×':
-					a = random.Next(5, 21);
-					b = random.Next(5, 21);
+					a = Random.Range(5, 21);
+					b = Random.Range(5, 21);
 					answer = a * b;
 					break;
 
 				case '÷':
-					int c = random.Next(5, 13);
-					b = random.Next(5, 13);
+					int c = Random.Range(5, 13);
+					b = Random.Range(5, 13);
 					a = b * c;
 					answer = a / b;
 					break;
@@ -87,13 +85,27 @@ namespace Assets.Scenes.Games.FastMath {
 
 		#endregion
 
+		#region Update
+
 		[UsedImplicitly]
 		private void Update() {
 			BaseUpdate();
+			UnselectCheck();
+		}
+
+		private void UnselectCheck() {
+			Debug.Log(EventSystem.current.currentSelectedGameObject?.name);
+
+			if (EventSystem.current.currentSelectedGameObject == null)
+				EventSystem.current.SetSelectedGameObject(UserAnswer.gameObject);
 		}
 
 		#region Pause
 
+		private string PreviousAnswer1;
+		private string PreviousAnswer2;
+
+		/*
 		protected override void Pause() {
 			UserAnswer.text = PreviousAnswer2;
 			PreviousAnswer2 = PreviousAnswer1;
@@ -102,14 +114,13 @@ namespace Assets.Scenes.Games.FastMath {
 			Blur.SetActive(!pause);
 			PausePanel.SetActive(!pause);
 		}
-
-		private string PreviousAnswer1;
-		private string PreviousAnswer2;
+		//*/
 
 		#endregion
 
 		#region Check answer
 
+		[UsedImplicitly]
 		public void OnTextChanged() {
 			// For saving value to pause
 			PreviousAnswer2 = PreviousAnswer1;
@@ -133,6 +144,8 @@ namespace Assets.Scenes.Games.FastMath {
 			color.a = 1;
 			Indicator.color = color;
 		}
+
+		#endregion
 
 		#endregion
 

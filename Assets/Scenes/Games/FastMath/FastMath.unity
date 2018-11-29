@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 731956314}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &524093648
@@ -634,7 +634,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2095163013}
-        m_MethodName: onTextChanged
+        m_MethodName: OnTextChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1561,16 +1561,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d30aaa480a0fc547a0bb2a53c4284c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Score: {fileID: 706532017}
+  Timer: {fileID: 354094598}
   Blur: {fileID: 1878434107}
   PausePanel: {fileID: 837269785}
-  Timer: {fileID: 354094596}
-  GivenTime: 7
-  TimeLeft: 0
-  GameIsOver: 0
-  Score: {fileID: 706532015}
   Expression: {fileID: 125451654}
   UserAnswer: {fileID: 731956316}
-  UserAnswerInput: {fileID: 731956314}
   Indicator: {fileID: 393479020}
   TrueIndicator: {fileID: 21300000, guid: 599debed4aac9af48907061da447ab9e, type: 3}
   FalseIndicator: {fileID: 21300000, guid: d50366420bd61e5419adb22b66c9bd90, type: 3}
