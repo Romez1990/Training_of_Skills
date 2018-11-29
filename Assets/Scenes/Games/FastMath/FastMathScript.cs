@@ -1,11 +1,13 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseScene;
+using JetBrains.Annotations;
 using System;
-using Assets.Scenes.Games.BaseScene;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scenes.Games.FastMath {
 	public class FastMathScript : BaseSceneScript {
+
+		#region Start
 
 		[UsedImplicitly]
 		private void Start() {
@@ -83,6 +85,8 @@ namespace Assets.Scenes.Games.FastMath {
 
 		#endregion
 
+		#endregion
+
 		[UsedImplicitly]
 		private void Update() {
 			BaseUpdate();
@@ -93,7 +97,7 @@ namespace Assets.Scenes.Games.FastMath {
 		protected override void Pause() {
 			UserAnswer.text = PreviousAnswer2;
 			PreviousAnswer2 = PreviousAnswer1;
-			
+
 			bool pause = PausePanel.activeSelf;
 			Blur.SetActive(!pause);
 			PausePanel.SetActive(!pause);
@@ -106,7 +110,7 @@ namespace Assets.Scenes.Games.FastMath {
 
 		#region Check answer
 
-		public void onTextChanged() {
+		public void OnTextChanged() {
 			// For saving value to pause
 			PreviousAnswer2 = PreviousAnswer1;
 			PreviousAnswer1 = UserAnswer.text;
@@ -123,8 +127,6 @@ namespace Assets.Scenes.Games.FastMath {
 				Indicator.sprite = FalseIndicator;
 			} else {
 				Indicator.sprite = TrueIndicator;
-				//GameObject.Find("CorrectSound").GetComponent<AudioSource>().Play();
-
 				Win(20, 50);
 			}
 

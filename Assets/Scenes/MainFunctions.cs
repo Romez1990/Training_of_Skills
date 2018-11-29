@@ -11,7 +11,7 @@ namespace Assets.Scenes {
 		public static readonly string[] Games = {
 			"FastMath",
 			"FastCircles",
-			//*
+			/*
 			"Some Game1",
 			"Some Game2",
 			"Some Game3",
