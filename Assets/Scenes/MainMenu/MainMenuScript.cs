@@ -1,8 +1,9 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseScene;
+using JetBrains.Annotations;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static Assets.Scenes.MainMenu.UIElements;
 
 namespace Assets.Scenes.MainMenu {
 	public class MainMenuScript : MonoBehaviour {
@@ -12,10 +13,14 @@ namespace Assets.Scenes.MainMenu {
 		[UsedImplicitly]
 		private void Start() {
 			InitializePanelsAndButtons();
+			DisplayAndInitializeGames();
 			AddEventsToButtons();
 		}
 
-		public GameObject SelectGameContent;
+		#region Initialization panels and buttons
+
+		public static GameObject[] Panels;
+		public static GameObject[][] Buttons;
 
 		private void InitializePanelsAndButtons() {
 			Panels = new GameObject[transform.childCount];
@@ -32,14 +37,9 @@ namespace Assets.Scenes.MainMenu {
 					Buttons[i][j] = Panels[i].transform.GetChild(j).gameObject;
 				}
 			}
-
-			DisplayAndInitializeGames();
 		}
 
-		#endregion
-
-		#region Select panel
-
+		public GameObject SelectGameContent;
 		public GameObject PanelPrefab;
 		public Sprite[] SceneImages;
 		public GameObject BackButton;
@@ -80,6 +80,77 @@ namespace Assets.Scenes.MainMenu {
 			Buttons[1][Buttons[1].Length - 1] = BackButton;
 		}
 
+		#endregion
+
+		#region Change current panel
+
+		private static int _CurrentPanel = 0;
+
+		public static int CurrentPanel {
+			get => _CurrentPanel;
+			set {
+				if (_CurrentPanel == value) { return; }
+
+				Panels[_CurrentPanel].SetActive(false);
+				Panels[value].SetActive(true);
+				EventSystem.current.SetSelectedGameObject(Buttons[value][0]);
+				_CurrentPanel = value;
+			}
+		}
+
+		#endregion
+
+		#region Clicks
+
+		public static void AddEventsToButtons() {
+			foreach (GameObject[] Row in Buttons) {
+				foreach (GameObject Button in Row) {
+					EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+					entry.callback.AddListener(delegate { EventSystem.current.SetSelectedGameObject(Button); });
+					Button.AddComponent<EventTrigger>().triggers.Add(entry);
+
+					Button.GetComponent<Button>().onClick.AddListener(delegate { OnButtonClick(Button.name); });
+				}
+			}
+		}
+
+		private struct ButtonClick {
+			public readonly string Name;
+			public readonly Action OnClick;
+
+			public ButtonClick(string Name, Action OnClick) {
+				this.Name = Name;
+				this.OnClick = OnClick;
+			}
+		}
+
+		private static readonly ButtonClick[] ButtonClicks = {
+			new ButtonClick("Play",       delegate { MainFunctions.LoadRandomGame(); ToNextScene.Score = 0; ToNextScene.GameMode = "Mixed"; }),
+			new ButtonClick("SelectGame", delegate { CurrentPanel = 1; }),
+			new ButtonClick("Settings",   delegate { CurrentPanel = 2; }),
+			new ButtonClick("Quit",       Application.Quit),
+			new ButtonClick("Back",       delegate { CurrentPanel = 0; })
+		};
+
+		public static void OnButtonClick(string ButtonName) {
+			foreach (ButtonClick ButtonEvent in ButtonClicks) {
+				if (ButtonEvent.Name == ButtonName) {
+					ButtonEvent.OnClick();
+					return;
+				}
+			}
+
+			foreach (string Game in MainFunctions.Games) {
+				if (Game == ButtonName) {
+					MainFunctions.LoadSelectedGame(Game);
+					ToNextScene.Score = 0;
+					ToNextScene.GameMode = Game;
+					return;
+				}
+			}
+		}
+
+		#endregion
 
 		#endregion
 
@@ -97,5 +168,6 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		#endregion
+
 	}
 }
