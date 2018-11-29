@@ -158,10 +158,25 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		private void Update() {
-			CheckKeystroke();
+			UnselectedCheck();
+			KeystrokeCheck();
 		}
 
-		private void CheckKeystroke() {
+		private GameObject PreviousSelected;
+
+		private void UnselectedCheck() {
+			if (EventSystem.current.currentSelectedGameObject == null) {
+				EventSystem.current.SetSelectedGameObject(
+					PreviousSelected != null ?
+						PreviousSelected :
+						Buttons[CurrentPanel][0]
+				);
+			}
+
+			PreviousSelected = EventSystem.current.currentSelectedGameObject;
+		}
+
+		private void KeystrokeCheck() {
 			if (Input.GetKeyDown(KeyCode.Backspace)) {
 				OnButtonClick("Back");
 			}
