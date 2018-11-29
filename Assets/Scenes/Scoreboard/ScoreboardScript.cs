@@ -1,6 +1,7 @@
 ﻿using Assets.Scenes.Games.BaseScene;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.Scoreboard {
 	public class ScoreboardScript : MonoBehaviour {
@@ -9,14 +10,32 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		private void Start() {
-			Debug.Log("Score: " + ToNextScene.Score);
-			ToNextScene.Reset();
+			Debug.Log("You earned " + ToNextScene.Score + " points");
+		}
+
+		/*[UsedImplicitly]
+		private void Update() {
+		
+		}*/
+
+		#region Clicks
+
+		[UsedImplicitly]
+		public void MainMenuClick() {
+			SceneManager.LoadScene("MainMenu");
 		}
 
 		[UsedImplicitly]
-		private void Update() {
-			
+		public void StartOverClick() {
+			ToNextScene.Score = 0;
+
+			if (ToNextScene.GameMode == "Mixed" || ToNextScene.GameMode == null)
+				MainFunctions.LoadRandomGame();
+			else
+				SceneManager.LoadScene(ToNextScene.GameMode);
 		}
+
+		#endregion
 
 	}
 }

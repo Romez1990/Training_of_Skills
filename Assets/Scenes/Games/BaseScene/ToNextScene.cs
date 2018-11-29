@@ -4,11 +4,5 @@
 		public static int Score;
 		public static string GameMode;
 
-		public static void Reset()
-		{
-			Score = 0;
-			GameMode = null;
-		}
-
 	}
 }
