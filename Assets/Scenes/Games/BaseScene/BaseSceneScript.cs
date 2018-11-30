@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -7,7 +8,11 @@ namespace Assets.Scenes.Games.BaseScene {
 
 		#region Start
 
-		protected void BaseStart() {
+		[UsedImplicitly]
+		private void Start() {
+			if (ToNextScene.GameMode == null)
+				ToNextScene.GameMode = SceneManager.GetActiveScene().name;
+
 			ScoreStart();
 			StartTimer();
 		}
@@ -30,7 +35,8 @@ namespace Assets.Scenes.Games.BaseScene {
 
 		#region Update
 
-		protected void BaseUpdate() {
+		[UsedImplicitly]
+		private void Update() {
 			TickTimer();
 			CheckPause();
 		}
@@ -42,8 +48,8 @@ namespace Assets.Scenes.Games.BaseScene {
 		}
 
 		public Text Timer;
-		protected int GivenTime = 5;
-		protected float TimeLeft;
+		public int GivenTime = 15;
+		public float TimeLeft;
 		private int LastTime;
 		protected bool GameIsOver = false;
 
@@ -69,40 +75,23 @@ namespace Assets.Scenes.Games.BaseScene {
 
 		#endregion
 
-		#region Pause
+		#region TogglePause
 
 		protected void CheckPause() {
 			if (Input.GetKeyDown(KeyCode.Escape)) {
-				Pause();
+				TogglePause();
 			}
 		}
 
-		public GameObject Blur;
-		public GameObject PausePanel;
+		public GameObject Pause;
 		protected bool IsPause = false;
 
-		protected virtual void Pause() {
-			Blur.SetActive(!IsPause);
-			PausePanel.SetActive(!IsPause);
+		protected virtual void TogglePause() {
 			IsPause = !IsPause;
+			Pause.SetActive(IsPause);
 
 			//BlurMaterial.GetFloat("Size");
 			//BlurMaterial.SetFloat("Size", 2.8f);
-		}
-
-		#endregion
-
-		#region Win
-
-		public void Win(int BaseScore, int TimeScore) {
-			ToNextScene.Score = ToNextScene.Score + MainFunctions.CalculateAddScore(BaseScore, TimeScore, GivenTime, TimeLeft);
-
-			SetScore(ToNextScene.Score);
-
-			if (ToNextScene.GameMode == "Mixed")
-				MainFunctions.LoadRandomGame();
-			else
-				SceneManager.LoadScene(ToNextScene.GameMode);
 		}
 
 		#endregion

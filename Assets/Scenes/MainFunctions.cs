@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Assets.Scenes.Games.BaseScene;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -80,6 +81,16 @@ namespace Assets.Scenes {
 			//return Regex.Replace(Str, @"\B[A-Z]", m => " " + m.ToString().ToLower());
 		}
 
+		public static void Win(this BaseSceneScript BaseSceneScript, int BaseScore, int TimeScore) {
+			ToNextScene.Score = ToNextScene.Score + CalculateAddScore(BaseScore, TimeScore, BaseSceneScript.GivenTime, BaseSceneScript.TimeLeft);
+
+			BaseSceneScript.SetScore(ToNextScene.Score);
+
+			if (ToNextScene.GameMode == "Mixed")
+				LoadRandomGame();
+			else
+				SceneManager.LoadScene(ToNextScene.GameMode);
+		}
 
 	}
 }

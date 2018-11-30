@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseScene;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,29 +8,27 @@ namespace Assets.Scenes.Games.FastCircles {
 
 		[UsedImplicitly]
 		private void Start() {
-			AddClickHendler();
+			AddClickHandler();
 		}
 
-		private void AddClickHendler() {
+		private void AddClickHandler() {
 			EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
-			entry.callback.AddListener(RemoveCircle);
+			entry.callback.AddListener(delegate { RemoveCircle(); });
 			gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
 		}
 
-		private void RemoveCircle(BaseEventData e) {
+		private void RemoveCircle() {
 			CheckWin();
-
 			Destroy(gameObject);
 		}
 
 		private void CheckWin() {
-			if (GameObject.Find("GamePanel").transform.childCount != 1) { return; }
-
-			Win();
+			if (transform.parent.childCount == 1)
+				Win();
 		}
 
 		private void Win() {
-			GameObject.Find("Canvas").GetComponent<FastCrclesScrept>().Win(20, 50);
+			GameObject.Find("BaseScene").GetComponent<BaseSceneScript>().Win(20, 50);
 		}
 
 	}

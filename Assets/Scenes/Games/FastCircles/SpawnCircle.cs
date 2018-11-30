@@ -6,11 +6,11 @@ namespace Assets.Scenes.Games.FastCircles {
 	public class SpawnCircle : MonoBehaviour {
 
 		[UsedImplicitly]
-		void Start() {
+		private void Start() {
 			SetCircles(5);
 		}
 
-		public GameObject CirclePrefub;
+		public GameObject CirclePrefab;
 
 		private void SetCircles(int Amount) {
 			RectTransform GamePanelRectTransform = GetComponent<RectTransform>();
@@ -19,7 +19,7 @@ namespace Assets.Scenes.Games.FastCircles {
 			var Height = GamePanelRectTransform.rect.height;
 
 			for (int i = 0; i < Amount; i++) {
-				GameObject Circle = Instantiate(CirclePrefub, transform);
+				GameObject Circle = Instantiate(CirclePrefab, transform);
 				RectTransform CircleRectTransform = Circle.GetComponent<RectTransform>();
 
 				int Diameter = Random.Range(75, 125);

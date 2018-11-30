@@ -1,19 +1,18 @@
-﻿using Assets.Scenes.Games.BaseScene;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using System;
+using Assets.Scenes.Games.BaseScene;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scenes.Games.FastMath {
-	public class FastMathScript : BaseSceneScript {
+	public class FastMathScript : MonoBehaviour {
 
 		#region Start
 
 		[UsedImplicitly]
 		private void Start() {
-			BaseStart();
 			ExpressionElements = SetNumbers(ExpressionElements.Operation = GetSign());
 			Expression.text = GetExpression();
 		}
@@ -89,7 +88,6 @@ namespace Assets.Scenes.Games.FastMath {
 
 		[UsedImplicitly]
 		private void Update() {
-			BaseUpdate();
 			UnselectCheck();
 		}
 
@@ -98,18 +96,18 @@ namespace Assets.Scenes.Games.FastMath {
 				EventSystem.current.SetSelectedGameObject(UserAnswer.gameObject);
 		}
 
-		#region Pause
+		#region TogglePause
 
 		private string PreviousAnswer1;
 		private string PreviousAnswer2;
 
 		/*
-		protected override void Pause() {
+		protected override void TogglePause() {
 			UserAnswer.text = PreviousAnswer2;
 			PreviousAnswer2 = PreviousAnswer1;
 
 			bool pause = PausePanel.activeSelf;
-			Blur.SetActive(!pause);
+			TogglePause.SetActive(!pause);
 			PausePanel.SetActive(!pause);
 		}
 		//*/
@@ -136,7 +134,7 @@ namespace Assets.Scenes.Games.FastMath {
 				Indicator.sprite = FalseIndicator;
 			} else {
 				Indicator.sprite = TrueIndicator;
-				Win(20, 50);
+				GameObject.Find("BaseScene").GetComponent<BaseSceneScript>().Win(20, 50);
 			}
 
 			color.a = 1;
