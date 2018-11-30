@@ -19,7 +19,7 @@ public static class AsyncTools {
 	private static Awaiter nextFrameAwaiter;
 
 	[RuntimeInitializeOnLoadMethod]
-	public static void Initialize () {
+	public static void Initialize() {
 		MainThreadId = Thread.CurrentThread.ManagedThreadId;
 		MainThreadContext = SynchronizationContext.Current;
 		MainThreadScheduler = new UnityTaskScheduler(MainThreadContext);
@@ -29,7 +29,7 @@ public static class AsyncTools {
 		nextFrameAwaiter = new NextFrameAwaiter();
 	}
 
-	public static void WhereAmI (string text) {
+	public static void WhereAmI(string text) {
 		if (IsMainThread()) {
 			Debug.Log($"{text}: main thread, frame: {Time.frameCount}");
 		} else {
@@ -40,24 +40,24 @@ public static class AsyncTools {
 	/// <summary>
 	/// Returns true if called from the Unity's main thread, and false otherwise.
 	/// </summary>
-	public static bool IsMainThread () => Thread.CurrentThread.ManagedThreadId == MainThreadId;
+	public static bool IsMainThread() => Thread.CurrentThread.ManagedThreadId == MainThreadId;
 
 	/// <summary>
 	/// Switches execution to a background thread.
 	/// </summary>
-	public static Awaiter ToThreadPool () => threadPoolAwaiter;
+	public static Awaiter ToThreadPool() => threadPoolAwaiter;
 
 	/// <summary>
 	/// Switches execution to the Update context of the main thread.
 	/// </summary>
-	public static Awaiter ToMainThread () => mainThreadAwaiter;
+	public static Awaiter ToMainThread() => mainThreadAwaiter;
 
 	/// <summary>
 	/// Downloads a file as an array of bytes.
 	/// </summary>
 	/// <param name="address">File URL</param>
 	/// <param name="cancellationToken">Optional cancellation token</param>
-	public static Task<byte[]> DownloadAsBytesAsync (string address, CancellationToken cancellationToken = new CancellationToken()) {
+	public static Task<byte[]> DownloadAsBytesAsync(string address, CancellationToken cancellationToken = new CancellationToken()) {
 		return Task.Run(() => {
 			using (var webClient = new WebClient()) {
 				return webClient.DownloadData(address);
@@ -70,7 +70,7 @@ public static class AsyncTools {
 	/// </summary>
 	/// <param name="address">File URL</param>
 	/// <param name="cancellationToken">Optional cancellation token</param>
-	public static Task<string> DownloadAsStringAsync (string address, CancellationToken cancellationToken = new CancellationToken()) {
+	public static Task<string> DownloadAsStringAsync(string address, CancellationToken cancellationToken = new CancellationToken()) {
 		return Task.Run(() => {
 			using (var webClient = new WebClient()) {
 				return webClient.DownloadString(address);
@@ -88,7 +88,7 @@ public static class AsyncTools {
 	/// waits until next physics frame.
 	/// </summary>
 	/// <param name="seconds">If positive, number of seconds to wait</param>
-	public static Awaiter GetAwaiter (this float seconds) {
+	public static Awaiter GetAwaiter(this float seconds) {
 		var context = SynchronizationContext.Current;
 		if (seconds <= 0f && context != null) {
 			return nextFrameAwaiter;
@@ -107,19 +107,19 @@ public static class AsyncTools {
 	/// waits until next physics frame.
 	/// </summary>
 	/// <param name="seconds">If positive, number of seconds to wait</param>
-	public static Awaiter GetAwaiter (this int seconds) => GetAwaiter((float)seconds);
+	public static Awaiter GetAwaiter(this int seconds) => GetAwaiter((float)seconds);
 
 	/// <summary>
 	/// Waits until all the tasks are completed.
 	/// </summary>
-	public static TaskAwaiter GetAwaiter (this IEnumerable<Task> tasks) => Task.WhenAll(tasks).GetAwaiter();
+	public static TaskAwaiter GetAwaiter(this IEnumerable<Task> tasks) => Task.WhenAll(tasks).GetAwaiter();
 
-	public static Awaiter GetAwaiter (this SynchronizationContext context) => new SynchronizationContextAwaiter(context);
+	public static Awaiter GetAwaiter(this SynchronizationContext context) => new SynchronizationContextAwaiter(context);
 
 	/// <summary>
 	/// Waits until the process exits.
 	/// </summary>
-	public static TaskAwaiter<int> GetAwaiter (this Process process) {
+	public static TaskAwaiter<int> GetAwaiter(this Process process) {
 		var tcs = new TaskCompletionSource<int>();
 		process.EnableRaisingEvents = true;
 		process.Exited += (sender, eventArgs) => tcs.TrySetResult(process.ExitCode);
@@ -132,16 +132,16 @@ public static class AsyncTools {
 	/// <summary>
 	/// Waits for AsyncOperation completion
 	/// </summary>
-	public static Awaiter GetAwaiter (this AsyncOperation asyncOp) => new AsyncOperationAwaiter(asyncOp);
+	public static Awaiter GetAwaiter(this AsyncOperation asyncOp) => new AsyncOperationAwaiter(asyncOp);
 
 	#region Various awaiters
 
 	public abstract class Awaiter : INotifyCompletion {
 		public abstract bool IsCompleted { get; }
-		public abstract void OnCompleted (Action action);
-		public Awaiter GetAwaiter () => this;
+		public abstract void OnCompleted(Action action);
+		public Awaiter GetAwaiter() => this;
 
-		public void GetResult () {
+		public void GetResult() {
 		}
 	}
 
@@ -149,14 +149,14 @@ public static class AsyncTools {
 		private readonly SynchronizationContext context;
 		private readonly float seconds;
 
-		public DelayAwaiter (float seconds) {
+		public DelayAwaiter(float seconds) {
 			context = SynchronizationContext.Current;
 			this.seconds = seconds;
 		}
 
 		public override bool IsCompleted => (seconds <= 0f);
 
-		public override void OnCompleted (Action action) {
+		public override void OnCompleted(Action action) {
 			Task.Delay((int)(seconds * 1000)).ContinueWith(prevTask => {
 				if (context != null) {
 					context.Post(state => action(), null);
@@ -170,29 +170,29 @@ public static class AsyncTools {
 	private class SynchronizationContextAwaiter : Awaiter {
 		private readonly SynchronizationContext context;
 
-		public SynchronizationContextAwaiter (SynchronizationContext context) {
+		public SynchronizationContextAwaiter(SynchronizationContext context) {
 			this.context = context;
 		}
 
 		public override bool IsCompleted => context == null || context == SynchronizationContext.Current;
-		public override void OnCompleted (Action action) => context.Post(state => action(), null);
+		public override void OnCompleted(Action action) => context.Post(state => action(), null);
 	}
 
 	private class ThreadPoolContextAwaiter : Awaiter {
 		public override bool IsCompleted => IsMainThread() == false;
-		public override void OnCompleted (Action action) => ThreadPool.QueueUserWorkItem(state => action(), null);
+		public override void OnCompleted(Action action) => ThreadPool.QueueUserWorkItem(state => action(), null);
 	}
 
 	private class NextFrameAwaiter : Awaiter {
 		public override bool IsCompleted => false;
-		public override void OnCompleted (Action action) => NextFrameHelper.Enqueue(action);
+		public override void OnCompleted(Action action) => NextFrameHelper.Enqueue(action);
 	}
 
 	private class AsyncOperationAwaiter : Awaiter {
 		private readonly AsyncOperation asyncOp;
-		public AsyncOperationAwaiter (AsyncOperation asyncOp) => this.asyncOp = asyncOp;
+		public AsyncOperationAwaiter(AsyncOperation asyncOp) => this.asyncOp = asyncOp;
 		public override bool IsCompleted => asyncOp.isDone;
-		public override void OnCompleted (Action action) => asyncOp.completed += _ => action();
+		public override void OnCompleted(Action action) => asyncOp.completed += _ => action();
 	}
 	#endregion
 }
