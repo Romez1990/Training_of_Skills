@@ -94,8 +94,6 @@ namespace Assets.Scenes.Games.FastMath {
 		}
 
 		private void UnselectCheck() {
-			Debug.Log(EventSystem.current.currentSelectedGameObject?.name);
-
 			if (EventSystem.current.currentSelectedGameObject == null)
 				EventSystem.current.SetSelectedGameObject(UserAnswer.gameObject);
 		}

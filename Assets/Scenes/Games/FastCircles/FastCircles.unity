@@ -146,7 +146,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -206,10 +206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2adf4ffa3c42f9549882b7d7204c6126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Score: {fileID: 2025637908}
+  Timer: {fileID: 2025637907}
   Blur: {fileID: 836890169}
   PausePanel: {fileID: 695684032}
-  Score: {fileID: 1692769567}
-  Timer: {fileID: 1191807839}
 --- !u!1 &695684032 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1544038550996048, guid: 200023c03ee6280429ca335ed2255ec3,
@@ -268,16 +268,6 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
---- !u!1 &1191807839 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1053246927724100, guid: 200023c03ee6280429ca335ed2255ec3,
-    type: 2}
-  m_PrefabInternal: {fileID: 2025637906}
---- !u!1 &1692769567 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1919316717543812, guid: 200023c03ee6280429ca335ed2255ec3,
-    type: 2}
-  m_PrefabInternal: {fileID: 2025637906}
 --- !u!1001 &2025637906
 Prefab:
   m_ObjectHideFlags: 0
@@ -398,6 +388,18 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 200023c03ee6280429ca335ed2255ec3, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &2025637907 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114300419982330386, guid: 200023c03ee6280429ca335ed2255ec3,
+    type: 2}
+  m_PrefabInternal: {fileID: 2025637906}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &2025637908 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114495664833916302, guid: 200023c03ee6280429ca335ed2255ec3,
+    type: 2}
+  m_PrefabInternal: {fileID: 2025637906}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &2060012496
 GameObject:
   m_ObjectHideFlags: 0
