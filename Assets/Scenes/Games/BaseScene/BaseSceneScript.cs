@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseScene.Pause;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -38,7 +39,6 @@ namespace Assets.Scenes.Games.BaseScene {
 		[UsedImplicitly]
 		private void Update() {
 			TickTimer();
-			CheckPause();
 		}
 
 		#region Timer
@@ -54,7 +54,7 @@ namespace Assets.Scenes.Games.BaseScene {
 		protected bool GameIsOver = false;
 
 		private void TickTimer() {
-			if (IsPause) { return; }
+			if (PauseControl.IsPause) { return; }
 
 			TimeLeft -= Time.deltaTime;
 			if (LastTime == (int)TimeLeft) { return; }
@@ -71,27 +71,6 @@ namespace Assets.Scenes.Games.BaseScene {
 							 (Second < 10 ? "0" : string.Empty) + Second;
 
 			LastTime = (int)TimeLeft;
-		}
-
-		#endregion
-
-		#region TogglePause
-
-		protected void CheckPause() {
-			if (Input.GetKeyDown(KeyCode.Escape)) {
-				TogglePause();
-			}
-		}
-
-		public GameObject Pause;
-		protected bool IsPause = false;
-
-		protected virtual void TogglePause() {
-			IsPause = !IsPause;
-			Pause.SetActive(IsPause);
-
-			//BlurMaterial.GetFloat("Size");
-			//BlurMaterial.SetFloat("Size", 2.8f);
 		}
 
 		#endregion

@@ -2,18 +2,18 @@
 
 // Based on cician's shader from: https://forum.unity3d.com/threads/simple-optimized-blur-shader.185327/#post-1267642
 
-Shader "Custom/MaskedUIBlur" {
+Shader "Custom/Blur" {
     Properties {
-        _Size ("Blur", Range(0, 30)) = 1
+        _Size ("Size", Range(0, 30)) = 0
         [HideInInspector] _MainTex ("Tint Color (RGB)", 2D) = "white" {}
     }
- 
+
     Category {
- 
+
         // We must be transparent, so other objects are drawn before this one.
         Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Opaque" }
- 
- 
+
+
         SubShader 
         {
             // Horizontal blur
@@ -23,7 +23,7 @@ Shader "Custom/MaskedUIBlur" {
             }
 
             Pass 
-            {             
+            {
                 CGPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
@@ -42,32 +42,32 @@ Shader "Custom/MaskedUIBlur" {
                 };
 
                 sampler2D _MainTex;
-				float4 _MainTex_ST;
+                float4 _MainTex_ST;
 
                 v2f vert (appdata_t v)
                 {
-					v2f o;
-					o.vertex = UnityObjectToClipPos(v.vertex);
+                    v2f o;
+                    o.vertex = UnityObjectToClipPos(v.vertex);
 
-					#if UNITY_UV_STARTS_AT_TOP
-					float scale = -1.0;
-					#else
-					float scale = 1.0;
-					#endif
+                    #if UNITY_UV_STARTS_AT_TOP
+                    float scale = -1.0;
+                    #else
+                    float scale = 1.0;
+                    #endif
 
-					o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y * scale) + o.vertex.w) * 0.5;
-					o.uvgrab.zw = o.vertex.zw;
+                    o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y * scale) + o.vertex.w) * 0.5;
+                    o.uvgrab.zw = o.vertex.zw;
 
-					o.uvmain = TRANSFORM_TEX(v.texcoord, _MainTex);
-					return o;
+                    o.uvmain = TRANSFORM_TEX(v.texcoord, _MainTex);
+                    return o;
                 }
-             
-				sampler2D _HBlur;
-				float4 _HBlur_TexelSize;
-				float _Size;
+
+                sampler2D _HBlur;
+                float4 _HBlur_TexelSize;
+                float _Size;
 
                 half4 frag( v2f i ) : COLOR 
-                {      
+                {
                 	float alpha = tex2D(_MainTex, i.uvmain).a;
                     half4 sum = half4(0,0,0,0);
 
@@ -127,20 +127,20 @@ Shader "Custom/MaskedUIBlur" {
                     #endif
 
                     o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y * scale) + o.vertex.w) * 0.5;
-					o.uvgrab.zw = o.vertex.zw;
+                    o.uvgrab.zw = o.vertex.zw;
 
-					o.uvmain = TRANSFORM_TEX(v.texcoord, _MainTex);
+                    o.uvmain = TRANSFORM_TEX(v.texcoord, _MainTex);
 
                     return o;
                 }
-             
+
                 sampler2D _VBlur;
                 float4 _VBlur_TexelSize;
                 float _Size;
              
                 half4 frag( v2f i ) : COLOR 
                 {
-                	float alpha = tex2D(_MainTex, i.uvmain).a;
+                    float alpha = tex2D(_MainTex, i.uvmain).a;
                     half4 sum = half4(0,0,0,0);
 
                     #define GRABPIXEL(weight,kernely) tex2Dproj( _VBlur, UNITY_PROJ_COORD(float4(i.uvgrab.x, i.uvgrab.y + _VBlur_TexelSize.y * kernely * _Size * alpha, i.uvgrab.z, i.uvgrab.w))) * weight
@@ -155,7 +155,7 @@ Shader "Custom/MaskedUIBlur" {
                     sum += GRABPIXEL(0.09, +3.0);
                     sum += GRABPIXEL(0.05, +4.0);
 
-					return sum;
+                    return sum;
                 }
                 ENDCG
             }
