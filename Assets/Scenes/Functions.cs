@@ -1,13 +1,9 @@
-﻿using Assets.Scenes.Games.BaseScene;
-using System;
-using System.IO;
-using System.Linq;
-using UnityEngine;
+﻿using System.Linq;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scenes {
-	public static class MainFunctions {
+	public static class Functions {
 
 		public static readonly string[] Games = {
 			"FastMath",
@@ -32,20 +28,7 @@ namespace Assets.Scenes {
 			SceneManager.LoadScene(GameName);
 		}
 
-		public static void GameOver() {
-			SceneManager.LoadScene("Scoreboard");
-		}
-
-		public static readonly string PathToData = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
-
-		public static int CalculateAddScore(int BaseScore, int TimeScore, float GivenTime, float TimeLeft) {
-			if (BaseScore < 0) { throw new ArgumentOutOfRangeException(nameof(BaseScore)); }
-			if (TimeScore < 0) { throw new ArgumentOutOfRangeException(nameof(TimeScore)); }
-
-			float PercentTime = TimeLeft / GivenTime;
-			TimeScore = (int)Math.Round(TimeScore * PercentTime);
-			return BaseScore + TimeScore;
-		}
+		//public static readonly string PathToData = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
 
 		/// <summary>
 		/// Convert CamelCase string to Normal case string
@@ -59,7 +42,7 @@ namespace Assets.Scenes {
 				i > 0 && char.IsUpper(x) ?
 					" " + x.ToString().ToLower() :
 					x.ToString())
-			);//*/
+			);
 
 			/*string NewStr = string.Empty;
 			for (int i = 0; i < Str.Length; i++)
@@ -79,17 +62,6 @@ namespace Assets.Scenes {
 			//return Regex.Replace(Str, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
 			//return Regex.Replace(Str, "(\\B[A-Z])", " $1");
 			//return Regex.Replace(Str, @"\B[A-Z]", m => " " + m.ToString().ToLower());
-		}
-
-		public static void Win(this BaseSceneScript BaseSceneScript, int BaseScore, int TimeScore) {
-			ToNextScene.Score = ToNextScene.Score + CalculateAddScore(BaseScore, TimeScore, BaseSceneScript.GivenTime, BaseSceneScript.TimeLeft);
-
-			ScoreControl.SetScore(ToNextScene.Score);
-
-			if (ToNextScene.GameMode == "Mixed")
-				LoadRandomGame();
-			else
-				SceneManager.LoadScene(ToNextScene.GameMode);
 		}
 
 	}

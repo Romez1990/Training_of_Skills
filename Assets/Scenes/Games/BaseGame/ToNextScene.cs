@@ -1,4 +1,4 @@
-﻿namespace Assets.Scenes.Games.BaseScene {
+﻿namespace Assets.Scenes.Games.BaseGame {
 	public struct ToNextScene {
 
 		public static int Score;

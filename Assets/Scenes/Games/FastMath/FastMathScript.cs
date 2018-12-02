@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseGame;
+using JetBrains.Annotations;
 using System;
-using Assets.Scenes.Games.BaseScene;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -134,7 +134,7 @@ namespace Assets.Scenes.Games.FastMath {
 				Indicator.sprite = FalseIndicator;
 			} else {
 				Indicator.sprite = TrueIndicator;
-				GameObject.Find("BaseScene").GetComponent<BaseSceneScript>().Win(20, 50);
+				BaseGameScript.Win(20, 50);
 			}
 
 			color.a = 1;

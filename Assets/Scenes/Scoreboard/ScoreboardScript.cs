@@ -1,4 +1,4 @@
-﻿using Assets.Scenes.Games.BaseScene;
+﻿using Assets.Scenes.Games.BaseGame;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,7 +30,7 @@ namespace Assets.Scenes.Scoreboard {
 			ToNextScene.Score = 0;
 
 			if (ToNextScene.GameMode == "Mixed" || ToNextScene.GameMode == null)
-				MainFunctions.LoadRandomGame();
+				Functions.LoadRandomGame();
 			else
 				SceneManager.LoadScene(ToNextScene.GameMode);
 		}

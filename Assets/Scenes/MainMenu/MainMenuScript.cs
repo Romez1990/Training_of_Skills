@@ -1,6 +1,6 @@
-﻿using Assets.Scenes.Games.BaseScene;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using System;
+using Assets.Scenes.Games.BaseGame;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -103,15 +103,15 @@ namespace Assets.Scenes.MainMenu {
 				Destroy(ChooseGameContent.transform.GetChild(i).gameObject);
 
 			// Set size of the Content
-			int VerticalQuantity = (int)Math.Ceiling(MainFunctions.Games.Length / (float)AmountInRow);
+			int VerticalQuantity = (int)Math.Ceiling(Functions.Games.Length / (float)AmountInRow);
 			float Height = VerticalQuantity * GetComponent<RectTransform>().rect.width / AmountInRow * AspectRatio;
 			RectTransform RectTransform = ChooseGameContent.GetComponent<RectTransform>();
 			RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, Height);
 
-			Buttons[1] = new GameObject[MainFunctions.Games.Length + 1];
-			for (int i = 0; i < MainFunctions.Games.Length; i++) {
+			Buttons[1] = new GameObject[Functions.Games.Length + 1];
+			for (int i = 0; i < Functions.Games.Length; i++) {
 				GameObject Game = Instantiate(GameButtonPrefab, ChooseGameContent.transform);
-				Game.name = MainFunctions.Games[i] + "Wrapper";
+				Game.name = Functions.Games[i] + "Wrapper";
 
 				// Set button position and size
 				RectTransform PanelRectTransform = Game.GetComponent<RectTransform>();
@@ -120,7 +120,7 @@ namespace Assets.Scenes.MainMenu {
 				PanelRectTransform.anchorMax = new Vector2((i % AmountInRow + 1) / (float)AmountInRow, (float)v / VerticalQuantity);
 
 				Buttons[1][i] = Game.transform.GetChild(0).gameObject;
-				Buttons[1][i].name = MainFunctions.Games[i];
+				Buttons[1][i].name = Functions.Games[i];
 
 				// Set game image
 				if (i < SceneImages.Length) {
@@ -132,7 +132,7 @@ namespace Assets.Scenes.MainMenu {
 				// Set game name
 				GameObject NameScene = Buttons[1][i].transform.GetChild(1).gameObject;
 				Text Name = NameScene.GetComponent<Text>();
-				Name.text = MainFunctions.Games[i].ToNormalCase();
+				Name.text = Functions.Games[i].ToNormalCase();
 			}
 
 			// Set Back button
@@ -188,7 +188,7 @@ namespace Assets.Scenes.MainMenu {
 		private static readonly ButtonClick[] ButtonClicks = {
 			// MainMenu
 			new ButtonClick(ButtonNames[0][0], delegate {
-				MainFunctions.LoadRandomGame();
+				Functions.LoadRandomGame();
 				ToNextScene.Score = 0;
 				ToNextScene.GameMode = "Mixed";
 			}),
@@ -208,9 +208,9 @@ namespace Assets.Scenes.MainMenu {
 				}
 			}
 
-			foreach (string Game in MainFunctions.Games) {
+			foreach (string Game in Functions.Games) {
 				if (Game == ButtonName) {
-					MainFunctions.LoadSelectedGame(Game);
+					Functions.LoadSelectedGame(Game);
 					ToNextScene.Score = 0;
 					ToNextScene.GameMode = Game;
 					return;

@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scenes.Games.BaseScene.Pause {
+namespace Assets.Scenes.Games.BaseGame {
 	public class PauseControl : MonoBehaviour {
 
 		[UsedImplicitly]

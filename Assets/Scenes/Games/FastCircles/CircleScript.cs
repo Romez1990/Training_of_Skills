@@ -1,4 +1,4 @@
-﻿using Assets.Scenes.Games.BaseScene;
+﻿using Assets.Scenes.Games.BaseGame;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,7 +28,7 @@ namespace Assets.Scenes.Games.FastCircles {
 		}
 
 		private void Win() {
-			GameObject.Find("BaseScene").GetComponent<BaseSceneScript>().Win(20, 50);
+			BaseGameScript.Win(20, 50);
 		}
 
 	}

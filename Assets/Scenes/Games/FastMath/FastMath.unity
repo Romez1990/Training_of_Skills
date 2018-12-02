@@ -543,103 +543,13 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 2095163017}
-    m_Modifications:
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
-        type: 2}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
+    m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9801b7e62391b804e9e4d0186744cf2d, type: 2}
   m_IsPrefabAsset: 0
 --- !u!224 &1099837631 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224567903938443828, guid: 9801b7e62391b804e9e4d0186744cf2d,
+  m_CorrespondingSourceObject: {fileID: 224473089124641636, guid: 9801b7e62391b804e9e4d0186744cf2d,
     type: 2}
   m_PrefabInternal: {fileID: 1099837630}
 --- !u!1 &1141554798
@@ -899,9 +809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d30aaa480a0fc547a0bb2a53c4284c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: {fileID: 0}
-  Timer: {fileID: 0}
-  Pause: {fileID: 0}
   Expression: {fileID: 125451654}
   UserAnswer: {fileID: 731956316}
   Indicator: {fileID: 393479020}
