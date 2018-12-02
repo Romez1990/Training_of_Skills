@@ -27,7 +27,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1040383569321818
 GameObject:
   m_ObjectHideFlags: 1
@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 224933446309622968}
   - component: {fileID: 222512548238099848}
   - component: {fileID: 114592929120235242}
+  - component: {fileID: 114890235033009186}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -191,13 +192,14 @@ GameObject:
   - component: {fileID: 224191191635707044}
   - component: {fileID: 222840209462433342}
   - component: {fileID: 114931856872619728}
+  - component: {fileID: 114674438613025438}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &114039900725236280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -317,9 +319,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a2fc570fc36104294af8ad6407da60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: {fileID: 114592929120235242}
   Timer: {fileID: 114523049311956280}
-  Pause: {fileID: 1937501322110990}
+  GivenTime: 15
+  TimeLeft: 0
 --- !u!114 &114492589629922186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -446,6 +448,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114674438613025438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1937501322110990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f8b5ee63caf654ab7ce77e1a7f5d6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114786573131622726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -498,6 +511,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114890235033009186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1040383569321818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9dfc8c90e327e4287d643ae50507a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114907649939653586
 MonoBehaviour:
   m_ObjectHideFlags: 1

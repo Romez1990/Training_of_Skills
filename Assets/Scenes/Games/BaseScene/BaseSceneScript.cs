@@ -14,23 +14,8 @@ namespace Assets.Scenes.Games.BaseScene {
 			if (ToNextScene.GameMode == null)
 				ToNextScene.GameMode = SceneManager.GetActiveScene().name;
 
-			ScoreStart();
 			StartTimer();
 		}
-
-		#region From previous scene
-
-		public Text Score;
-
-		private void ScoreStart() {
-			SetScore(ToNextScene.Score);
-		}
-
-		public void SetScore(int NewScore) {
-			Score.text = NewScore.ToString();
-		}
-
-		#endregion
 
 		#endregion
 

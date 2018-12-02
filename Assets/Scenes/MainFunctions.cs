@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Assets.Scenes.Games.BaseScene;
+using System;
 using System.IO;
 using System.Linq;
-using Assets.Scenes.Games.BaseScene;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -84,7 +84,7 @@ namespace Assets.Scenes {
 		public static void Win(this BaseSceneScript BaseSceneScript, int BaseScore, int TimeScore) {
 			ToNextScene.Score = ToNextScene.Score + CalculateAddScore(BaseScore, TimeScore, BaseSceneScript.GivenTime, BaseSceneScript.TimeLeft);
 
-			BaseSceneScript.SetScore(ToNextScene.Score);
+			ScoreControl.SetScore(ToNextScene.Score);
 
 			if (ToNextScene.GameMode == "Mixed")
 				LoadRandomGame();
