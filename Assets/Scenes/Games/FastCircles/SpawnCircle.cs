@@ -7,7 +7,7 @@ namespace Assets.Scenes.Games.FastCircles {
 
 		[UsedImplicitly]
 		private void Start() {
-			SetCircles(5);
+			SetCircles(15);
 		}
 
 		public GameObject CirclePrefab;
@@ -22,13 +22,13 @@ namespace Assets.Scenes.Games.FastCircles {
 				GameObject Circle = Instantiate(CirclePrefab, transform);
 				RectTransform CircleRectTransform = Circle.GetComponent<RectTransform>();
 
-				int Diameter = Random.Range(75, 125);
+				int Diameter = Random.Range(30, 125);
 				CircleRectTransform.sizeDelta = new Vector2(Diameter, Diameter);
 
 				CircleRectTransform.localPosition = new Vector3(
 					Random.Range(-(Width / 2 - Diameter / 2f), Width / 2 - Diameter / 2f),
 					Random.Range(-(Height / 2 - Diameter / 2f), Height / 2 - Diameter / 2f),
-					1
+					0
 				);
 
 				var Image = Circle.GetComponent<Image>();

@@ -92,36 +92,14 @@ namespace Assets.Scenes.Games.FastMath {
 		}
 
 		private void UnselectCheck() {
-			if (EventSystem.current.currentSelectedGameObject == null)
+			if (EventSystem.current.currentSelectedGameObject == null && !BaseGameScript.IsPause)
 				EventSystem.current.SetSelectedGameObject(UserAnswer.gameObject);
 		}
-
-		#region TogglePause
-
-		private string PreviousAnswer1;
-		private string PreviousAnswer2;
-
-		/*
-		protected override void TogglePause() {
-			UserAnswer.text = PreviousAnswer2;
-			PreviousAnswer2 = PreviousAnswer1;
-
-			bool pause = PausePanel.activeSelf;
-			TogglePause.SetActive(!pause);
-			PausePanel.SetActive(!pause);
-		}
-		//*/
-
-		#endregion
 
 		#region Check answer
 
 		[UsedImplicitly]
 		public void OnTextChanged() {
-			// For saving value to pause
-			PreviousAnswer2 = PreviousAnswer1;
-			PreviousAnswer1 = UserAnswer.text;
-
 			Color color = Indicator.color;
 
 			if (UserAnswer.text == string.Empty) {

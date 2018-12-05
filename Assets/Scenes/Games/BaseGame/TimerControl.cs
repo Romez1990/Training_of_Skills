@@ -5,17 +5,14 @@ using UnityEngine.UI;
 namespace Assets.Scenes.Games.BaseGame {
 	public class TimerControl : MonoBehaviour {
 
-		[UsedImplicitly]
-		private void Start() {
-			StartTimer();
-		}
-
 		public Text Timer;
 		public static int GivenTime;
 		public static float TimeLeft;
 		private int LastTime;
 
-		private void StartTimer() {
+		[UsedImplicitly]
+		private void Start() {
+			Timer = GetComponent<Text>();
 			GivenTime = 15;
 			TimeLeft = GivenTime;
 		}
@@ -26,7 +23,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		}
 
 		private void TickTimer() {
-			if (PauseControl.IsPause) { return; }
+			if (BaseGameScript.IsPause) { return; }
 
 			TimeLeft -= Time.deltaTime;
 			if (LastTime == (int)TimeLeft) { return; }

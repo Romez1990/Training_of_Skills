@@ -4,7 +4,7 @@
 
 Shader "Custom/Blur" {
     Properties {
-        _Size ("Size", Range(0, 30)) = 0
+        _Size ("Size", Range(0, 7)) = 0
         [HideInInspector] _MainTex ("Tint Color (RGB)", 2D) = "white" {}
     }
 
