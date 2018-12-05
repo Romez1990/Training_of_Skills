@@ -7,7 +7,7 @@ namespace Assets.Scenes.Games.FastMath {
 		public static int RandomByProbabitity(int[] probability) {
 			int[] sumsProbability = new int[probability.Length];
 
-			for (int i = 0; i < sumsProbability.Length; i++) {
+			for (int i = 0; i < sumsProbability.Length; ++i) {
 				int sum = 0;
 
 				for (int j = 0; j < i + 1; j++) {
@@ -21,7 +21,7 @@ namespace Assets.Scenes.Games.FastMath {
 
 			int index = 0;
 
-			for (int i = 0; i < sumsProbability.Length; i++) {
+			for (int i = 0; i < sumsProbability.Length; ++i) {
 				if (randomNumber >= sumsProbability[i]) { continue; }
 				index = i;
 				break;

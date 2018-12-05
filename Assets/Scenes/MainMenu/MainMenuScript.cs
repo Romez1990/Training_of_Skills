@@ -49,7 +49,7 @@ namespace Assets.Scenes.MainMenu {
 			Panels = new GameObject[PanelAmount];
 			Buttons = new GameObject[PanelAmount][];
 
-			for (int i = 0; i < PanelAmount; i++) {
+			for (int i = 0; i < PanelAmount; ++i) {
 				// Panel initializing
 				Panels[i] = transform.GetChild(i + 1).gameObject; // + 1 'cause there's Background at 0 index
 
@@ -99,7 +99,7 @@ namespace Assets.Scenes.MainMenu {
 
 		private void InitializeGameButtons() {
 			// Remove all buttons from the scene
-			for (int i = 0; i < ChooseGameContent.transform.childCount; i++)
+			for (int i = 0; i < ChooseGameContent.transform.childCount; ++i)
 				Destroy(ChooseGameContent.transform.GetChild(i).gameObject);
 
 			// Set size of the Content
@@ -109,7 +109,7 @@ namespace Assets.Scenes.MainMenu {
 			RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, Height);
 
 			Buttons[1] = new GameObject[Functions.Games.Length + 1];
-			for (int i = 0; i < Functions.Games.Length; i++) {
+			for (int i = 0; i < Functions.Games.Length; ++i) {
 				GameObject Game = Instantiate(GameButtonPrefab, ChooseGameContent.transform);
 				Game.name = Functions.Games[i] + "Wrapper";
 
@@ -165,9 +165,9 @@ namespace Assets.Scenes.MainMenu {
 			foreach (GameObject[] Row in Buttons) {
 				foreach (GameObject Button in Row) {
 					// Add mouse over event
-					EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-					entry.callback.AddListener(delegate { EventSystem.current.SetSelectedGameObject(Button); });
-					Button.AddComponent<EventTrigger>().triggers.Add(entry);
+					EventTrigger.Entry Entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+					Entry.callback.AddListener(delegate { EventSystem.current.SetSelectedGameObject(Button); });
+					Button.AddComponent<EventTrigger>().triggers.Add(Entry);
 
 					// Add click event
 					Button.GetComponent<Button>().onClick.AddListener(delegate { OnButtonClick(Button.name); });

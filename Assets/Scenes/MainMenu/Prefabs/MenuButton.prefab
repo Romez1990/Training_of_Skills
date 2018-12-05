@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224471352387976008}
-  - component: {fileID: 222920470530270748}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -195,13 +194,6 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1339432430854816}
-  m_CullTransparentMesh: 0
---- !u!222 &222920470530270748
-CanvasRenderer:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1249353158392100}
   m_CullTransparentMesh: 0
 --- !u!224 &224471352387976008
 RectTransform:

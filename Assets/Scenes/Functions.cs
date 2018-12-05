@@ -45,7 +45,7 @@ namespace Assets.Scenes {
 			);
 
 			/*string NewStr = string.Empty;
-			for (int i = 0; i < Str.Length; i++)
+			for (int i = 0; i < Str.Length; ++i)
 				if (i == 0)
 					NewStr += Str[i];
 				else if (i > 0 && char.IsUpper(Str[i]))

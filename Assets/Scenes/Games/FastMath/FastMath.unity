@@ -501,7 +501,7 @@ MonoBehaviour:
   m_SelectionColor: {r: 0.5372549, g: 0.6039216, b: 0.69803923, a: 0.4509804}
   m_Text: 
   m_CaretBlinkRate: 0.85
-  m_CaretWidth: 1
+  m_CaretWidth: 3
   m_ReadOnly: 0
 --- !u!114 &731956317
 MonoBehaviour:

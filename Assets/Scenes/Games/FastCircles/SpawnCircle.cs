@@ -18,7 +18,7 @@ namespace Assets.Scenes.Games.FastCircles {
 			var Width = GamePanelRectTransform.rect.width;
 			var Height = GamePanelRectTransform.rect.height;
 
-			for (int i = 0; i < Amount; i++) {
+			for (int i = 0; i < Amount; ++i) {
 				GameObject Circle = Instantiate(CirclePrefab, transform);
 				RectTransform CircleRectTransform = Circle.GetComponent<RectTransform>();
 
