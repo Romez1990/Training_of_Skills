@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -87,7 +88,10 @@ namespace Assets.Scenes.Games.FastMath {
 
 		[UsedImplicitly]
 		private void Update() {
-			UserAnswer.ActivateInputField();
+			if (!BaseGameScript.IsPause) {
+				EventSystem.current.SetSelectedGameObject(UserAnswer.gameObject);
+				UserAnswer.ActivateInputField();
+			}
 		}
 
 		#region Check answer

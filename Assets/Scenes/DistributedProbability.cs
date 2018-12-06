@@ -10,7 +10,7 @@ namespace Assets.Scenes.Games.FastMath {
 			for (int i = 0; i < sumsProbability.Length; ++i) {
 				int sum = 0;
 
-				for (int j = 0; j < i + 1; j++) {
+				for (int j = 0; j < i + 1; ++j) {
 					sum += probability[j];
 				}
 

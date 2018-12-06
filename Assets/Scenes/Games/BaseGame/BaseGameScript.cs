@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.Games.BaseGame {
@@ -73,6 +74,8 @@ namespace Assets.Scenes.Games.BaseGame {
 			_IsPause = !_IsPause;
 			_Size = _IsPause ? 5 : 0;
 			PausePanel.SetActive(_IsPause);
+			EventSystem.current.SetSelectedGameObject(null);
+			//EventSystem.current.SetSelectedGameObject(PauseMenu.Buttons[0]);
 		}
 
 		#endregion

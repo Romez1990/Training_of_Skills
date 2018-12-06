@@ -59,8 +59,8 @@ namespace Assets.Scenes.MainMenu {
 					continue;
 				}
 
-				// Remove all buttons from the scene
-				for (int j = 0; j < Panels[i].transform.childCount; j++)
+				// Remove all existing buttons from the scene
+				for (int j = 0; j < Panels[i].transform.childCount; ++j)
 					Destroy(Panels[i].transform.GetChild(j).gameObject);
 
 				// Set panel position and size
@@ -72,7 +72,7 @@ namespace Assets.Scenes.MainMenu {
 
 				// Button creating
 				Buttons[i] = new GameObject[ButtonNames[i].Length];
-				for (int j = 0; j < ButtonNames[i].Length; j++) {
+				for (int j = 0; j < ButtonNames[i].Length; ++j) {
 					GameObject ButtonWrapper = Instantiate(ButtonPrefab, Panels[i].transform);
 					ButtonWrapper.name = ButtonNames[i][j] + "Wrapper";
 
@@ -175,7 +175,7 @@ namespace Assets.Scenes.MainMenu {
 			}
 		}
 
-		private struct ButtonClick {
+		public struct ButtonClick {
 			public readonly string Name;
 			public readonly Action OnClick;
 
