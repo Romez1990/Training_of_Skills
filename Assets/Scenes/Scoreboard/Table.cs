@@ -16,17 +16,9 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		private void Start() {
-			ToNextScene.Name = "Unity";
-			ToNextScene.Score = 10000;
+			ToNextScene.Name = ToNextScene.Name != null ? ToNextScene.Name : "Player";
+			ToNextScene.Score = ToNextScene.Score != 0 ? ToNextScene.Score : 10_000;
 			StartCoroutine(SendRequest(ToNextScene.Name, ToNextScene.Score));
-		}
-
-		[Serializable]
-		public class Record {
-			public string position;
-			public string name;
-			public string score;
-			public string datetime;
 		}
 
 		private IEnumerator SendRequest(string Name, int Score) {
@@ -39,15 +31,44 @@ namespace Assets.Scenes.Scoreboard {
 
 			yield return Request.SendWebRequest();
 
-			if (Request.isNetworkError || Request.isHttpError) {
-				Debug.Log(Request.error);
+			if (Request.isNetworkError) {
+				DisplayError("There is no internet connection to display other results", Request.error);
+			} else if (Request.isHttpError) {
+				DisplayError("Something went wrong. We can't display other results", Request.error);
 			} else {
-				FigureOutTable(Encoding.Default.GetString(Request.downloadHandler.data));
+				Callback(Encoding.Default.GetString(Request.downloadHandler.data));
 			}
+		}
+
+		public Transform CurrentRow;
+		public Text ErrorRow;
+
+		private void DisplayError(string ErrorText, string RequestError) {
+			Debug.Log(RequestError);
+			CurrentRow.gameObject.SetActive(true);
+			CurrentRow.gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
+			CurrentRow.GetChild(0).GetComponent<Text>().text = "1";
+			CurrentRow.GetChild(1).GetComponent<Text>().text = ToNextScene.Name;
+			CurrentRow.GetChild(2).GetComponent<Text>().text = ToNextScene.Score.ToString();
+			CurrentRow.GetChild(3).GetComponent<Text>().text = DateTime.Now.ToString("yy-MM-dd HH:mm");
+			ErrorRow.text = ErrorText;
+		}
+
+		[Serializable]
+		public class Record {
+			public string position;
+			public string name;
+			public string score;
+			public string datetime;
 		}
 
 		private List<Record> Records;
 		private int Current;
+
+		private void Callback(string Response) {
+			FigureOutTable(Response);
+			SetTable();
+		}
 
 		private void FigureOutTable(string Json) {
 			Records = JsonHelper.FromJson<Record>(Json).ToList();
@@ -62,8 +83,6 @@ namespace Assets.Scenes.Scoreboard {
 					break;
 				}
 			}
-
-			SetTable();
 		}
 
 		public GameObject RowPrefab;
@@ -100,8 +119,8 @@ namespace Assets.Scenes.Scoreboard {
 			//transform.GetChild(1).gameObject.AddComponent<Image>().color = Color.red;
 		}
 
-	}
+		#endregion
 
-	#endregion
+	}
 
 }

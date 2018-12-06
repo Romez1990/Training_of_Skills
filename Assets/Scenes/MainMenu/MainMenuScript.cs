@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseGame;
+using JetBrains.Annotations;
 using System;
-using Assets.Scenes.Games.BaseGame;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -188,9 +188,9 @@ namespace Assets.Scenes.MainMenu {
 		private static readonly ButtonClick[] ButtonClicks = {
 			// MainMenu
 			new ButtonClick(ButtonNames[0][0], delegate {
-				Functions.LoadRandomGame();
 				ToNextScene.Score = 0;
 				ToNextScene.GameMode = "Mixed";
+				Functions.LoadGame(ToNextScene.GameMode);
 			}),
 			new ButtonClick(ButtonNames[0][1], delegate { CurrentPanel = 1; }),
 			new ButtonClick(ButtonNames[0][2], delegate { CurrentPanel = 2; }),
@@ -210,7 +210,7 @@ namespace Assets.Scenes.MainMenu {
 
 			foreach (string Game in Functions.Games) {
 				if (Game == ButtonName) {
-					Functions.LoadSelectedGame(Game);
+					Functions.LoadGame(Game);
 					ToNextScene.Score = 0;
 					ToNextScene.GameMode = Game;
 					return;
@@ -235,9 +235,9 @@ namespace Assets.Scenes.MainMenu {
 		private static void UnselectedCheck() {
 			if (EventSystem.current.currentSelectedGameObject == null) {
 				EventSystem.current.SetSelectedGameObject(
-					PreviousSelected != null ?
-						PreviousSelected :
-						Buttons[CurrentPanel][0]
+					PreviousSelected == null ?
+						Buttons[CurrentPanel][0] :
+						PreviousSelected
 				);
 			}
 

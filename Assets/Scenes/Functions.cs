@@ -1,13 +1,14 @@
-﻿using System.Linq;
+﻿using Assets.Scenes.Games.BaseGame;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
 
 namespace Assets.Scenes {
 	public static class Functions {
 
 		public static readonly string[] Games = {
 			"FastMath",
-			"FastCircles",
+			"FastCircles"
 			/*
 			"Some Game1",
 			"Some Game2",
@@ -20,12 +21,18 @@ namespace Assets.Scenes {
 			//*/
 		};
 
-		public static void LoadRandomGame() {
-			SceneManager.LoadScene(Games[Random.Range(0, Games.Length)]);
+		public static void LoadGame(string GameName) {
+			BaseGameScript.IsPause = false;
+			SceneManager.LoadScene(GameName == "Mixed" || GameName == null ? Games[Random.Range(0, Games.Length)] : GameName);
 		}
 
-		public static void LoadSelectedGame(string GameName) {
-			SceneManager.LoadScene(GameName);
+		public static void Restart(bool ResetScore = true) {
+			BaseGameScript.IsPause = false;
+
+			if (ResetScore)
+				ToNextScene.Score = 0;
+
+			LoadGame(ToNextScene.GameMode);
 		}
 
 		//public static readonly string PathToData = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");

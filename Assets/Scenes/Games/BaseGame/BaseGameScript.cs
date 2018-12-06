@@ -75,7 +75,11 @@ namespace Assets.Scenes.Games.BaseGame {
 			_Size = _IsPause ? 5 : 0;
 			PausePanel.SetActive(_IsPause);
 			EventSystem.current.SetSelectedGameObject(null);
-			//EventSystem.current.SetSelectedGameObject(PauseMenu.Buttons[0]);
+		}
+
+		[UsedImplicitly]
+		public void PauseClick() {
+			IsPause = true;
 		}
 
 		#endregion
@@ -87,16 +91,13 @@ namespace Assets.Scenes.Games.BaseGame {
 		public static void Win(int BaseScore, int TimeScore) {
 			ToNextScene.Score = ToNextScene.Score + ScoreControl.CalculateAddScore(BaseScore, TimeScore, TimerControl.GivenTime, TimerControl.TimeLeft);
 
-			ScoreControl.SetScore(ToNextScene.Score);
+			ScoreControl.SetScore(ToNextScene.Score); // Is it needed?
 
-			if (ToNextScene.GameMode == "Mixed")
-				Functions.LoadRandomGame();
-			else
-				SceneManager.LoadScene(ToNextScene.GameMode);
+			Functions.Restart(false);
 		}
 
 		public static void GameOver() {
-			SceneManager.LoadScene("Scoreboard");
+			Functions.LoadGame("Scoreboard");
 		}
 
 		#endregion

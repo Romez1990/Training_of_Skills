@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Assets.Scenes.Games.BaseGame;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scenes.Scoreboard {
 	public class ScoreboardScript : MonoBehaviour {
@@ -24,7 +21,7 @@ namespace Assets.Scenes.Scoreboard {
 				Button.AddComponent<EventTrigger>().triggers.Add(Entry);
 			}
 		}
-		
+
 		#endregion
 
 		#region Update
@@ -39,9 +36,9 @@ namespace Assets.Scenes.Scoreboard {
 		private void UnselectedCheck() {
 			if (EventSystem.current.currentSelectedGameObject == null) {
 				EventSystem.current.SetSelectedGameObject(
-					PreviousSelected != null ?
-						PreviousSelected :
-						Buttons[0]
+					PreviousSelected == null ?
+						Buttons[0] :
+						PreviousSelected
 				);
 			}
 
@@ -50,17 +47,12 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		public void MainMenuClick() {
-			SceneManager.LoadScene("MainMenu");
+			Functions.LoadGame("MainMenu");
 		}
 
 		[UsedImplicitly]
 		public void StartOverClick() {
-			ToNextScene.Score = 0;
-
-			if (ToNextScene.GameMode == "Mixed" || ToNextScene.GameMode == null)
-				Functions.LoadRandomGame();
-			else
-				SceneManager.LoadScene(ToNextScene.GameMode);
+			Functions.Restart();
 		}
 
 		#endregion

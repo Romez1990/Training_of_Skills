@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scenes.Games.BaseGame {
@@ -18,7 +17,9 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		private static readonly string[] ButtonNames = {
 			"Resume",
-			"Quit game"
+			"Restart",
+			"MainMenu",
+			"Quit"
 		};
 
 		#region Initialization panels and buttons
@@ -75,7 +76,9 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		private static readonly MainMenuScript.ButtonClick[] ButtonClicks = {
 			new MainMenuScript.ButtonClick(ButtonNames[0], delegate { BaseGameScript.IsPause = false; }),
-			new MainMenuScript.ButtonClick(ButtonNames[1], delegate { SceneManager.LoadScene("MainMenu"); })
+			new MainMenuScript.ButtonClick(ButtonNames[1], delegate { Functions.Restart(); }),
+			new MainMenuScript.ButtonClick(ButtonNames[2], delegate { Functions.LoadGame("MainMenu"); }),
+			new MainMenuScript.ButtonClick(ButtonNames[3], Application.Quit)
 		};
 
 		public static void OnButtonClick(string ButtonName) {
