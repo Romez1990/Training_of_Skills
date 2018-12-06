@@ -3,9 +3,9 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
@@ -16,61 +16,22 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		private void Start() {
-			ToNextScene.Username = "Unity";
-			ToNextScene.Score = 16;
-			StartCoroutine(SendRequest(ToNextScene.Username, ToNextScene.Score));
-			SetRows();
-			AddHighLightToRows();
+			ToNextScene.Name = "Unity";
+			ToNextScene.Score = 10000;
+			StartCoroutine(SendRequest(ToNextScene.Name, ToNextScene.Score));
 		}
 
-		private void AddHighLightToRows() {
-			for (int i = 1; i < transform.childCount; ++i) {
-				List<EventTrigger.Entry> Triggers = transform.GetChild(i).gameObject.AddComponent<EventTrigger>().triggers;
-
-				EventTrigger.Entry Entry1 = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-				Entry1.callback.AddListener(delegate { transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0.95f); });
-				Triggers.Add(Entry1);
-
-				EventTrigger.Entry Entry2 = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-				Entry2.callback.AddListener(delegate { transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 0); });
-				Triggers.Add(Entry2);
-			}
-		}
-
-		public GameObject RowPrefab;
-		private static Text[,] Cells;
-
-		private void SetRows() {
-			for (int i = 1; i < transform.childCount; ++i)
-				Destroy(transform.GetChild(i).gameObject);
-
-			Cells = new Text[11, 4];
-			for (int i = 1; i <= 11; ++i) {
-				GameObject Row = Instantiate(RowPrefab, transform);
-				Row.name = "Row" + i;
-
-				RectTransform RectTransform = Row.GetComponent<RectTransform>();
-				RectTransform.anchorMin = new Vector2(0, 1 - (i + 1) / 12f);
-				RectTransform.anchorMax = new Vector2(1, 1 - i / 12f);
-
-				for (int j = 0; j < 4; j++) {
-					Cells[i - 1, j] = Row.transform.GetChild(j).GetComponent<Text>();
-				}
-			}
-
-			Color Gold = new Color(255 / 255f, 215 / 255f, 1 / 255f, 1);
-			Color Silver = new Color(192 / 255f, 192 / 255f, 192 / 255f, 1);
-			Color Bronze = new Color(236 / 255f, 106 / 255f, 22 / 255f, 1);
-			for (int i = 0; i < 4; i++) {
-				Cells[0, i].color = Gold;
-				Cells[1, i].color = Silver;
-				Cells[2, i].color = Bronze;
-			}
+		[Serializable]
+		public class Record {
+			public string position;
+			public string name;
+			public string score;
+			public string datetime;
 		}
 
 		private IEnumerator SendRequest(string Name, int Score) {
 			Dictionary<string, string> Parameters = new Dictionary<string, string> {
-				{ "username", Name },
+				{ "name", Name },
 				{ "score", Score.ToString() }
 			};
 			UnityWebRequest Request = UnityWebRequest.Post("http://u9895013.beget.tech/scoreboard.php", Parameters);
@@ -85,46 +46,60 @@ namespace Assets.Scenes.Scoreboard {
 			}
 		}
 
-		[Serializable]
-		public class Record {
-			public string position;
-			public string username;
-			public string score;
-			public string datetime;
-		}
+		private List<Record> Records;
+		private int Current;
 
 		private void FigureOutTable(string Json) {
-			bool Found = false;
-			int Current = 0;
-			Record[] Records = JsonHelper.FromJson<Record>(Json);
-			for (int i = 0; i < Records.Length - 1; ++i) {
-				Cells[i, 0].text = Records[i].position;
-				Cells[i, 1].text = Records[i].username;
-				Cells[i, 2].text = Records[i].score;
-				Cells[i, 3].text = Records[i].datetime;
+			Records = JsonHelper.FromJson<Record>(Json).ToList();
 
-				if (ToNextScene.Username == Records[i].username && ToNextScene.Score.ToString() == Records[i].score) {
-					Found = true;
+			if (Records.Count == 10)
+				if (Convert.ToInt32(Records[9].position) > 10)
+					Records.Insert(9, new Record { position = "..." });
+
+			for (int i = 0; i <= Records.Count - 1; ++i) {
+				if (ToNextScene.Name == Records[i].name && ToNextScene.Score.ToString() == Records[i].score) {
 					Current = i;
+					break;
 				}
 			}
 
-			bool AddDots = Convert.ToInt32(Records[9].position) > 10;
-			if (AddDots) {
-				Cells[9, 0].text = "...";
-				Cells[10, 0].text = Records[9].position;
-				Cells[10, 1].text = Records[9].username;
-				Cells[10, 2].text = Records[9].score;
-				Cells[10, 3].text = Records[9].datetime;
-			} else {
-				Cells[9, 0].text = Records[9].position;
-				Cells[9, 1].text = Records[9].username;
-				Cells[9, 2].text = Records[9].score;
-				Cells[9, 3].text = Records[9].datetime;
+			SetTable();
+		}
+
+		public GameObject RowPrefab;
+
+		private void SetTable() {
+			for (int i = 1; i < transform.childCount; ++i)
+				Destroy(transform.GetChild(i).gameObject);
+
+			for (int i = 1; i <= Records.Count; ++i) {
+				GameObject Row = Instantiate(RowPrefab, transform);
+				Row.name = "Row" + i;
+
+				RectTransform RectTransform = Row.GetComponent<RectTransform>();
+				RectTransform.anchorMin = new Vector2(0, 1 - (i + 1) / 12f);
+				RectTransform.anchorMax = new Vector2(1, 1 - i / 12f);
+
+				Row.transform.GetChild(0).GetComponent<Text>().text = Records[i - 1].position;
+				Row.transform.GetChild(1).GetComponent<Text>().text = Records[i - 1].name;
+				Row.transform.GetChild(2).GetComponent<Text>().text = Records[i - 1].score;
+				Row.transform.GetChild(3).GetComponent<Text>().text = Records[i - 1].datetime;
 			}
 
-			transform.GetChild(Found ? Current : AddDots ? 11 : 10).gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.15f);
+			Color[] Top = new Color[3];
+			Top[0] = new Color(255 / 255f, 215 / 255f, 1 / 255f, 1); // Gold
+			Top[1] = new Color(192 / 255f, 192 / 255f, 192 / 255f, 1); // Silver
+			Top[2] = new Color(236 / 255f, 106 / 255f, 22 / 255f, 1); // Bronze
+			for (int i = 0; i < 3; i++)
+				for (int j = 0; j < 4; j++)
+					transform.GetChild(i).GetChild(j).GetComponent<Text>().color = Top[i];
+
+			transform.GetChild(Current + 2).gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
+			// Yeah, + 2 This is a fucking bug
+			//Debug.Log(transform.GetChild(1));
+			//transform.GetChild(1).gameObject.AddComponent<Image>().color = Color.red;
 		}
+
 	}
 
 	#endregion
