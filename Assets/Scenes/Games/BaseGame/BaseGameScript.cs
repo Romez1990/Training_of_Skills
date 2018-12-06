@@ -13,8 +13,8 @@ namespace Assets.Scenes.Games.BaseGame {
 		private void Start() {
 			PausePanel = _PausePanel;
 			StartPause();
-			if (ToNextScene.GameMode == null)
-				ToNextScene.GameMode = SceneManager.GetActiveScene().name;
+			if (PlayingInfo.GameMode == null)
+				PlayingInfo.GameMode = SceneManager.GetActiveScene().name;
 		}
 
 		public GameObject _PausePanel;
@@ -40,7 +40,7 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		private void CheckPause() {
 			if (Input.GetKeyDown(KeyCode.Escape)) {
-				TogglePause();
+				IsPause = !IsPause;
 			}
 		}
 
@@ -64,17 +64,14 @@ namespace Assets.Scenes.Games.BaseGame {
 		public static bool IsPause {
 			get => _IsPause;
 			set {
-				if (value != _IsPause) {
-					TogglePause();
-				}
-			}
-		}
+				if (value == _IsPause) { return; }
 
-		private static void TogglePause() {
-			_IsPause = !_IsPause;
-			_Size = _IsPause ? 5 : 0;
-			PausePanel.SetActive(_IsPause);
-			EventSystem.current.SetSelectedGameObject(null);
+				_Size = value ? 5 : 0;
+				EventSystem.current.SetSelectedGameObject(null);
+				PauseMenu.PreviousSelected = null;
+				PausePanel.SetActive(value);
+				_IsPause = value;
+			}
 		}
 
 		[UsedImplicitly]
@@ -86,14 +83,11 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		#region Game over
 
-		public static bool GameIsOver = false;
+		public static void Win() {
+			PlayingInfo.Time += 10;
+			PlayingInfo.Score += ScoreControl.CalculateAddScore(TimeControl.GivenTime);
 
-		public static void Win(int BaseScore, int TimeScore) {
-			ToNextScene.Score = ToNextScene.Score + ScoreControl.CalculateAddScore(BaseScore, TimeScore, TimerControl.GivenTime, TimerControl.TimeLeft);
-
-			ScoreControl.SetScore(ToNextScene.Score); // Is it needed?
-
-			Functions.Restart(false);
+			Functions.LoadGame(PlayingInfo.GameMode);
 		}
 
 		public static void GameOver() {

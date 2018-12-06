@@ -188,9 +188,10 @@ namespace Assets.Scenes.MainMenu {
 		private static readonly ButtonClick[] ButtonClicks = {
 			// MainMenu
 			new ButtonClick(ButtonNames[0][0], delegate {
-				ToNextScene.Score = 0;
-				ToNextScene.GameMode = "Mixed";
-				Functions.LoadGame(ToNextScene.GameMode);
+				Functions.LoadGame("Mixed");
+				PlayingInfo.Score = 0;
+				PlayingInfo.Time = 30;
+				PlayingInfo.GameMode = "Mixed";
 			}),
 			new ButtonClick(ButtonNames[0][1], delegate { CurrentPanel = 1; }),
 			new ButtonClick(ButtonNames[0][2], delegate { CurrentPanel = 2; }),
@@ -211,8 +212,9 @@ namespace Assets.Scenes.MainMenu {
 			foreach (string Game in Functions.Games) {
 				if (Game == ButtonName) {
 					Functions.LoadGame(Game);
-					ToNextScene.Score = 0;
-					ToNextScene.GameMode = Game;
+					PlayingInfo.Score = 0;
+					PlayingInfo.Time = 30;
+					PlayingInfo.GameMode = Game;
 					return;
 				}
 			}

@@ -332,7 +332,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CirclePrefab: {fileID: 1498151840289130, guid: 23a9699f813c38748b36a7178535f747,
     type: 2}
---- !u!1001 &1522024912
+--- !u!224 &1522024913 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224473089124641636, guid: 9801b7e62391b804e9e4d0186744cf2d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1684274954}
+--- !u!1001 &1684274954
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -432,11 +437,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9801b7e62391b804e9e4d0186744cf2d, type: 2}
   m_IsPrefabAsset: 0
---- !u!224 &1522024913 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224473089124641636, guid: 9801b7e62391b804e9e4d0186744cf2d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1522024912}
 --- !u!1 &2060012496
 GameObject:
   m_ObjectHideFlags: 0

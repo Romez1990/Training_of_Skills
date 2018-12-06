@@ -3,18 +3,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scenes.Games.BaseGame {
-	public class TimerControl : MonoBehaviour {
+	public class TimeControl : MonoBehaviour {
 
-		public Text Timer;
-		public static int GivenTime;
-		public static float TimeLeft;
-		private int LastTime;
+		private Text Timer;
+		public static float GivenTime;
 
 		[UsedImplicitly]
 		private void Start() {
+			if (PlayingInfo.Time == 0)
+				PlayingInfo.Time = 30;
+
 			Timer = GetComponent<Text>();
-			GivenTime = 15;
-			TimeLeft = GivenTime;
+			GivenTime = PlayingInfo.Time;
 		}
 
 		[UsedImplicitly]
@@ -22,26 +22,25 @@ namespace Assets.Scenes.Games.BaseGame {
 			TickTimer();
 		}
 
+		private int LastTime;
+
 		private void TickTimer() {
 			if (BaseGameScript.IsPause) { return; }
 
-			TimeLeft -= Time.deltaTime;
-			if (LastTime == (int)TimeLeft) { return; }
+			PlayingInfo.Time -= Time.deltaTime;
 
-			if (TimeLeft < 0.2) {
+			if (LastTime == (int)PlayingInfo.Time) { return; }
+
+			if (PlayingInfo.Time < 0.2f)
 				BaseGameScript.GameOver();
-				BaseGameScript.GameIsOver = true;
-			}
 
-			int Second = (int)TimeLeft % 60;
-			int Minute = ((int)TimeLeft - Second) / 60;
+			int Second = (int)PlayingInfo.Time % 60;
+			int Minute = (int)PlayingInfo.Time / 60;
 			Timer.text = (Minute < 10 ? "0" : string.Empty) + Minute +
 							 ":" +
 							 (Second < 10 ? "0" : string.Empty) + Second;
 
-			LastTime = (int)TimeLeft;
+			LastTime = (int)PlayingInfo.Time;
 		}
-
-
 	}
 }

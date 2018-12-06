@@ -52,7 +52,7 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		public void StartOverClick() {
-			Functions.Restart();
+			Functions.ReloadGame();
 		}
 
 		#endregion

@@ -28,7 +28,7 @@ namespace Assets.Scenes.Games.FastCircles {
 		}
 
 		private void Win() {
-			BaseGameScript.Win(20, 50);
+			BaseGameScript.Win();
 		}
 
 	}

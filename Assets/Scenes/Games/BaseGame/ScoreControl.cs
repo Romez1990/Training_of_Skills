@@ -15,20 +15,22 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		private void ScoreStart() {
 			Score = GetComponent<Text>();
-			Score.text = ToNextScene.Score.ToString();
+			SetScore(PlayingInfo.Score);
 		}
 
 		public static void SetScore(int NewScore) {
-			Score.text = NewScore.ToString();
+			Score.text = "Score: " + (NewScore > 0 ? NewScore.ToString("#,#").Replace(',', ' ') : "0");
 		}
 
-		public static int CalculateAddScore(int BaseScore, int TimeScore, float GivenTime, float TimeLeft) {
-			if (BaseScore < 0) { throw new ArgumentOutOfRangeException(nameof(BaseScore)); }
-			if (TimeScore < 0) { throw new ArgumentOutOfRangeException(nameof(TimeScore)); }
+		private const int BaseScore = 50;
+		private const int TimeScore = 100;
 
-			float PercentTime = TimeLeft / GivenTime;
-			TimeScore = (int)Math.Round(TimeScore * PercentTime);
-			return BaseScore + TimeScore;
+		public static int CalculateAddScore(float GivenTime) {
+			float PercentTime = PlayingInfo.Time / GivenTime;
+			int CalcScore = (int)Math.Round(TimeScore * PercentTime);
+			int TotalScore = BaseScore + CalcScore;
+			TotalScore += TotalScore * PlayingInfo.Score / 1000;
+			return TotalScore;
 		}
 
 	}

@@ -110,7 +110,7 @@ namespace Assets.Scenes.Games.FastMath {
 				Indicator.sprite = FalseIndicator;
 			} else {
 				Indicator.sprite = TrueIndicator;
-				BaseGameScript.Win(20, 50);
+				BaseGameScript.Win();
 			}
 
 			color.a = 1;

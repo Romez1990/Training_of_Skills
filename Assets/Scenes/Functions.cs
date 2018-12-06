@@ -26,13 +26,11 @@ namespace Assets.Scenes {
 			SceneManager.LoadScene(GameName == "Mixed" || GameName == null ? Games[Random.Range(0, Games.Length)] : GameName);
 		}
 
-		public static void Restart(bool ResetScore = true) {
-			BaseGameScript.IsPause = false;
+		public static void ReloadGame() {
+			PlayingInfo.Score = 0;
+			PlayingInfo.Time = 30;
 
-			if (ResetScore)
-				ToNextScene.Score = 0;
-
-			LoadGame(ToNextScene.GameMode);
+			LoadGame(PlayingInfo.GameMode);
 		}
 
 		//public static readonly string PathToData = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");

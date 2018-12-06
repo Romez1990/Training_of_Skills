@@ -16,9 +16,9 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		private void Start() {
-			ToNextScene.Name = ToNextScene.Name != null ? ToNextScene.Name : "Player";
-			ToNextScene.Score = ToNextScene.Score != 0 ? ToNextScene.Score : 10_000;
-			StartCoroutine(SendRequest(ToNextScene.Name, ToNextScene.Score));
+			PlayingInfo.Name = PlayingInfo.Name != null ? PlayingInfo.Name : "Player";
+			PlayingInfo.Score = PlayingInfo.Score != 0 ? PlayingInfo.Score : 10_000;
+			StartCoroutine(SendRequest(PlayingInfo.Name, PlayingInfo.Score));
 		}
 
 		private IEnumerator SendRequest(string Name, int Score) {
@@ -31,13 +31,12 @@ namespace Assets.Scenes.Scoreboard {
 
 			yield return Request.SendWebRequest();
 
-			if (Request.isNetworkError) {
+			if (Request.isNetworkError)
 				DisplayError("There is no internet connection to display other results", Request.error);
-			} else if (Request.isHttpError) {
+			else if (Request.isHttpError)
 				DisplayError("Something went wrong. We can't display other results", Request.error);
-			} else {
+			else
 				Callback(Encoding.Default.GetString(Request.downloadHandler.data));
-			}
 		}
 
 		public Transform CurrentRow;
@@ -48,10 +47,15 @@ namespace Assets.Scenes.Scoreboard {
 			CurrentRow.gameObject.SetActive(true);
 			CurrentRow.gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
 			CurrentRow.GetChild(0).GetComponent<Text>().text = "1";
-			CurrentRow.GetChild(1).GetComponent<Text>().text = ToNextScene.Name;
-			CurrentRow.GetChild(2).GetComponent<Text>().text = ToNextScene.Score.ToString();
+			CurrentRow.GetChild(1).GetComponent<Text>().text = PlayingInfo.Name;
+			CurrentRow.GetChild(2).GetComponent<Text>().text = PlayingInfo.Score.ToString();
 			CurrentRow.GetChild(3).GetComponent<Text>().text = DateTime.Now.ToString("yy-MM-dd HH:mm");
 			ErrorRow.text = ErrorText;
+		}
+
+		private void Callback(string Response) {
+			FigureOutTable(Response);
+			SetTable();
 		}
 
 		[Serializable]
@@ -65,11 +69,6 @@ namespace Assets.Scenes.Scoreboard {
 		private List<Record> Records;
 		private int Current;
 
-		private void Callback(string Response) {
-			FigureOutTable(Response);
-			SetTable();
-		}
-
 		private void FigureOutTable(string Json) {
 			Records = JsonHelper.FromJson<Record>(Json).ToList();
 
@@ -78,7 +77,7 @@ namespace Assets.Scenes.Scoreboard {
 					Records.Insert(9, new Record { position = "..." });
 
 			for (int i = 0; i <= Records.Count - 1; ++i) {
-				if (ToNextScene.Name == Records[i].name && ToNextScene.Score.ToString() == Records[i].score) {
+				if (PlayingInfo.Name == Records[i].name && PlayingInfo.Score.ToString() == Records[i].score) {
 					Current = i;
 					break;
 				}
