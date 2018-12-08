@@ -12,16 +12,16 @@ using UnityEngine.UI;
 namespace Assets.Scenes.Scoreboard {
 	public class Table : MonoBehaviour {
 
-		#region Start
-
 		[UsedImplicitly]
 		private void Start() {
-			PlayingInfo.Name = PlayingInfo.Name != null ? PlayingInfo.Name : "Player";
-			PlayingInfo.Score = PlayingInfo.Score != 0 ? PlayingInfo.Score : 10_000;
+			//PlayingInfo.Name = PlayingInfo.Name != null ? PlayingInfo.Name : "Player";
+			//PlayingInfo.Score = PlayingInfo.Score != 0 ? PlayingInfo.Score : 1000;
 			StartCoroutine(SendRequest(PlayingInfo.Name, PlayingInfo.Score));
 		}
 
 		private IEnumerator SendRequest(string Name, int Score) {
+			transform.GetChild(2).GetComponent<Text>().text = "Please wait";
+
 			Dictionary<string, string> Parameters = new Dictionary<string, string> {
 				{ "name", Name },
 				{ "score", Score.ToString() }
@@ -32,25 +32,22 @@ namespace Assets.Scenes.Scoreboard {
 			yield return Request.SendWebRequest();
 
 			if (Request.isNetworkError)
-				DisplayError("There is no internet connection to display other results", Request.error);
+				DisplayError("There is no internet connection to display scoreboard");
 			else if (Request.isHttpError)
-				DisplayError("Something went wrong. We can't display other results", Request.error);
+				DisplayError("Something went wrong. We can't display scoreboard");
 			else
 				Callback(Encoding.Default.GetString(Request.downloadHandler.data));
 		}
 
-		public Transform CurrentRow;
-		public Text ErrorRow;
-
-		private void DisplayError(string ErrorText, string RequestError) {
-			Debug.Log(RequestError);
+		private void DisplayError(string ErrorText) {
+			Transform CurrentRow = transform.GetChild(1);
 			CurrentRow.gameObject.SetActive(true);
 			CurrentRow.gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
 			CurrentRow.GetChild(0).GetComponent<Text>().text = "1";
 			CurrentRow.GetChild(1).GetComponent<Text>().text = PlayingInfo.Name;
 			CurrentRow.GetChild(2).GetComponent<Text>().text = PlayingInfo.Score.ToString();
 			CurrentRow.GetChild(3).GetComponent<Text>().text = DateTime.Now.ToString("yy-MM-dd HH:mm");
-			ErrorRow.text = ErrorText;
+			transform.GetChild(2).GetComponent<Text>().text = ErrorText;
 		}
 
 		private void Callback(string Response) {
@@ -110,15 +107,11 @@ namespace Assets.Scenes.Scoreboard {
 			Top[2] = new Color(236 / 255f, 106 / 255f, 22 / 255f, 1); // Bronze
 			for (int i = 0; i < 3; ++i)
 				for (int j = 0; j < 4; ++j)
-					transform.GetChild(i).GetChild(j).GetComponent<Text>().color = Top[i];
+					transform.GetChild(i + 3).GetChild(j).GetComponent<Text>().color = Top[i];
 
-			transform.GetChild(Current + 2).gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
-			// Yeah, + 2 This is a fucking bug
-			//Debug.Log(transform.GetChild(1));
-			//transform.GetChild(1).gameObject.AddComponent<Image>().color = Color.red;
+			transform.GetChild(Current + 3).gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
+			// Yeah, + 3 because there already was 3 elements
 		}
-
-		#endregion
 
 	}
 
