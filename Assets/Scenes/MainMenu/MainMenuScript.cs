@@ -103,7 +103,7 @@ namespace Assets.Scenes.MainMenu {
 				Destroy(ChooseGameContent.transform.GetChild(i).gameObject);
 
 			// Set size of the Content
-			int VerticalQuantity = (int)Math.Ceiling(Functions.Games.Length / (float)AmountInRow);
+			int VerticalQuantity = Mathf.CeilToInt(Functions.Games.Length / (float)AmountInRow);
 			float Height = VerticalQuantity * GetComponent<RectTransform>().rect.width / AmountInRow * AspectRatio;
 			RectTransform RectTransform = ChooseGameContent.GetComponent<RectTransform>();
 			RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, Height);

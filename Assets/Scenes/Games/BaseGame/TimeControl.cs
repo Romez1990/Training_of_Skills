@@ -1,6 +1,4 @@
 ﻿using JetBrains.Annotations;
-using System;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,7 +56,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		private const float Step = 0.08f;
 
 		public static void TakeTime(float TimeToTake) {
-			PlayingInfo.Time = (float)Math.Round(PlayingInfo.Time - TimeToTake);
+			PlayingInfo.Time = Mathf.Round(PlayingInfo.Time - TimeToTake);
 			DisplayTime();
 			Time.color = Color.red;
 			TimeColorLerp = Color.red;
@@ -80,9 +78,9 @@ namespace Assets.Scenes.Games.BaseGame {
 			Debug.Log($"R:\t{TimeColorLerp.g}\t{Time.color.g}");
 			Debug.Log($"R:\t{TimeColorLerp.b}\t{Time.color.b}");//*/
 
-			if (Math.Abs(TimeColorLerp.r - Time.color.r) < Step / 4 &&
-				 Math.Abs(TimeColorLerp.g - Time.color.g) < Step / 4 &&
-				 Math.Abs(TimeColorLerp.b - Time.color.b) < Step / 4)
+			if (Mathf.Abs(TimeColorLerp.r - Time.color.r) < Step / 4 &&
+				 Mathf.Abs(TimeColorLerp.g - Time.color.g) < Step / 4 &&
+				 Mathf.Abs(TimeColorLerp.b - Time.color.b) < Step / 4)
 				return;
 
 			Time.color = new Color(

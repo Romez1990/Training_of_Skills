@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -48,7 +47,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		}
 
 		private static void EquateBlur() {
-			if (Math.Abs(SizeLerp - Size) < 0.1f / 4) { return; }
+			if (Mathf.Abs(SizeLerp - Size) < 0.1f / 4) { return; }
 
 			SizeLerp = Mathf.Lerp(SizeLerp, Size, 0.1f);
 			Material.SetFloat("_Size", SizeLerp);

@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +26,7 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		public static int CalculateAddScore(float GivenTime) {
 			float PercentTime = PlayingInfo.Time / GivenTime;
-			int CalcScore = (int)Math.Round(TimeScore * PercentTime);
+			int CalcScore = Mathf.RoundToInt(TimeScore * PercentTime);
 			int TotalScore = BaseScore + CalcScore;
 			TotalScore += TotalScore * PlayingInfo.Score / 600;
 			return TotalScore;
