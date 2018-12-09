@@ -35,8 +35,7 @@ namespace Assets.Scenes {
 
 		public static void Win() {
 			PlayingInfo.Time += 10;
-			PlayingInfo.Score += ScoreControl.CalculateAddScore(TimeControl.GivenTime);
-
+			ScoreControl.CalculateAddScore();
 			LoadGame(PlayingInfo.GameMode);
 		}
 

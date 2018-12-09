@@ -14,22 +14,21 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		private void ScoreStart() {
 			Score = GetComponent<Text>();
-			SetScore(PlayingInfo.Score);
+			SetScore();
 		}
 
-		public static void SetScore(int NewScore) {
-			Score.text = "Score: " + (NewScore > 0 ? NewScore.ToString("#,#").Replace(',', ' ') : "0");
+		public static void SetScore() {
+			Score.text = "Score: " + (PlayingInfo.Score > 0 ? PlayingInfo.Score.ToString("#,#").Replace(',', ' ') : "0");
 		}
 
 		private const int BaseScore = 50;
 		private const int TimeScore = 100;
 
-		public static int CalculateAddScore(float GivenTime) {
-			float PercentTime = PlayingInfo.Time / GivenTime;
+		public static void CalculateAddScore() {
+			float PercentTime = PlayingInfo.Time / TimeControl.GivenTime;
 			int CalcScore = Mathf.RoundToInt(TimeScore * PercentTime);
-			int TotalScore = BaseScore + CalcScore;
-			TotalScore += TotalScore * PlayingInfo.Score / 600;
-			return TotalScore;
+			PlayingInfo.Score += (BaseScore + CalcScore) * (1 + PlayingInfo.Score / 300);
+			SetScore();
 		}
 
 	}

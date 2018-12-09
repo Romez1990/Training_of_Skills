@@ -15,8 +15,8 @@ namespace Assets.Scenes.Games.FastCircles {
 		private void SetCircles(int Amount) {
 			RectTransform GamePanelRectTransform = GetComponent<RectTransform>();
 
-			var Width = GamePanelRectTransform.rect.width;
-			var Height = GamePanelRectTransform.rect.height;
+			float Width = GamePanelRectTransform.rect.width;
+			float Height = GamePanelRectTransform.rect.height;
 
 			for (int i = 0; i < Amount; ++i) {
 				GameObject Circle = Instantiate(CirclePrefab, transform);
@@ -31,7 +31,7 @@ namespace Assets.Scenes.Games.FastCircles {
 					0
 				);
 
-				var Image = Circle.GetComponent<Image>();
+				Image Image = Circle.GetComponent<Image>();
 				Image.color = Color.HSVToRGB(Random.Range(0, 1000) / 1000f, 1f, 1f);
 			}
 		}

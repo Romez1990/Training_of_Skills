@@ -13,7 +13,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		private void Start() {
 			This = this;
 			if (PlayingInfo.Time == 0)
-				PlayingInfo.Time = 300;
+				PlayingInfo.Time = 30;
 
 			Time = GetComponent<Text>();
 			GivenTime = PlayingInfo.Time;
