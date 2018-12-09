@@ -1,5 +1,5 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -56,7 +56,7 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		#endregion
 
-		private static bool _IsPause = false;
+		private static bool _IsPause;
 		public static bool IsPause {
 			get => _IsPause;
 			set {

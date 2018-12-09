@@ -14,8 +14,6 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		private void Start() {
-			//PlayingInfo.Name = PlayingInfo.Name != null ? PlayingInfo.Name : "Player";
-			//PlayingInfo.Score = PlayingInfo.Score != 0 ? PlayingInfo.Score : 1000;
 			StartCoroutine(SendRequest(PlayingInfo.Name, PlayingInfo.Score));
 		}
 
@@ -70,7 +68,7 @@ namespace Assets.Scenes.Scoreboard {
 			Records = JsonHelper.FromJson<Record>(Json).ToList();
 
 			if (Records.Count == 10)
-				if (Convert.ToInt32(Records[9].position) > 10)
+				if (int.Parse(Records[9].position) > 10)
 					Records.Insert(9, new Record { position = "..." });
 
 			for (int i = 0; i <= Records.Count - 1; ++i) {

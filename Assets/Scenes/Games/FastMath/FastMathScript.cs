@@ -1,10 +1,8 @@
 ﻿using Assets.Scenes.Games.BaseGame;
 using JetBrains.Annotations;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace Assets.Scenes.Games.FastMath {
 	public class FastMathScript : MonoBehaviour {
@@ -106,7 +104,7 @@ namespace Assets.Scenes.Games.FastMath {
 				return;
 			}
 
-			if (Convert.ToInt32(UserAnswer.text) != ExpressionElements.Answer) {
+			if (int.Parse(UserAnswer.text) != ExpressionElements.Answer) {
 				Indicator.sprite = FalseIndicator;
 			} else {
 				Indicator.sprite = TrueIndicator;

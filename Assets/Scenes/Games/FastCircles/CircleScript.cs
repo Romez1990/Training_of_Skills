@@ -1,5 +1,4 @@
-﻿using Assets.Scenes.Games.BaseGame;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

@@ -198,7 +198,7 @@ namespace Assets.Scenes.MainMenu {
 			new ButtonClick(ButtonNames[0][3], Application.Quit),
 			
 			// Settings
-			new ButtonClick(ButtonNames[2][3], delegate { CurrentPanel = 0; }),
+			new ButtonClick(ButtonNames[2][3], delegate { CurrentPanel = 0; })
 		};
 
 		public static void OnButtonClick(string ButtonName) {

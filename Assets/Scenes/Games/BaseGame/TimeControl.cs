@@ -1,15 +1,19 @@
 ﻿using JetBrains.Annotations;
+using System;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scenes.Games.BaseGame {
 	public class TimeControl : MonoBehaviour {
 
+		private static MonoBehaviour This;
 		public static Text Time;
 		public static float GivenTime;
 
 		[UsedImplicitly]
 		private void Start() {
+			This = this;
 			if (PlayingInfo.Time == 0)
 				PlayingInfo.Time = 300;
 
@@ -24,7 +28,7 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		private static int IntTime;
 
-		private void TickTimer() {
+		private static void TickTimer() {
 			if (PauseControl.IsPause) { return; }
 
 			PlayingInfo.Time -= UnityEngine.Time.deltaTime;
@@ -44,8 +48,51 @@ namespace Assets.Scenes.Games.BaseGame {
 			int Minute = (int)PlayingInfo.Time / 60;
 			Time.text = (Minute < 10 ? "0" : string.Empty) + Minute +
 							 ":" +
-							 (Second < 10 ? "0" : string.Empty) + Second;
+							(Second < 10 ? "0" : string.Empty) + Second;
 		}
+
+		#region Take time
+
+		private static readonly Color DefaultTimeColor = Color.white;
+		private static Color TimeColorLerp = DefaultTimeColor;
+		private const float Step = 0.08f;
+
+		public static void TakeTime(float TimeToTake) {
+			PlayingInfo.Time = (float)Math.Round(PlayingInfo.Time - TimeToTake);
+			DisplayTime();
+			Time.color = Color.red;
+			TimeColorLerp = Color.red;
+			This.Invoke("ResetTimeColor", 0.12f);
+		}
+
+		[UsedImplicitly]
+		private void ResetTimeColor() {
+			TimeColorLerp = DefaultTimeColor;
+		}
+
+		[UsedImplicitly]
+		private void FixedUpdate() {
+			EquateTimeColor();
+		}
+
+		public static void EquateTimeColor() {
+			/*Debug.Log($"R:\t{TimeColorLerp.r}\t{Time.color.r}");
+			Debug.Log($"R:\t{TimeColorLerp.g}\t{Time.color.g}");
+			Debug.Log($"R:\t{TimeColorLerp.b}\t{Time.color.b}");//*/
+
+			if (Math.Abs(TimeColorLerp.r - Time.color.r) < Step / 4 &&
+				 Math.Abs(TimeColorLerp.g - Time.color.g) < Step / 4 &&
+				 Math.Abs(TimeColorLerp.b - Time.color.b) < Step / 4)
+				return;
+
+			Time.color = new Color(
+				Mathf.Lerp(Time.color.r, TimeColorLerp.r, Step),
+				Mathf.Lerp(Time.color.g, TimeColorLerp.g, Step),
+				Mathf.Lerp(Time.color.b, TimeColorLerp.b, Step)
+			);
+		}
+
+		#endregion
 
 	}
 }
