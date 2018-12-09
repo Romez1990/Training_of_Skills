@@ -1,7 +1,8 @@
-﻿using Assets.Scenes.Games.BaseGame;
+﻿using System;
+using Assets.Scenes.Games.BaseGame;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scenes {
 	public static class Functions {
@@ -22,7 +23,7 @@ namespace Assets.Scenes {
 		};
 
 		public static void LoadGame(string GameName) {
-			BaseGameScript.IsPause = false;
+			PauseControl.IsPause = false;
 			SceneManager.LoadScene(GameName == "Mixed" || GameName == null ? Games[Random.Range(0, Games.Length)] : GameName);
 		}
 
@@ -33,6 +34,17 @@ namespace Assets.Scenes {
 			LoadGame(PlayingInfo.GameMode);
 		}
 
+		public static void Win() {
+			PlayingInfo.Time += 10;
+			PlayingInfo.Score += ScoreControl.CalculateAddScore(TimeControl.GivenTime);
+
+			Functions.LoadGame(PlayingInfo.GameMode);
+		}
+
+		public static void GameOver() {
+			Functions.LoadGame("Scoreboard");
+		}
+
 		//public static readonly string PathToData = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
 
 		/// <summary>
@@ -41,10 +53,10 @@ namespace Assets.Scenes {
 		/// <param name="Str">String to convert</param>
 		/// <returns>Normal case string</returns>
 		public static string ToNormalCase(this string Str) {
-			return string.Concat(Str.Select((x, i) =>
+			return String.Concat(Str.Select((x, i) =>
 				i == 0 ?
 					x.ToString() :
-				i > 0 && char.IsUpper(x) ?
+				i > 0 && Char.IsUpper(x) ?
 					" " + x.ToString().ToLower() :
 					x.ToString())
 			);
@@ -68,6 +80,5 @@ namespace Assets.Scenes {
 			//return Regex.Replace(Str, "(\\B[A-Z])", " $1");
 			//return Regex.Replace(Str, @"\B[A-Z]", m => " " + m.ToString().ToLower());
 		}
-
 	}
 }

@@ -88,7 +88,7 @@ namespace Assets.Scenes.Games.FastMath {
 
 		[UsedImplicitly]
 		private void Update() {
-			if (!BaseGameScript.IsPause) {
+			if (!PauseControl.IsPause) {
 				EventSystem.current.SetSelectedGameObject(UserAnswer.gameObject);
 				UserAnswer.ActivateInputField();
 			}
@@ -110,7 +110,7 @@ namespace Assets.Scenes.Games.FastMath {
 				Indicator.sprite = FalseIndicator;
 			} else {
 				Indicator.sprite = TrueIndicator;
-				BaseGameScript.Win();
+				Functions.Win();
 			}
 
 			color.a = 1;

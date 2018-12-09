@@ -75,7 +75,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		}
 
 		private static readonly MainMenuScript.ButtonClick[] ButtonClicks = {
-			new MainMenuScript.ButtonClick(ButtonNames[0], delegate { BaseGameScript.IsPause = false; }),
+			new MainMenuScript.ButtonClick(ButtonNames[0], delegate { PauseControl.IsPause = false; }),
 			new MainMenuScript.ButtonClick(ButtonNames[1], Functions.ReloadGame),
 			new MainMenuScript.ButtonClick(ButtonNames[2], delegate { Functions.LoadGame("MainMenu"); }),
 			new MainMenuScript.ButtonClick(ButtonNames[3], Application.Quit)
@@ -104,7 +104,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		public static GameObject PreviousSelected;
 
 		private static void UnselectedCheck() {
-			if (BaseGameScript.IsPause && EventSystem.current.currentSelectedGameObject == null) {
+			if (PauseControl.IsPause && EventSystem.current.currentSelectedGameObject == null) {
 				EventSystem.current.SetSelectedGameObject(
 					PreviousSelected == null ?
 						Buttons[0] :

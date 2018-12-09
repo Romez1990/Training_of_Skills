@@ -25,7 +25,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		private static int IntTime;
 
 		private void TickTimer() {
-			if (BaseGameScript.IsPause) { return; }
+			if (PauseControl.IsPause) { return; }
 
 			PlayingInfo.Time -= UnityEngine.Time.deltaTime;
 			DisplayTime();
@@ -35,7 +35,7 @@ namespace Assets.Scenes.Games.BaseGame {
 			if (IntTime == (int)PlayingInfo.Time) { return; }
 
 			if (PlayingInfo.Time < 0.2f) {
-				BaseGameScript.GameOver();
+				Functions.GameOver();
 				return;
 			}
 
