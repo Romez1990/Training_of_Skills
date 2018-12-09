@@ -24,11 +24,7 @@ namespace Assets.Scenes.Games.FastCircles {
 
 		private void CheckWin() {
 			if (transform.parent.childCount == 1)
-				Win();
-		}
-
-		private void Win() {
-			BaseGameScript.Win();
+				BaseGameScript.Win();
 		}
 
 	}
