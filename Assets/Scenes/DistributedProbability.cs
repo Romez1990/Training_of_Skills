@@ -1,33 +1,24 @@
-﻿using System;
+﻿using UnityEngine;
 
-namespace Assets.Scenes.Games.FastMath {
+namespace Assets.Scenes {
 	static class DistributedProbability {
-		private static readonly Random random = new Random();
 
-		public static int RandomByProbabitity(int[] probability) {
-			int[] sumsProbability = new int[probability.Length];
-
-			for (int i = 0; i < sumsProbability.Length; ++i) {
-				int sum = 0;
-
-				for (int j = 0; j < i + 1; ++j) {
-					sum += probability[j];
-				}
-
-				sumsProbability[i] = sum;
+		public static int RandomByProbability(int[] Probability) {
+			int[] SumsProbability = new int[Probability.Length];
+			for (int i = 0; i < SumsProbability.Length; ++i) {
+				int Sum = 0;
+				for (int j = 0; j < i + 1; ++j)
+					Sum += Probability[j];
+				SumsProbability[i] = Sum;
 			}
 
-			int randomNumber = random.Next(sumsProbability[sumsProbability.Length - 1]);
+			int RandomNumber = Random.Range(0, SumsProbability[SumsProbability.Length - 1]);
+			for (int i = 0; i < SumsProbability.Length; ++i)
+				if (RandomNumber < SumsProbability[i])
+					return i;
 
-			int index = 0;
-
-			for (int i = 0; i < sumsProbability.Length; ++i) {
-				if (randomNumber >= sumsProbability[i]) { continue; }
-				index = i;
-				break;
-			}
-
-			return index;
+			return 0; // But this never will happen
 		}
+
 	}
 }

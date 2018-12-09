@@ -39,7 +39,7 @@ namespace Assets.Scenes.Games.FastMath {
 		private readonly int[] SignsProbability = { 25, 25, 25, 25 };
 
 		private char GetSign() {
-			return Signs[DistributedProbability.RandomByProbabitity(SignsProbability)];
+			return Signs[DistributedProbability.RandomByProbability(SignsProbability)];
 		}
 
 		private static (int, char, int, int) SetNumbers(char operation) {
