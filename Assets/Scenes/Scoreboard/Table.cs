@@ -103,7 +103,7 @@ namespace Assets.Scenes.Scoreboard {
 			Top[0] = new Color(255 / 255f, 215 / 255f, 1 / 255f, 1); // Gold
 			Top[1] = new Color(192 / 255f, 192 / 255f, 192 / 255f, 1); // Silver
 			Top[2] = new Color(236 / 255f, 106 / 255f, 22 / 255f, 1); // Bronze
-			for (int i = 0; i < 3; ++i)
+			for (int i = 0; i < (Records.Count >= 3 ? 3 : Records.Count); ++i)
 				for (int j = 0; j < 4; ++j)
 					transform.GetChild(i + 3).GetChild(j).GetComponent<Text>().color = Top[i];
 
