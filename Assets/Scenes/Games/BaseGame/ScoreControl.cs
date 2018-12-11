@@ -18,7 +18,8 @@ namespace Assets.Scenes.Games.BaseGame {
 		}
 
 		public static void SetScore() {
-			Score.text = "Score: " + (PlayingInfo.Score > 0 ? PlayingInfo.Score.ToString("#,#").Replace(',', ' ') : "0");
+			string _Score = Mathf.RoundToInt(PlayingInfo.Score).ToString("#,#").Replace(',', ' ');
+			Score.text = "Score: " + (_Score != string.Empty ? _Score : "0");
 		}
 
 		private const int BaseScore = 50;
@@ -27,7 +28,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		public static void CalculateAddScore() {
 			float PercentTime = PlayingInfo.Time / TimeControl.GivenTime;
 			int CalcScore = Mathf.RoundToInt(TimeScore * PercentTime);
-			PlayingInfo.Score += (BaseScore + CalcScore) * (1 + PlayingInfo.Score / 300);
+			PlayingInfo.Score += (BaseScore + CalcScore) * (1 + Mathf.Pow(PlayingInfo.Score, 0.8f) / 350);
 			SetScore();
 		}
 

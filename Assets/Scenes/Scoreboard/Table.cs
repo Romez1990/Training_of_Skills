@@ -14,7 +14,7 @@ namespace Assets.Scenes.Scoreboard {
 
 		[UsedImplicitly]
 		private void Start() {
-			StartCoroutine(SendRequest(PlayingInfo.Name, PlayingInfo.Score));
+			StartCoroutine(SendRequest(PlayingInfo.Name, Mathf.RoundToInt(PlayingInfo.Score)));
 		}
 
 		private IEnumerator SendRequest(string Name, int Score) {
@@ -43,7 +43,7 @@ namespace Assets.Scenes.Scoreboard {
 			CurrentRow.gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
 			CurrentRow.GetChild(0).GetComponent<Text>().text = "1";
 			CurrentRow.GetChild(1).GetComponent<Text>().text = PlayingInfo.Name;
-			CurrentRow.GetChild(2).GetComponent<Text>().text = PlayingInfo.Score.ToString();
+			CurrentRow.GetChild(2).GetComponent<Text>().text = Mathf.RoundToInt(PlayingInfo.Score).ToString();
 			CurrentRow.GetChild(3).GetComponent<Text>().text = DateTime.Now.ToString("yy-MM-dd HH:mm");
 			transform.GetChild(2).GetComponent<Text>().text = ErrorText;
 		}
@@ -72,7 +72,7 @@ namespace Assets.Scenes.Scoreboard {
 					Records.Insert(9, new Record { position = "..." });
 
 			for (int i = 0; i <= Records.Count - 1; ++i) {
-				if (PlayingInfo.Name == Records[i].name && PlayingInfo.Score.ToString() == Records[i].score) {
+				if (PlayingInfo.Name == Records[i].name && Mathf.RoundToInt(PlayingInfo.Score).ToString() == Records[i].score) {
 					Current = i;
 					break;
 				}
