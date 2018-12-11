@@ -11,12 +11,14 @@ namespace Assets.Scenes.Games.FastMath {
 
 		[UsedImplicitly]
 		private void Start() {
-			ExpressionElements = SetNumbers(ExpressionElements.Operation = GetSign());
+			SignsProbability = new[] { 25, 25, 25, 25 };
+			ExpressionElements.Operation = GetSign();
+			ExpressionElements = SetNumbers();
 			Expression.text = GetExpression();
 		}
 
 		public Text Expression;
-		private (int FirstNumber, char Operation, int SecondNumber, int Answer) ExpressionElements;
+		private static (int FirstNumber, char Operation, int SecondNumber, int Answer) ExpressionElements;
 		public InputField UserAnswer;
 		public Image Indicator;
 		public Sprite TrueIndicator;
@@ -24,28 +26,20 @@ namespace Assets.Scenes.Games.FastMath {
 
 		#region Get expression
 
-		private string GetExpression() {
-			string NewExpression = string.Empty;
-			NewExpression += ExpressionElements.FirstNumber;
-			NewExpression += " ";
-			NewExpression += ExpressionElements.Operation;
-			NewExpression += " ";
-			NewExpression += ExpressionElements.SecondNumber;
-			NewExpression += " = ";
-			return NewExpression;
+		private static string GetExpression() {
+			return $"{ExpressionElements.FirstNumber} {ExpressionElements.Operation} {ExpressionElements.SecondNumber} = ";
 		}
 
-		private readonly char[] Signs = { '+', '-', '×', '÷' };
-		private readonly int[] SignsProbability = { 25, 25, 25, 25 };
+		private static readonly char[] Signs = { '+', '-', '×', '÷' };
+		private int[] SignsProbability;
 
 		private char GetSign() {
 			return Signs[DistributedProbability.RandomByProbability(SignsProbability)];
 		}
 
-		private static (int, char, int, int) SetNumbers(char operation) {
+		private static (int, char, int, int) SetNumbers() {
 			int a, b, answer;
-
-			switch (operation) {
+			switch (ExpressionElements.Operation) {
 				case '+':
 					a = Random.Range(20, 51);
 					b = Random.Range(20, 51);
@@ -72,10 +66,10 @@ namespace Assets.Scenes.Games.FastMath {
 					break;
 
 				default:
-					a = b = answer = 0;
+					a = b = answer = 0; // But this never will happen
 					break;
 			}
-			return (a, operation, b, answer);
+			return (a, ExpressionElements.Operation, b, answer);
 		}
 
 		#endregion
@@ -91,6 +85,8 @@ namespace Assets.Scenes.Games.FastMath {
 				UserAnswer.ActivateInputField();
 			}
 		}
+
+		#endregion
 
 		#region Check answer
 
@@ -114,8 +110,6 @@ namespace Assets.Scenes.Games.FastMath {
 			color.a = 1;
 			Indicator.color = color;
 		}
-
-		#endregion
 
 		#endregion
 
