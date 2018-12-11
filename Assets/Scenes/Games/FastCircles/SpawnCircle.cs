@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseGame;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ namespace Assets.Scenes.Games.FastCircles {
 
 		[UsedImplicitly]
 		private void Start() {
-			SetCircles(15);
+			SetCircles(Mathf.RoundToInt(PlayingInfo.Score / 150f) + 10);
 		}
 
 		public GameObject CirclePrefab;
@@ -18,10 +19,12 @@ namespace Assets.Scenes.Games.FastCircles {
 			float Width = GamePanelRectTransform.rect.width;
 			float Height = GamePanelRectTransform.rect.height;
 
+			Debug.Log(30_000 / (PlayingInfo.Score == 0 ? 1 : PlayingInfo.Score) + 3);
 			for (int i = 0; i < Amount; ++i) {
 				GameObject Circle = Instantiate(CirclePrefab, transform);
 				RectTransform CircleRectTransform = Circle.GetComponent<RectTransform>();
 
+				//int Diameter = Random.Range(30_000 / PlayingInfo.Score + 3, 125);
 				int Diameter = Random.Range(30, 125);
 				CircleRectTransform.sizeDelta = new Vector2(Diameter, Diameter);
 
