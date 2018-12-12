@@ -497,7 +497,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.5372549, g: 0.6039216, b: 0.69803923, a: 0.4509804}
-  m_Text: 1234
+  m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 3
   m_ReadOnly: 0
@@ -680,7 +680,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1234
+  m_Text: 
 --- !u!222 &1141554801
 CanvasRenderer:
   m_ObjectHideFlags: 0

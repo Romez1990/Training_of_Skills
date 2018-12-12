@@ -11,7 +11,14 @@ namespace Assets.Scenes.Games.FastMath {
 
 		[UsedImplicitly]
 		private void Start() {
-			SignsProbability = new[] { 25, 25, 25, 25 };
+			SignsProbability = new[] {
+				Mathf.RoundToInt(170 / Mathf.Pow(PlayingInfo.Score / 300 + 2, 0.7f)),
+				PlayingInfo.Score < 2000 ?
+					Mathf.RoundToInt(150 / Mathf.Pow(PlayingInfo.Score / 300 + 2, 0.8f)) + 8 :
+					Mathf.RoundToInt(0.6f * Mathf.Pow(1.5f, Mathf.Pow(PlayingInfo.Score * 0.8f, 0.3f))),
+				Mathf.RoundToInt(0.7f * Mathf.Pow(1.5f, Mathf.Pow(PlayingInfo.Score, 0.3f))),
+				Mathf.RoundToInt(0.6f * Mathf.Pow(1.5f, Mathf.Pow(PlayingInfo.Score * 0.48f, 0.33f)))
+			};
 			ExpressionElements.Operation = GetSign();
 			ExpressionElements = SetNumbers();
 			Expression.text = GetExpression();
