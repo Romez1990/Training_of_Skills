@@ -9,7 +9,10 @@ namespace Assets.Scenes.Games.FastCircles {
 		[UsedImplicitly]
 		private void Start() {
 			EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
-			entry.callback.AddListener(delegate { TimeControl.TakeTime(5); });
+			entry.callback.AddListener(delegate {
+				if (!PauseControl.IsPause)
+					TimeControl.TakeTime(5);
+			});
 			gameObject.AddComponent<EventTrigger>().triggers.Add(entry);
 		}
 
