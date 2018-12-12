@@ -1,5 +1,6 @@
 ﻿using Assets.Scenes.Games.BaseGame;
 using JetBrains.Annotations;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,24 +9,34 @@ namespace Assets.Scenes.Games.FastCircles {
 
 		[UsedImplicitly]
 		private void Start() {
-			SetCircles(Mathf.RoundToInt(PlayingInfo.Score / 150f) + 10);
+			SetCircles();
+			//StartCoroutine(Log());
+		}
+
+		private IEnumerator Log() {
+			Debug.Log(new string('\t', 5) + $"{Mathf.RoundToInt(0.008f * Mathf.Pow(PlayingInfo.Score, 0.8f)) + 8}\t{Mathf.RoundToInt(PlayingInfo.Score)}");
+			yield return new WaitForSeconds(1f);
+			Functions.Win();
 		}
 
 		public GameObject CirclePrefab;
 
-		private void SetCircles(int Amount) {
+		private void SetCircles() {
+			int Amount = Mathf.RoundToInt(0.008f * Mathf.Pow(PlayingInfo.Score, 0.8f)) + 8;
+
 			RectTransform GamePanelRectTransform = GetComponent<RectTransform>();
 
 			float Width = GamePanelRectTransform.rect.width;
 			float Height = GamePanelRectTransform.rect.height;
 
-			Debug.Log(30_000 / (PlayingInfo.Score == 0 ? 1 : PlayingInfo.Score) + 3);
 			for (int i = 0; i < Amount; ++i) {
 				GameObject Circle = Instantiate(CirclePrefab, transform);
 				RectTransform CircleRectTransform = Circle.GetComponent<RectTransform>();
 
-				//int Diameter = Random.Range(30_000 / PlayingInfo.Score + 3, 125);
-				int Diameter = Random.Range(30, 125);
+				int Diameter = Random.Range(
+					300 / Amount + 10,
+					1250 / Amount + 12
+				);
 				CircleRectTransform.sizeDelta = new Vector2(Diameter, Diameter);
 
 				CircleRectTransform.localPosition = new Vector3(
