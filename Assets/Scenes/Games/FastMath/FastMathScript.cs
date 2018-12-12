@@ -102,6 +102,10 @@ namespace Assets.Scenes.Games.FastMath {
 
 			if (int.Parse(UserAnswer.text) != ExpressionElements.Answer) {
 				Indicator.sprite = FalseIndicator;
+				if (UserAnswer.text.Length == ExpressionElements.Answer.ToString().Length)
+					TimeControl.TakeTime(4);
+				else if (UserAnswer.text.Length > ExpressionElements.Answer.ToString().Length)
+					TimeControl.TakeTime(7);
 			} else {
 				Indicator.sprite = TrueIndicator;
 				Functions.Win();
