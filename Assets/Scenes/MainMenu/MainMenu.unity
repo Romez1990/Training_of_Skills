@@ -3977,6 +3977,7 @@ MonoBehaviour:
     type: 2}
   SceneImages:
   - {fileID: 21300000, guid: 02651130a7575ad429f0d1a7202d3af0, type: 3}
+  - {fileID: 21300000, guid: 9859c4e60ea34334990f974abe1166f3, type: 3}
   ChooseGameContent: {fileID: 1978662664}
   ChooseGameBack: {fileID: 1426464177}
 --- !u!1 &2062524441
