@@ -52,6 +52,14 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 			CurrentKeys = new List<KeyCode>();
 			for (int i = 0; i < 10; ++i) {
 				int Index = Random.Range(0, AllKeys.Count);
+
+				if (i != 0) {
+					if (AllKeys[Index] == CurrentKeys[i - 1]) {
+						--i;
+						continue;
+					}
+				}
+
 				CurrentKeys.Add(AllKeys[Index]);
 			}
 		}
