@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace Assets.Scenes {
-	public static class JsonHelper {
+	public static class JsonArrayHelper {
 
 		[Serializable]
 		private class Wrapper<T> {

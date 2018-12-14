@@ -65,7 +65,7 @@ namespace Assets.Scenes.Scoreboard {
 		private int Current;
 
 		private void FigureOutTable(string Json) {
-			Records = JsonHelper.FromJson<Record>(Json).ToList();
+			Records = JsonArrayHelper.FromJson<Record>(Json).ToList();
 
 			if (Records.Count == 10)
 				if (int.Parse(Records[9].position) > 10)

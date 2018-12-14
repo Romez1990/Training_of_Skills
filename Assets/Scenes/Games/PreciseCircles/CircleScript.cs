@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scenes.Games.FastCircles {
+namespace Assets.Scenes.Games.PreciseCircles {
 	public class CircleScript : MonoBehaviour {
 
 		[UsedImplicitly]

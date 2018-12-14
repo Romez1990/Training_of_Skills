@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scenes.Games.FastCircles {
+namespace Assets.Scenes.Games.PreciseCircles {
 	public class SpawnCircle : MonoBehaviour {
 
 		[UsedImplicitly]

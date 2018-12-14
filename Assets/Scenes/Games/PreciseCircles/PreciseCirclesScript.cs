@@ -3,8 +3,8 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scenes.Games.FastCircles {
-	public class FastCirclesScript : MonoBehaviour {
+namespace Assets.Scenes.Games.PreciseCircles {
+	public class PreciseCirclesScript : MonoBehaviour {
 
 		[UsedImplicitly]
 		private void Start() {

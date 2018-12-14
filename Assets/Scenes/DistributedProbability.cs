@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Assets.Scenes {
-	static class DistributedProbability {
+	public static class DistributedProbability {
 
 		public static int RandomByProbability(int[] Probability) {
 			int[] SumsProbability = new int[Probability.Length];
@@ -17,7 +17,7 @@ namespace Assets.Scenes {
 				if (RandomNumber < SumsProbability[i])
 					return i;
 
-			return 0; // But this never will happen
+			return 0; // But this will never happen
 		}
 
 	}
