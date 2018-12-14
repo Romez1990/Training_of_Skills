@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scenes.Games.Reaction {
-	public class ReactionScript : MonoBehaviour {
+namespace Assets.Scenes.Games.ExactKeystrokes {
+	public class ExactKeystrokesScript : MonoBehaviour {
 
 		#region Start
 
