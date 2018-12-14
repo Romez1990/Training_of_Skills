@@ -8,7 +8,8 @@ namespace Assets.Scenes {
 
 		public static readonly string[] Games = {
 			"FastMath",
-			"PreciseCircles"
+			"PreciseCircles",
+			"ExactKeystrokes"
 		};
 
 		public static void LoadGame(string GameName) {
