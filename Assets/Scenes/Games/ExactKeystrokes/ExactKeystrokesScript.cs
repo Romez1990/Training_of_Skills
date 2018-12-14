@@ -52,8 +52,19 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 			KeyCode.W,
 			KeyCode.X,
 			KeyCode.Y,
-			KeyCode.Z
+			KeyCode.Z,
+			KeyCode.Alpha1,
+			KeyCode.Alpha2,
+			KeyCode.Alpha3,
+			KeyCode.Alpha4,
+			KeyCode.Alpha5,
+			KeyCode.Alpha6,
+			KeyCode.Alpha7,
+			KeyCode.Alpha8,
+			KeyCode.Alpha9,
+			KeyCode.Alpha0
 		};
+
 		private static List<KeyCode> CurrentKeys;
 
 		private static void GetKeyList() {
@@ -117,6 +128,9 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 		private static Text Task;
 
 		private static void DisplayKey(string Key) {
+			if (Key.Length != 1)
+				Key = Key.Substring(Key.Length - 1, 1);
+
 			Task.text = $"Press {Key} key";
 		}
 
