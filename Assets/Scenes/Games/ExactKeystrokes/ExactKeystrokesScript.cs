@@ -1,5 +1,6 @@
 ﻿using Assets.Scenes.Games.BaseGame;
 using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,13 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 			GetKeyList();
 			DisplayKey(CurrentKeys[0].ToString());
 			DisplayLeft(CurrentKeys.Count.ToString());
+			//StartCoroutine(Log());
+		}
+
+		private static IEnumerator Log() {
+			Debug.Log(new string('\t', 5) + $"{Mathf.RoundToInt(0.008f * Mathf.Pow(PlayingInfo.Score, 0.8f)) + 8}\t{Mathf.RoundToInt(PlayingInfo.Score)}");
+			yield return new WaitForSeconds(0.5f);
+			Functions.Win();
 		}
 
 		private static readonly List<KeyCode> AllKeys = new List<KeyCode> {
@@ -49,8 +57,10 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 		private static List<KeyCode> CurrentKeys;
 
 		private static void GetKeyList() {
+			int Amount = Mathf.RoundToInt(0.008f * Mathf.Pow(PlayingInfo.Score, 0.8f)) + 8;
+
 			CurrentKeys = new List<KeyCode>();
-			for (int i = 0; i < 10; ++i) {
+			for (int i = 0; i < Amount; ++i) {
 				int Index = Random.Range(0, AllKeys.Count);
 
 				if (i != 0) {
