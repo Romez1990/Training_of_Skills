@@ -56,11 +56,18 @@ namespace Assets.Scenes.Games.BaseGame {
 		private const float Step = 0.08f;
 
 		public static void TakeTime(float TimeToTake) {
+			if (PauseControl.IsPause) { return; }
+
 			PlayingInfo.Time = Mathf.Round(PlayingInfo.Time - TimeToTake);
 			DisplayTime();
 			Time.color = Color.red;
 			TimeColorLerp = Color.red;
 			This.Invoke("ResetTimeColor", 0.12f);
+		}
+
+		[UsedImplicitly]
+		public void TakeTime_non_static(float TimeToTake) {
+			TakeTime(TimeToTake);
 		}
 
 		[UsedImplicitly]
