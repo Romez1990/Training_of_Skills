@@ -1,5 +1,6 @@
 ﻿using Assets.Scenes.MainMenu;
 using JetBrains.Annotations;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -74,15 +75,25 @@ namespace Assets.Scenes.Games.BaseGame {
 			}
 		}
 
-		private static readonly MainMenuScript.ButtonClick[] ButtonClicks = {
-			new MainMenuScript.ButtonClick(ButtonNames[0], delegate { PauseControl.IsPause = false; }),
-			new MainMenuScript.ButtonClick(ButtonNames[1], Functions.ReloadGame),
-			new MainMenuScript.ButtonClick(ButtonNames[2], delegate { Functions.LoadGame("MainMenu"); }),
-			new MainMenuScript.ButtonClick(ButtonNames[3], Application.Quit)
+		public struct ButtonClick {
+			public readonly string Name;
+			public readonly Action OnClick;
+
+			public ButtonClick(string Name, Action OnClick) {
+				this.Name = Name;
+				this.OnClick = OnClick;
+			}
+		}
+
+		private static readonly ButtonClick[] ButtonClicks = {
+			new ButtonClick(ButtonNames[0], delegate { PauseControl.IsPause = false; }),
+			new ButtonClick(ButtonNames[1], Functions.ReloadGame),
+			new ButtonClick(ButtonNames[2], delegate { Functions.LoadGame("MainMenu"); }),
+			new ButtonClick(ButtonNames[3], Application.Quit)
 		};
 
 		public static void OnButtonClick(string ButtonName) {
-			foreach (MainMenuScript.ButtonClick ButtonEvent in ButtonClicks) {
+			foreach (ButtonClick ButtonEvent in ButtonClicks) {
 				if (ButtonEvent.Name == ButtonName) {
 					ButtonEvent.OnClick();
 					return;

@@ -1,6 +1,5 @@
 ﻿using Assets.Scenes.Games.BaseGame;
 using JetBrains.Annotations;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,79 +12,46 @@ namespace Assets.Scenes.MainMenu {
 		[UsedImplicitly]
 		private void Start() {
 			InitializeMenuButtons();
-			AddEventsToButtons();
+			InitializeGameButtons();
 		}
-
-		private static readonly string[][] ButtonNames = {
-			// MainMenu
-			new[] {
-				"Play",
-				"ChooseGame",
-				"Settings",
-				"Quit"
-			},
-
-			// ChooseGame
-			null,
-
-			// Settings
-			new[] {
-				"Screen",
-				"Game",
-				"Control",
-				"Back"
-			}
-		};
 
 		#region Initialization panels and buttons
 
-		public GameObject ButtonPrefab;
 		private static GameObject[] Panels;
 		private static GameObject[][] Buttons;
 
 		private void InitializeMenuButtons() {
-			int PanelAmount = transform.childCount - 1;
+			int PanelNumber = transform.childCount - 1; // - 1 because there is Background there
+			Panels = new GameObject[PanelNumber];
+			Buttons = new GameObject[PanelNumber][];
 
-			Panels = new GameObject[PanelAmount];
-			Buttons = new GameObject[PanelAmount][];
-
-			for (int i = 0; i < PanelAmount; ++i) {
-				// Panel initializing
-				Panels[i] = transform.GetChild(i + 1).gameObject; // + 1 'cause there's Background at 0 index
+			for (int i = 0; i < PanelNumber; ++i) {
+				Panels[i] = transform.GetChild(i + 1).gameObject; // + 1 because there is Background at 0 index
 
 				// ChooseGame panel
-				if (i == 1) {
-					InitializeGameButtons();
+				if (i == PanelNumber - 1)
 					continue;
-				}
-
-				// Remove all existing buttons from the scene
-				for (int j = 0; j < Panels[i].transform.childCount; ++j)
-					Destroy(Panels[i].transform.GetChild(j).gameObject);
 
 				// Set panel position and size
-				float ScreenWidth = GetComponent<RectTransform>().rect.width;
+				/*float ScreenWidth = GetComponent<RectTransform>().rect.width;
 				RectTransform PanelRectTransform = Panels[i].GetComponent<RectTransform>();
-				float PanelWidth = PanelRectTransform.rect.height / ButtonNames[i].Length * 0.82f * 4.2f;
+				float PanelWidth = PanelRectTransform.rect.height / Panels[i].transform.childCount * 0.82f * 4.2f;
 				PanelRectTransform.anchorMin = new Vector2((ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMin.y);
-				PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);
+				PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);//*/
 
 				// Button creating
-				Buttons[i] = new GameObject[ButtonNames[i].Length];
-				for (int j = 0; j < ButtonNames[i].Length; ++j) {
-					GameObject ButtonWrapper = Instantiate(ButtonPrefab, Panels[i].transform);
-					ButtonWrapper.name = ButtonNames[i][j] + "Wrapper";
+				Buttons[i] = new GameObject[Panels[i].transform.childCount];
+				for (int j = 0; j < Buttons[i].Length; ++j) {
+					GameObject ButtonWrapper = Panels[i].transform.GetChild(j).gameObject;
 
 					// Set position and size
-					RectTransform ButtonRectTransform = ButtonWrapper.GetComponent<RectTransform>();
-					ButtonRectTransform.anchorMin = new Vector2(0, (ButtonNames[i].Length - j - 1) / (float)ButtonNames[i].Length);
-					ButtonRectTransform.anchorMax = new Vector2(1, (ButtonNames[i].Length - j) / (float)ButtonNames[i].Length);
+					/*RectTransform ButtonRectTransform = ButtonWrapper.GetComponent<RectTransform>();
+					ButtonRectTransform.anchorMin = new Vector2(0, (Buttons[i].Length - j - 1) / (float)Buttons[i].Length);
+					ButtonRectTransform.anchorMax = new Vector2(1, (Buttons[i].Length - j) / (float)Buttons[i].Length);//*/
 
 					Buttons[i][j] = ButtonWrapper.transform.GetChild(0).gameObject;
-					Buttons[i][j].name = ButtonNames[i][j];
 
-					// Set text
-					Buttons[i][j].transform.GetChild(0).GetComponent<Text>().text = ButtonNames[i][j].ToNormalCase();
+					AddMouseOver(Buttons[i][j]);
 				}
 			}
 		}
@@ -108,7 +74,8 @@ namespace Assets.Scenes.MainMenu {
 			RectTransform RectTransform = ChooseGameContent.GetComponent<RectTransform>();
 			RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, Height);
 
-			Buttons[1] = new GameObject[Functions.Games.Length + 1];
+			ref GameObject[] GameButtons = ref Buttons[2];
+			GameButtons = new GameObject[Functions.Games.Length + 1];
 			for (int i = 0; i < Functions.Games.Length; ++i) {
 				GameObject Game = Instantiate(GameButtonPrefab, ChooseGameContent.transform);
 				Game.name = Functions.Games[i] + "Wrapper";
@@ -119,24 +86,30 @@ namespace Assets.Scenes.MainMenu {
 				PanelRectTransform.anchorMin = new Vector2(i % AmountInRow / (float)AmountInRow, (float)(v - 1) / VerticalQuantity);
 				PanelRectTransform.anchorMax = new Vector2((i % AmountInRow + 1) / (float)AmountInRow, (float)v / VerticalQuantity);
 
-				Buttons[1][i] = Game.transform.GetChild(0).gameObject;
-				Buttons[1][i].name = Functions.Games[i];
+				GameButtons[i] = Game.transform.GetChild(0).gameObject;
+				GameButtons[i].name = Functions.Games[i];
 
 				// Set game image
 				if (i < SceneImages.Length) {
-					GameObject SceneImage = Buttons[1][i].transform.GetChild(0).gameObject;
+					GameObject SceneImage = GameButtons[i].transform.GetChild(0).gameObject;
 					Image Image = SceneImage.GetComponent<Image>();
 					Image.sprite = SceneImages[i];
 				}
 
 				// Set game name
-				GameObject NameScene = Buttons[1][i].transform.GetChild(1).gameObject;
+				GameObject NameScene = GameButtons[i].transform.GetChild(1).gameObject;
 				Text Name = NameScene.GetComponent<Text>();
 				Name.text = Functions.Games[i].ToNormalCase();
+
+				AddMouseOver(GameButtons[i]);
+				string ButtonName = GameButtons[i].name;
+				GameButtons[i].GetComponent<Button>().onClick.AddListener(delegate { OnButtonGameClick(ButtonName); });
 			}
 
 			// Set Back button
-			Buttons[1][Buttons[1].Length - 1] = ChooseGameBack;
+			GameButtons[GameButtons.Length - 1] = ChooseGameBack;
+			AddMouseOver(ChooseGameBack);
+			ChooseGameBack.GetComponent<Button>().onClick.AddListener(ClickBack);
 		}
 
 		#endregion
@@ -159,56 +132,20 @@ namespace Assets.Scenes.MainMenu {
 
 		#endregion
 
-		#region Clicks
+		#region Events
 
-		public static void AddEventsToButtons() {
-			foreach (GameObject[] Row in Buttons) {
-				foreach (GameObject Button in Row) {
-					// Add mouse over event
-					EventTrigger.Entry Entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-					Entry.callback.AddListener(delegate { EventSystem.current.SetSelectedGameObject(Button); });
-					Button.AddComponent<EventTrigger>().triggers.Add(Entry);
-
-					// Add click event
-					Button.GetComponent<Button>().onClick.AddListener(delegate { OnButtonClick(Button.name); });
-				}
-			}
+		public static void AddMouseOver(GameObject Button) {
+			EventTrigger.Entry Entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+			Entry.callback.AddListener(delegate { MouseOver(Button); });
+			Button.AddComponent<EventTrigger>().triggers.Add(Entry);
 		}
 
-		public struct ButtonClick {
-			public readonly string Name;
-			public readonly Action OnClick;
-
-			public ButtonClick(string Name, Action OnClick) {
-				this.Name = Name;
-				this.OnClick = OnClick;
-			}
+		private static void MouseOver(GameObject Button) {
+			EventSystem.current.SetSelectedGameObject(Button);
 		}
 
-		private static readonly ButtonClick[] ButtonClicks = {
-			// MainMenu
-			new ButtonClick(ButtonNames[0][0], delegate {
-				Functions.LoadGame("Mixed");
-				PlayingInfo.Score = 0;
-				PlayingInfo.Time = 30;
-				PlayingInfo.GameMode = "Mixed";
-			}),
-			new ButtonClick(ButtonNames[0][1], delegate { CurrentPanel = 1; }),
-			new ButtonClick(ButtonNames[0][2], delegate { CurrentPanel = 2; }),
-			new ButtonClick(ButtonNames[0][3], Application.Quit),
-			
-			// Settings
-			new ButtonClick(ButtonNames[2][3], delegate { CurrentPanel = 0; })
-		};
-
-		public static void OnButtonClick(string ButtonName) {
-			foreach (ButtonClick ButtonEvent in ButtonClicks) {
-				if (ButtonEvent.Name == ButtonName) {
-					ButtonEvent.OnClick();
-					return;
-				}
-			}
-
+		public static void OnButtonGameClick(string ButtonName) {
+			Debug.Log(ButtonName);
 			foreach (string Game in Functions.Games) {
 				if (Game == ButtonName) {
 					Functions.LoadGame(Game);
@@ -219,6 +156,21 @@ namespace Assets.Scenes.MainMenu {
 				}
 			}
 		}
+
+		// Main menu
+		[UsedImplicitly]
+		public void ClickPlay() {
+			Functions.LoadGame("Mixed");
+			PlayingInfo.Score = 0;
+			PlayingInfo.Time = 30;
+			PlayingInfo.GameMode = "Mixed";
+		}
+		[UsedImplicitly] public void ClickChooseGame() => CurrentPanel = 2;
+		[UsedImplicitly] public void ClickSettings() => CurrentPanel = 1;
+		[UsedImplicitly] public void ClickQuit() => Application.Quit();
+
+		// Settings
+		[UsedImplicitly] public void ClickBack() => CurrentPanel = 0;
 
 		#endregion
 
@@ -246,9 +198,9 @@ namespace Assets.Scenes.MainMenu {
 			PreviousSelected = EventSystem.current.currentSelectedGameObject;
 		}
 
-		private static void KeystrokeCheck() {
+		private void KeystrokeCheck() {
 			if (Input.GetKeyDown(KeyCode.Backspace)) {
-				OnButtonClick("Back");
+				ClickBack();
 			}
 		}
 
