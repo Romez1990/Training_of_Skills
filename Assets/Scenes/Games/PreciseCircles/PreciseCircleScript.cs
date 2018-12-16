@@ -10,6 +10,7 @@ namespace Assets.Scenes.Games.PreciseCircles {
 
 		[UsedImplicitly]
 		private void Start() {
+			Left = transform.parent.GetChild(0).GetComponent<Text>();
 			SpawnCircles();
 			//StartCoroutine(Log());
 		}
@@ -21,21 +22,23 @@ namespace Assets.Scenes.Games.PreciseCircles {
 		}
 
 		public GameObject CirclePrefab;
+		private static int CircleLeft;
 
 		private void SpawnCircles() {
-			int Amount = Mathf.RoundToInt(0.008f * Mathf.Pow(PlayingInfo.Score, 0.8f)) + 8;
+			CircleLeft = Mathf.RoundToInt(0.008f * Mathf.Pow(PlayingInfo.Score, 0.8f)) + 8;
+			DisplayLeft(CircleLeft);
 
 			RectTransform RectTransform = GetComponent<RectTransform>();
 			float Width = RectTransform.rect.width;
 			float Height = RectTransform.rect.height;
 
-			for (int i = 0; i < Amount; ++i) {
+			for (int i = 0; i < CircleLeft; ++i) {
 				GameObject Circle = Instantiate(CirclePrefab, transform);
 
 				RectTransform CircleRectTransform = Circle.GetComponent<RectTransform>();
 				int Diameter = Random.Range(
-					300 / Amount + 10,
-					1250 / Amount + 12
+					300 / CircleLeft + 10,
+					1250 / CircleLeft + 12
 				);
 				CircleRectTransform.sizeDelta = new Vector2(Diameter, Diameter);
 				CircleRectTransform.localPosition = new Vector3(
@@ -50,20 +53,28 @@ namespace Assets.Scenes.Games.PreciseCircles {
 			}
 		}
 
-		private void AddClickHandler(GameObject Circle) {
+		private static void AddClickHandler(GameObject Circle) {
 			EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
 			entry.callback.AddListener(delegate { RemoveCircle(Circle); });
 			Circle.AddComponent<EventTrigger>().triggers.Add(entry);
 		}
 
-		private void RemoveCircle(GameObject Circle) {
-			CheckWin();
+		private static void RemoveCircle(GameObject Circle) {
+			--CircleLeft;
 			Destroy(Circle);
+			CheckWin();
 		}
 
-		private void CheckWin() {
-			if (transform.childCount == 1)
+		private static void CheckWin() {
+			DisplayLeft(CircleLeft);
+			if (CircleLeft == 0)
 				Functions.Win();
+		}
+
+		private static Text Left;
+
+		private static void DisplayLeft(int Number) {
+			Left.text = $"Left: {Number}";
 		}
 
 	}
