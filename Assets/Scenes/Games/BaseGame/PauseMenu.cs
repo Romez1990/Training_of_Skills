@@ -34,8 +34,8 @@ namespace Assets.Scenes.Games.BaseGame {
 
 			Buttons = new GameObject[ButtonNames.Length];
 			// Set panel position and size
-			float ScreenWidth = GetComponent<RectTransform>().rect.width;
-			RectTransform PanelRectTransform = GetComponent<RectTransform>();
+			RectTransform PanelRectTransform = transform.parent.GetComponent<RectTransform>();
+			float ScreenWidth = PanelRectTransform.rect.width;
 			float PanelWidth = PanelRectTransform.rect.height / ButtonNames.Length * 0.82f * 4.2f;
 			PanelRectTransform.anchorMin = new Vector2((ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMin.y);
 			PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);
