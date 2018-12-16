@@ -10,16 +10,16 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		private static GameObject PausePanel;
 		private static Material Material;
-		private static float Size;
-		private static float SizeLerp;
+		private static float BlurSize;
+		private static float BlurSizeLerp;
 
 		[UsedImplicitly]
 		private void Start() {
 			PausePanel = transform.GetChild(0).gameObject;
 			Material = PausePanel.GetComponent<Image>().material;
-			SizeLerp = 0;
-			Size = 0;
-			Material.SetFloat("_Size", SizeLerp);
+			BlurSizeLerp = 0;
+			BlurSize = 0;
+			Material.SetFloat("_Size", BlurSizeLerp);
 		}
 
 		#endregion
@@ -31,15 +31,15 @@ namespace Assets.Scenes.Games.BaseGame {
 			CheckPause();
 		}
 
-		#endregion
-
-		#region Fixed update
-
 		private static void CheckPause() {
 			if (Input.GetKeyDown(KeyCode.Escape)) {
 				IsPause = !IsPause;
 			}
 		}
+
+		#endregion
+
+		#region Fixed update
 
 		[UsedImplicitly]
 		private void FixedUpdate() {
@@ -47,10 +47,10 @@ namespace Assets.Scenes.Games.BaseGame {
 		}
 
 		private static void EquateBlur() {
-			if (Mathf.Abs(SizeLerp - Size) < 0.1f / 4) { return; }
+			if (Mathf.Abs(BlurSizeLerp - BlurSize) < 0.1f / 4) { return; }
 
-			SizeLerp = Mathf.Lerp(SizeLerp, Size, 0.1f);
-			Material.SetFloat("_Size", SizeLerp);
+			BlurSizeLerp = Mathf.Lerp(BlurSizeLerp, BlurSize, 0.1f);
+			Material.SetFloat("_Size", BlurSizeLerp);
 		}
 
 		#endregion
@@ -61,7 +61,7 @@ namespace Assets.Scenes.Games.BaseGame {
 			set {
 				if (value == _IsPause) { return; }
 
-				Size = value ? 5 : 0;
+				BlurSize = value ? 5 : 0;
 				EventSystem.current.SetSelectedGameObject(null);
 				PauseMenu.PreviousSelected = null;
 				PausePanel.SetActive(value);
