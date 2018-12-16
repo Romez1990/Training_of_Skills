@@ -100,8 +100,8 @@ namespace Assets.Scenes.MainMenu {
 
 		private void InitializeGameButtons() {
 			// Remove all buttons from the scene
-			for (int i = 0; i < ChooseGameContent.transform.childCount; ++i)
-				Destroy(ChooseGameContent.transform.GetChild(i).gameObject);
+			/*for (int i = 0; i < ChooseGameContent.transform.childCount; ++i)
+				Destroy(ChooseGameContent.transform.GetChild(i).gameObject);//*/
 
 			// Set size of the Content
 			int VerticalQuantity = Mathf.CeilToInt(Functions.Games.Length / (float)AmountInRow);
