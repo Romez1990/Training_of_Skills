@@ -1,4 +1,5 @@
 ﻿using Assets.Scenes.Games.BaseGame;
+using Assets.Scenes.Games.BaseGame.Sounds;
 using JetBrains.Annotations;
 using System;
 using UnityEngine;
@@ -202,6 +203,8 @@ namespace Assets.Scenes.MainMenu {
 		};
 
 		public static void OnButtonClick(string ButtonName) {
+			Sound.Click();
+
 			foreach (ButtonClick ButtonEvent in ButtonClicks) {
 				if (ButtonEvent.Name == ButtonName) {
 					ButtonEvent.OnClick();
@@ -243,7 +246,10 @@ namespace Assets.Scenes.MainMenu {
 				);
 			}
 
-			PreviousSelected = EventSystem.current.currentSelectedGameObject;
+			if (PreviousSelected != EventSystem.current.currentSelectedGameObject) {
+				Sound.MouseOver();
+				PreviousSelected = EventSystem.current.currentSelectedGameObject;
+			}
 		}
 
 		private static void KeystrokeCheck() {

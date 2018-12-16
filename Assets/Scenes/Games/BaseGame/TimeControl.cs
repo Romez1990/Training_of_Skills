@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseGame.Sounds;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,6 +57,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		private const float Step = 0.08f;
 
 		public static void TakeTime(float TimeToTake) {
+			Sound.Mistake();
 			PlayingInfo.Time = Mathf.Round(PlayingInfo.Time - TimeToTake);
 			DisplayTime();
 			Time.color = Color.red;

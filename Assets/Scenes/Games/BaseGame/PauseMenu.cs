@@ -1,4 +1,5 @@
-﻿using Assets.Scenes.MainMenu;
+﻿using Assets.Scenes.Games.BaseGame.Sounds;
+using Assets.Scenes.MainMenu;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -82,6 +83,8 @@ namespace Assets.Scenes.Games.BaseGame {
 		};
 
 		public static void OnButtonClick(string ButtonName) {
+			Sound.Click();
+
 			foreach (MainMenuScript.ButtonClick ButtonEvent in ButtonClicks) {
 				if (ButtonEvent.Name == ButtonName) {
 					ButtonEvent.OnClick();
@@ -112,7 +115,10 @@ namespace Assets.Scenes.Games.BaseGame {
 				);
 			}
 
-			PreviousSelected = EventSystem.current.currentSelectedGameObject;
+			if (PreviousSelected != EventSystem.current.currentSelectedGameObject) {
+				Sound.MouseOver();
+				PreviousSelected = EventSystem.current.currentSelectedGameObject;
+			}
 		}
 
 		#endregion
