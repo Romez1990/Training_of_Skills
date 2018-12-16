@@ -1,5 +1,6 @@
 ﻿using Assets.Scenes.Games.BaseGame;
 using System.Linq;
+using Assets.Scenes.Games.BaseGame.Sounds;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,12 +26,14 @@ namespace Assets.Scenes {
 		}
 
 		public static void Win() {
+			Sound.CorrectAnswer();
 			PlayingInfo.Time += 10;
 			ScoreControl.CalculateAddScore();
 			LoadGame(PlayingInfo.GameMode);
 		}
 
 		public static void GameOver() {
+			Sound.Lose();
 			LoadGame("Scoreboard");
 		}
 

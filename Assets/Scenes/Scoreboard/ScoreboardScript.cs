@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.Games.BaseGame.Sounds;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -42,7 +43,10 @@ namespace Assets.Scenes.Scoreboard {
 				);
 			}
 
-			PreviousSelected = EventSystem.current.currentSelectedGameObject;
+			if (PreviousSelected != EventSystem.current.currentSelectedGameObject) {
+				Sound.MouseOver();
+				PreviousSelected = EventSystem.current.currentSelectedGameObject;
+			}
 		}
 
 		[UsedImplicitly]
