@@ -56,8 +56,6 @@ namespace Assets.Scenes.Games.BaseGame {
 		private const float Step = 0.08f;
 
 		public static void TakeTime(float TimeToTake) {
-			if (PauseControl.IsPause) { return; }
-
 			PlayingInfo.Time = Mathf.Round(PlayingInfo.Time - TimeToTake);
 			DisplayTime();
 			Time.color = Color.red;

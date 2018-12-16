@@ -15,6 +15,7 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		[UsedImplicitly]
 		private void Start() {
+			GamePanel = transform.parent.parent.GetChild(1).gameObject;
 			PausePanel = transform.GetChild(0).gameObject;
 			Material = PausePanel.GetComponent<Image>().material;
 			BlurSizeLerp = 0;
@@ -55,6 +56,8 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		#endregion
 
+		private static GameObject GamePanel;
+
 		private static bool _IsPause;
 		public static bool IsPause {
 			get => _IsPause;
@@ -65,6 +68,7 @@ namespace Assets.Scenes.Games.BaseGame {
 				EventSystem.current.SetSelectedGameObject(null);
 				PauseMenu.PreviousSelected = null;
 				PausePanel.SetActive(value);
+				GamePanel.SetActive(!value);
 				_IsPause = value;
 			}
 		}
