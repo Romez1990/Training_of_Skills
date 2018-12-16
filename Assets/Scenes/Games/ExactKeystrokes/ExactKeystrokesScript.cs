@@ -16,7 +16,7 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 			Left = transform.GetChild(0).GetComponent<Text>();
 			GetKeyList();
 			DisplayKey(CurrentKeys[0].ToString());
-			DisplayLeft(CurrentKeys.Count.ToString());
+			DisplayLeft(CurrentKeys.Count);
 			//StartCoroutine(Log());
 		}
 
@@ -111,7 +111,7 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 			}
 
 			DisplayKey(CurrentKeys[0].ToString());
-			DisplayLeft(CurrentKeys.Count.ToString());
+			DisplayLeft(CurrentKeys.Count);
 		}
 
 		private static void CheckOtherKeys() {
@@ -136,8 +136,8 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 
 		private static Text Left;
 
-		private static void DisplayLeft(string Quantity) {
-			Left.text = $"Left: {Quantity}";
+		private static void DisplayLeft(int Number) {
+			Left.text = $"Left: {Number}";
 		}
 
 	}
