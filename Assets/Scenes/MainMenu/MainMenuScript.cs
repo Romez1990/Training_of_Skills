@@ -13,6 +13,7 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		private void Start() {
+			_CurrentPanel = 0;
 			InitializeMenuButtons();
 			AddEventsToButtons();
 		}
@@ -144,7 +145,7 @@ namespace Assets.Scenes.MainMenu {
 
 		#region Change current panel
 
-		private static int _CurrentPanel = 0;
+		private static int _CurrentPanel;
 
 		private static int CurrentPanel {
 			get => _CurrentPanel;
