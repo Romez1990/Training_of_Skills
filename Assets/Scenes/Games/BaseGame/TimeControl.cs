@@ -18,6 +18,7 @@ namespace Assets.Scenes.Games.BaseGame {
 
 			Time = GetComponent<Text>();
 			GivenTime = PlayingInfo.Time;
+			DisplayTime();
 		}
 
 		[UsedImplicitly]
@@ -31,13 +32,15 @@ namespace Assets.Scenes.Games.BaseGame {
 			if (PauseControl.IsPause) { return; }
 
 			PlayingInfo.Time -= UnityEngine.Time.deltaTime;
+			
+			if (IntTime == (int)PlayingInfo.Time) { return; }
+
 			DisplayTime();
 		}
 
 		public static void DisplayTime() {
-			if (IntTime == (int)PlayingInfo.Time) { return; }
-
 			if (PlayingInfo.Time < 0.2f) {
+				Time.text = "00:00";
 				Functions.GameOver();
 				return;
 			}
