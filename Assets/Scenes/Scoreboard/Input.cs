@@ -83,5 +83,6 @@ namespace Assets.Scenes.Scoreboard {
 				PreviousSelected = EventSystem.current.currentSelectedGameObject;
 			}
 		}
+
 	}
 }
