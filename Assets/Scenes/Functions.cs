@@ -1,6 +1,7 @@
 ﻿using Assets.Scenes.Games.BaseGame;
-using System.Linq;
 using Assets.Scenes.Games.BaseGame.Sounds;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,7 +39,7 @@ namespace Assets.Scenes {
 			LoadGame("Scoreboard");
 		}
 
-		//public static readonly string PathToData = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
+		public static readonly string PathToData = Path.Combine(Directory.GetParent(Application.dataPath).ToString(), "Data");
 
 		/// <summary>
 		/// Convert CamelCase string to Normal case string
