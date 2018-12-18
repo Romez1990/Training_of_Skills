@@ -64,7 +64,7 @@ namespace Assets.Scenes.Scoreboard {
 		}
 
 		private void EnterCheck() {
-			if (UnityEngine.Input.GetKeyDown(KeyCode.Return))
+			if (UnityEngine.Input.GetKeyDown(KeyCode.Return) || UnityEngine.Input.GetKeyDown(KeyCode.KeypadEnter))
 				if (CheckName())
 					ShowResults();
 		}

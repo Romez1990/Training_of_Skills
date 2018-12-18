@@ -24,27 +24,28 @@ namespace Assets.Scenes.Scoreboard {
 				{ "name", Name },
 				{ "score", Score.ToString() }
 			};
-			UnityWebRequest Request = UnityWebRequest.Post("http://u9895013.beget.tech/scoreboard.php", Parameters);
+			UnityWebRequest Request = UnityWebRequest.Post("http://s90012jj.beget.tech/Training_of_Skills/scoreboard.php", Parameters);
 			Request.SetRequestHeader("User-Agent", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
 
 			yield return Request.SendWebRequest();
 
 			if (Request.isNetworkError)
-				DisplayError("There is no internet connection to display scoreboard");
+				DisplayError("There is no internet connection to display scoreboard", Request.error);
 			else if (Request.isHttpError)
-				DisplayError("Something went wrong. We can't display scoreboard");
+				DisplayError("Something went wrong. We can't display scoreboard", Request.error);
 			else
 				Callback(Encoding.Default.GetString(Request.downloadHandler.data));
 		}
 
-		private void DisplayError(string ErrorText) {
+		private void DisplayError(string ErrorText, string RequestError) {
+			Debug.Log(RequestError);
 			Transform CurrentRow = transform.GetChild(1);
 			CurrentRow.gameObject.SetActive(true);
 			CurrentRow.gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
 			CurrentRow.GetChild(0).GetComponent<Text>().text = "1";
 			CurrentRow.GetChild(1).GetComponent<Text>().text = PlayingInfo.Name;
 			CurrentRow.GetChild(2).GetComponent<Text>().text = Mathf.RoundToInt(PlayingInfo.Score).ToString();
-			CurrentRow.GetChild(3).GetComponent<Text>().text = DateTime.Now.ToString("yy-MM-dd HH:mm");
+			CurrentRow.GetChild(3).GetComponent<Text>().text = DateTime.Now.ToString("MM/dd/yyyy HH:mm").Replace('.', '/');
 			transform.GetChild(2).GetComponent<Text>().text = ErrorText;
 		}
 
@@ -62,7 +63,7 @@ namespace Assets.Scenes.Scoreboard {
 		}
 
 		private List<Record> Records;
-		private int Current;
+		private int? CurrentPlayer = null; // For highlight
 
 		private void FigureOutTable(string Json) {
 			Records = JsonArrayHelper.FromJson<Record>(Json).ToList();
@@ -73,7 +74,7 @@ namespace Assets.Scenes.Scoreboard {
 
 			for (int i = 0; i <= Records.Count - 1; ++i) {
 				if (PlayingInfo.Name == Records[i].name && Mathf.RoundToInt(PlayingInfo.Score).ToString() == Records[i].score) {
-					Current = i;
+					CurrentPlayer = i;
 					break;
 				}
 			}
@@ -107,7 +108,8 @@ namespace Assets.Scenes.Scoreboard {
 				for (int j = 0; j < 4; ++j)
 					transform.GetChild(i + 3).GetChild(j).GetComponent<Text>().color = Top[i];
 
-			transform.GetChild(Current + 3).gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
+			if (CurrentPlayer != null)
+				transform.GetChild((int)CurrentPlayer + 3).gameObject.AddComponent<Image>().color = new Color(255, 255, 255, 0.12f);
 			// Yeah, + 3 because there already was 3 elements
 		}
 
