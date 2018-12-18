@@ -17,6 +17,7 @@ namespace Assets.Scenes.Games.BaseGame {
 				PlayingInfo.Time = 30;
 
 			Time = GetComponent<Text>();
+			TimeColorLerp = DefaultTimeColor;
 			GivenTime = PlayingInfo.Time;
 			DisplayTime();
 		}
@@ -32,7 +33,7 @@ namespace Assets.Scenes.Games.BaseGame {
 			if (PauseControl.IsPause) { return; }
 
 			PlayingInfo.Time -= UnityEngine.Time.deltaTime;
-			
+
 			if (IntTime == (int)PlayingInfo.Time) { return; }
 
 			DisplayTime();
@@ -56,7 +57,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		#region Take time
 
 		private static readonly Color DefaultTimeColor = Color.white;
-		private static Color TimeColorLerp = DefaultTimeColor;
+		private static Color TimeColorLerp;
 		private const float Step = 0.08f;
 
 		public static void TakeTime(float TimeToTake) {
