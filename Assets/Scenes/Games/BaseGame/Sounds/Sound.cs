@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Assets.Scenes.MainMenu;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Assets.Scenes.Games.BaseGame.Sounds {
@@ -38,11 +39,34 @@ namespace Assets.Scenes.Games.BaseGame.Sounds {
 			LoseGameObject = transform.GetChild(4).GetComponent<AudioSource>();
 		}
 
-		public static void Click() => ClickGameObject.Play();
-		public static void MouseOver() => MouseOverGameObject.Play();
-		public static void CorrectAnswer() => CorrectAnswerGameObject.Play();
-		public static void Mistake() => MistakeGameObject.Play();
-		public static void Lose() => LoseGameObject.Play();
+		private static bool CheckSoundIsOn() {
+			return Settings.CurrentSettings.SoundIsOn;
+		}
+
+		public static void Click() {
+			if (CheckSoundIsOn())
+				ClickGameObject.Play();
+		}
+
+		public static void MouseOver() {
+			if (CheckSoundIsOn())
+				MouseOverGameObject.Play();
+		}
+
+		public static void CorrectAnswer() {
+			if (CheckSoundIsOn())
+				CorrectAnswerGameObject.Play();
+		}
+
+		public static void Mistake() {
+			if (CheckSoundIsOn())
+				MistakeGameObject.Play();
+		}
+
+		public static void Lose() {
+			if (CheckSoundIsOn())
+				LoseGameObject.Play();
+		}
 
 		#endregion
 

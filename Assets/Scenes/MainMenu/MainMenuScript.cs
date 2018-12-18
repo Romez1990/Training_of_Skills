@@ -19,7 +19,7 @@ namespace Assets.Scenes.MainMenu {
 			InitChoosePanel(1);
 			InitSettingsPanel(2);
 			SoundToggle = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Toggle>();
-			SetSettings();
+			Settings.Load();
 		}
 
 		private static readonly string[][] ButtonNames = {
@@ -255,6 +255,29 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		#endregion
+
+		#endregion
+
+		#region Settings
+
+		private static Toggle SoundToggle;
+
+		private static void SetSettings() {
+			Settings.Load();
+			SoundToggle.isOn = Settings.CurrentSettings.SoundIsOn;
+		}
+
+		private static void CancelSettings() {
+			CurrentPanel = 0;
+		}
+
+		private static void ApplySettings() {
+			CurrentPanel = 0;
+
+			new Settings {
+				SoundIsOn = SoundToggle.isOn
+			}.Save();
+		}
 
 		#endregion
 
