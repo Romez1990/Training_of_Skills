@@ -1,8 +1,8 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Assets.Scenes.Games.BaseGame {
-	public class PauseButtonResizer : MonoBehaviour {
+namespace Assets.Scenes {
+	public class BeSquare : MonoBehaviour {
 
 		[UsedImplicitly]
 		private void Start() {
