@@ -14,8 +14,12 @@ namespace Assets.Scenes.MainMenu {
 		[UsedImplicitly]
 		private void Start() {
 			_CurrentPanel = 0;
-			InitializeMenuButtons();
-			AddEventsToButtons();
+			InitPanels();
+			InitMainMenu(0);
+			InitChoosePanel(1);
+			InitSettingsPanel(2);
+			SoundToggle = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Toggle>();
+			SetSettings();
 		}
 
 		private static readonly string[][] ButtonNames = {
@@ -32,63 +36,61 @@ namespace Assets.Scenes.MainMenu {
 
 			// Settings
 			new[] {
-				"Screen",
-				"Game",
-				"Control",
-				"Back"
+				"Cancel",
+				"Apply"
 			}
 		};
 
 		#region Initialization panels and buttons
 
-		public GameObject ButtonPrefab;
 		private static GameObject[] Panels;
 		private static GameObject[][] Buttons;
 
-		private void InitializeMenuButtons() {
-			int PanelAmount = transform.childCount - 1;
+		private void InitPanels() {
+			int PanelAmount = transform.childCount;
 
 			Panels = new GameObject[PanelAmount];
 			Buttons = new GameObject[PanelAmount][];
 
 			for (int i = 0; i < PanelAmount; ++i) {
-				// Panel initializing
-				Panels[i] = transform.GetChild(i + 1).gameObject; // + 1 'cause there's Background at 0 index
+				Panels[i] = transform.GetChild(i).gameObject;
+			}
+		}
 
-				// ChooseGame panel
-				if (i == 1) {
-					InitializeGameButtons();
-					continue;
-				}
+		public GameObject ButtonPrefab;
 
-				// Remove all existing buttons from the scene
-				for (int j = 0; j < Panels[i].transform.childCount; ++j)
-					Destroy(Panels[i].transform.GetChild(j).gameObject);
+		private void InitMainMenu(int i) {
+			Panels[i] = transform.GetChild(i).gameObject;
 
-				// Set panel position and size
-				float ScreenWidth = GetComponent<RectTransform>().rect.width;
-				RectTransform PanelRectTransform = Panels[i].GetComponent<RectTransform>();
-				float PanelWidth = PanelRectTransform.rect.height / ButtonNames[i].Length * 0.82f * 4.2f;
-				PanelRectTransform.anchorMin = new Vector2((ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMin.y);
-				PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);
+			// Remove all existing buttons from the scene
+			for (int j = 0; j < Panels[i].transform.childCount; ++j)
+				Destroy(Panels[i].transform.GetChild(j).gameObject);
 
-				// Button creating
-				Buttons[i] = new GameObject[ButtonNames[i].Length];
-				for (int j = 0; j < ButtonNames[i].Length; ++j) {
-					GameObject ButtonWrapper = Instantiate(ButtonPrefab, Panels[i].transform);
-					ButtonWrapper.name = ButtonNames[i][j] + "Wrapper";
+			// Set panel position and size
+			float ScreenWidth = GetComponent<RectTransform>().rect.width;
+			RectTransform PanelRectTransform = Panels[i].GetComponent<RectTransform>();
+			float PanelWidth = PanelRectTransform.rect.height / ButtonNames[i].Length * 0.82f * 4.2f;
+			PanelRectTransform.anchorMin = new Vector2((ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMin.y);
+			PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);
 
-					// Set position and size
-					RectTransform ButtonRectTransform = ButtonWrapper.GetComponent<RectTransform>();
-					ButtonRectTransform.anchorMin = new Vector2(0, (ButtonNames[i].Length - j - 1) / (float)ButtonNames[i].Length);
-					ButtonRectTransform.anchorMax = new Vector2(1, (ButtonNames[i].Length - j) / (float)ButtonNames[i].Length);
+			// Button creating
+			Buttons[i] = new GameObject[ButtonNames[i].Length];
+			for (int j = 0; j < ButtonNames[i].Length; ++j) {
+				GameObject ButtonWrapper = Instantiate(ButtonPrefab, Panels[i].transform);
+				ButtonWrapper.name = ButtonNames[i][j] + "Wrapper";
 
-					Buttons[i][j] = ButtonWrapper.transform.GetChild(0).gameObject;
-					Buttons[i][j].name = ButtonNames[i][j];
+				// Set position and size
+				RectTransform ButtonRectTransform = ButtonWrapper.GetComponent<RectTransform>();
+				ButtonRectTransform.anchorMin = new Vector2(0, (ButtonNames[i].Length - j - 1) / (float)ButtonNames[i].Length);
+				ButtonRectTransform.anchorMax = new Vector2(1, (ButtonNames[i].Length - j) / (float)ButtonNames[i].Length);
 
-					// Set text
-					Buttons[i][j].transform.GetChild(0).GetComponent<Text>().text = ButtonNames[i][j].ToNormalCase();
-				}
+				Buttons[i][j] = ButtonWrapper.transform.GetChild(0).gameObject;
+				Buttons[i][j].name = ButtonNames[i][j];
+
+				AddEventsToButtons(Buttons[i][j]);
+
+				// Set text
+				Buttons[i][j].transform.GetChild(0).GetComponent<Text>().text = ButtonNames[i][j].ToNormalCase();
 			}
 		}
 
@@ -99,7 +101,7 @@ namespace Assets.Scenes.MainMenu {
 		private const int AmountInRow = 3;
 		private const float AspectRatio = 3 / 4f;
 
-		private void InitializeGameButtons() {
+		private void InitChoosePanel(int i) {
 			// Remove all buttons from the scene
 			/*for (int i = 0; i < ChooseGameContent.transform.childCount; ++i)
 				Destroy(ChooseGameContent.transform.GetChild(i).gameObject);//*/
@@ -110,35 +112,53 @@ namespace Assets.Scenes.MainMenu {
 			RectTransform RectTransform = ChooseGameContent.GetComponent<RectTransform>();
 			RectTransform.sizeDelta = new Vector2(RectTransform.sizeDelta.x, Height);
 
-			Buttons[1] = new GameObject[Functions.Games.Length + 1];
-			for (int i = 0; i < Functions.Games.Length; ++i) {
+			Buttons[i] = new GameObject[Functions.Games.Length + 1];
+			for (int j = 0; j < Functions.Games.Length; ++j) {
 				GameObject Game = Instantiate(GameButtonPrefab, ChooseGameContent.transform);
-				Game.name = Functions.Games[i] + "Wrapper";
+				Game.name = Functions.Games[j];
 
 				// Set button position and size
 				RectTransform PanelRectTransform = Game.GetComponent<RectTransform>();
-				int v = VerticalQuantity - i / AmountInRow;
-				PanelRectTransform.anchorMin = new Vector2(i % AmountInRow / (float)AmountInRow, (float)(v - 1) / VerticalQuantity);
-				PanelRectTransform.anchorMax = new Vector2((i % AmountInRow + 1) / (float)AmountInRow, (float)v / VerticalQuantity);
+				int v = VerticalQuantity - j / AmountInRow;
+				PanelRectTransform.anchorMin = new Vector2(j % AmountInRow / (float)AmountInRow, (float)(v - 1) / VerticalQuantity);
+				PanelRectTransform.anchorMax = new Vector2((j % AmountInRow + 1) / (float)AmountInRow, (float)v / VerticalQuantity);
 
-				Buttons[1][i] = Game.transform.GetChild(0).gameObject;
-				Buttons[1][i].name = Functions.Games[i];
+				Buttons[i][j] = Game.transform.GetChild(0).gameObject;
+				Buttons[i][j].name = "Button";
+
+				AddEventsToButtons(Buttons[i][j], Functions.Games[j]);
 
 				// Set game image
-				if (i < SceneImages.Length) {
-					GameObject SceneImage = Buttons[1][i].transform.GetChild(0).gameObject;
+				if (j < SceneImages.Length) {
+					GameObject SceneImage = Buttons[i][j].transform.GetChild(0).gameObject;
 					Image Image = SceneImage.GetComponent<Image>();
-					Image.sprite = SceneImages[i];
+					Image.sprite = SceneImages[j];
 				}
 
 				// Set game name
-				GameObject NameScene = Buttons[1][i].transform.GetChild(1).gameObject;
+				GameObject NameScene = Buttons[i][j].transform.GetChild(1).gameObject;
 				Text Name = NameScene.GetComponent<Text>();
-				Name.text = Functions.Games[i].ToNormalCase();
+				Name.text = Functions.Games[j].ToNormalCase();
 			}
 
 			// Set Back button
-			Buttons[1][Buttons[1].Length - 1] = ChooseGameBack;
+			Buttons[i][Buttons[i].Length - 1] = ChooseGameBack;
+			AddEventsToButtons(Buttons[i][Buttons[i].Length - 1]);
+		}
+
+		private void InitSettingsPanel(int i) {
+			float ScreenWidth = GetComponent<RectTransform>().rect.width;
+			RectTransform PanelRectTransform = Panels[i].GetComponent<RectTransform>();
+			float PanelWidth = PanelRectTransform.rect.height / ButtonNames[i].Length * 0.82f * 4.2f * 0.35f;
+			PanelRectTransform.anchorMin = new Vector2((ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMin.y);
+			PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);
+
+			Buttons[i] = new GameObject[2];
+			Buttons[i][0] = Panels[i].transform.GetChild(1).GetChild(0).gameObject;
+			Buttons[i][1] = Panels[i].transform.GetChild(2).GetChild(0).gameObject;
+
+			foreach (GameObject Button in Buttons[i])
+				AddEventsToButtons(Button);
 		}
 
 		#endregion
@@ -156,6 +176,12 @@ namespace Assets.Scenes.MainMenu {
 				Panels[value].SetActive(true);
 				EventSystem.current.SetSelectedGameObject(Buttons[value][0]);
 				_CurrentPanel = value;
+
+				switch (value) {
+					case 2:
+						SetSettings();
+						break;
+				}
 			}
 		}
 
@@ -163,18 +189,18 @@ namespace Assets.Scenes.MainMenu {
 
 		#region Clicks
 
-		public static void AddEventsToButtons() {
-			foreach (GameObject[] Row in Buttons) {
-				foreach (GameObject Button in Row) {
-					// Add mouse over event
-					EventTrigger.Entry Entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-					Entry.callback.AddListener(delegate { EventSystem.current.SetSelectedGameObject(Button); });
-					Button.AddComponent<EventTrigger>().triggers.Add(Entry);
+		public static void AddEventsToButtons(GameObject Button) {
+			AddEventsToButtons(Button, Button.name);
+		}
 
-					// Add click event
-					Button.GetComponent<Button>().onClick.AddListener(delegate { OnButtonClick(Button.name); });
-				}
-			}
+		public static void AddEventsToButtons(GameObject Button, string Parameter) {
+			// Add mouse over event
+			EventTrigger.Entry Entry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+			Entry.callback.AddListener(delegate { EventSystem.current.SetSelectedGameObject(Button); });
+			Button.AddComponent<EventTrigger>().triggers.Add(Entry);
+
+			// Add click event
+			Button.GetComponent<Button>().onClick.AddListener(delegate { OnButtonClick(Parameter); });
 		}
 
 		public struct ButtonClick {
@@ -199,8 +225,12 @@ namespace Assets.Scenes.MainMenu {
 			new ButtonClick(ButtonNames[0][2], delegate { CurrentPanel = 2; }),
 			new ButtonClick(ButtonNames[0][3], Application.Quit),
 			
+			// Choose panel
+			new ButtonClick("Back", delegate { CurrentPanel = 0; }), 
+
 			// Settings
-			new ButtonClick(ButtonNames[2][3], delegate { CurrentPanel = 0; })
+			new ButtonClick(ButtonNames[2][0], CancelSettings),
+			new ButtonClick(ButtonNames[2][1], ApplySettings)
 		};
 
 		public static void OnButtonClick(string ButtonName) {
