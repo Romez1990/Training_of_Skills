@@ -15,12 +15,12 @@ namespace Assets.Scenes.Scoreboard {
 		}
 
 		[UsedImplicitly]
-		public void Input_OnValueChanged() {
+		public void InputOnValueChanged() {
 			Warning.text = string.Empty;
 		}
 
 		[UsedImplicitly]
-		public void Input_OnEndEdit() {
+		public void InputOnEndEdit() {
 			CheckName();
 		}
 
@@ -28,7 +28,7 @@ namespace Assets.Scenes.Scoreboard {
 		private Text Warning;
 
 		[UsedImplicitly]
-		public void Button_OnClick() {
+		public void ClickShowResults() {
 			if (CheckName())
 				ShowResults();
 		}

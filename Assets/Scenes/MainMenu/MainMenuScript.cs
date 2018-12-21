@@ -187,7 +187,7 @@ namespace Assets.Scenes.MainMenu {
 
 		#endregion
 
-		#region Clicks
+		#region Button events
 
 		public static void AddEventsToButtons(GameObject Button) {
 			AddEventsToButtons(Button, Button.name);

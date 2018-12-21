@@ -1162,7 +1162,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114678898105412946}
-        m_MethodName: PauseClick
+        m_MethodName: ClickPause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

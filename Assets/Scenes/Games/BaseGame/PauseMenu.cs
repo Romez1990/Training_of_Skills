@@ -61,7 +61,7 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		#endregion
 
-		#region Clicks
+		#region Button events
 
 		public static void AddEventsToButtons() {
 			foreach (GameObject Button in Buttons) {

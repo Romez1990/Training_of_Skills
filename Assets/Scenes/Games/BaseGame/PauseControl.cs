@@ -74,7 +74,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		}
 
 		[UsedImplicitly]
-		public void PauseClick() {
+		public void ClickPause() {
 			IsPause = true;
 		}
 

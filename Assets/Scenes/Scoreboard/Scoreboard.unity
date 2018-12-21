@@ -1345,7 +1345,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1811642615}
-        m_MethodName: Input_OnEndEdit
+        m_MethodName: InputOnEndEdit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1361,7 +1361,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1811642615}
-        m_MethodName: Input_OnValueChanged
+        m_MethodName: InputOnValueChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2060,7 +2060,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1811642615}
-        m_MethodName: Button_OnClick
+        m_MethodName: ClickShowResults
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
