@@ -2,7 +2,7 @@
 	public struct PlayingInfo {
 
 		public static string Name;
-		public static float Score;
+		public static ulong Score;
 		public static string GameMode;
 		public static float Time = 0;
 
