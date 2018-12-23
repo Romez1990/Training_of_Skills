@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scenes.Games.BaseGame {
@@ -64,11 +65,17 @@ namespace Assets.Scenes.Games.BaseGame {
 			set {
 				if (value == _IsPause) { return; }
 
-				BlurSize = value ? 5 : 0;
-				EventSystem.current.SetSelectedGameObject(null);
-				PauseMenu.PreviousSelected = null;
-				PausePanel.SetActive(value);
-				GamePanel.SetActive(!value);
+				if (value) {
+					BlurSize = 5;
+					PausePanel.SetActive(true);
+					GamePanel.SetActive(false);
+					PauseMenu.PreviousSelected = null;
+					EventSystem.current.SetSelectedGameObject(null);
+				} else {
+					SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+					BlurSize = 0;
+				}
+
 				_IsPause = value;
 			}
 		}

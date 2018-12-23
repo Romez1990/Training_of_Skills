@@ -14,6 +14,7 @@ namespace Assets.Scenes.Games.BaseGame {
 		private void Start() {
 			InitializeMenuButtons();
 			AddEventsToButtons();
+			PreviousSelected = null;
 		}
 
 		private static readonly string[] ButtonNames = {
