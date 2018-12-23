@@ -22,7 +22,7 @@ namespace Assets.Scenes.Games.BaseGame {
 			BlurSizeLerp = 0;
 			BlurSize = 0;
 			Material.SetFloat("_Size", BlurSizeLerp);
-			_IsPause = false;
+			isPause = false;
 		}
 
 		#endregion
@@ -60,11 +60,11 @@ namespace Assets.Scenes.Games.BaseGame {
 
 		private static GameObject GamePanel;
 
-		private static bool _IsPause;
+		private static bool isPause;
 		public static bool IsPause {
-			get => _IsPause;
+			get => isPause;
 			set {
-				if (value == _IsPause) { return; }
+				if (value == isPause) { return; }
 
 				if (value) {
 					BlurSize = 5;
@@ -77,7 +77,7 @@ namespace Assets.Scenes.Games.BaseGame {
 					BlurSize = 0;
 				}
 
-				_IsPause = value;
+				isPause = value;
 			}
 		}
 

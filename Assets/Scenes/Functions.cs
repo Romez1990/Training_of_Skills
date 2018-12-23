@@ -43,8 +43,6 @@ namespace Assets.Scenes {
 		/// <summary>
 		/// Convert CamelCase string to Normal case string
 		/// </summary>
-		/// <param name="Str">String to convert</param>
-		/// <returns>Normal case string</returns>
 		public static string ToNormalCase(this string Str) {
 			return string.Concat(Str.Select((x, i) =>
 				i == 0 ?
