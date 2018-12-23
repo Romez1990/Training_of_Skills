@@ -12,6 +12,7 @@ namespace Assets.Scenes.Scoreboard {
 		private void Start() {
 			InputField = transform.GetChild(0).GetComponent<InputField>();
 			Warning = transform.GetChild(1).GetComponent<Text>();
+			InputField.text = Name.Load();
 		}
 
 		[UsedImplicitly]
@@ -53,6 +54,7 @@ namespace Assets.Scenes.Scoreboard {
 			PlayingInfo.Name = InputField.text;
 			transform.parent.GetChild(2).gameObject.SetActive(true);
 			gameObject.SetActive(false);
+			Name.Save(InputField.text);
 		}
 
 		private static GameObject PreviousSelected;
