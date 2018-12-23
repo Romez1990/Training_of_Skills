@@ -21,7 +21,7 @@ namespace Assets.Scenes.Games.BaseGame {
 			Material = PausePanel.GetComponent<Image>().material;
 			BlurSizeLerp = 0;
 			BlurSize = 0;
-			Material.SetFloat("_Size", BlurSizeLerp);
+			Material.SetFloat("size", BlurSizeLerp);
 			isPause = false;
 		}
 
@@ -53,7 +53,7 @@ namespace Assets.Scenes.Games.BaseGame {
 			if (Mathf.Abs(BlurSizeLerp - BlurSize) < 0.1f / 4) { return; }
 
 			BlurSizeLerp = Mathf.Lerp(BlurSizeLerp, BlurSize, 0.1f);
-			Material.SetFloat("_Size", BlurSizeLerp);
+			Material.SetFloat("size", BlurSizeLerp);
 		}
 
 		#endregion

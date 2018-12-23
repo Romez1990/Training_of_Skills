@@ -4,7 +4,7 @@
 
 Shader "Custom/Blur" {
     Properties {
-        _Size ("Size", Range(0, 7)) = 0
+        size ("Size", Range(0, 7)) = 0
         [HideInInspector] _MainTex ("Tint Color (RGB)", 2D) = "white" {}
     }
 
@@ -64,14 +64,14 @@ Shader "Custom/Blur" {
 
                 sampler2D _HBlur;
                 float4 _HBlur_TexelSize;
-                float _Size;
+                float size;
 
                 half4 frag( v2f i ) : COLOR 
                 {
                 	float alpha = tex2D(_MainTex, i.uvmain).a;
                     half4 sum = half4(0,0,0,0);
 
-                    #define GRABPIXEL(weight,kernelx) tex2Dproj( _HBlur, UNITY_PROJ_COORD(float4(i.uvgrab.x + _HBlur_TexelSize.x * kernelx * _Size * alpha, i.uvgrab.y, i.uvgrab.z, i.uvgrab.w))) * weight
+                    #define GRABPIXEL(weight,kernelx) tex2Dproj( _HBlur, UNITY_PROJ_COORD(float4(i.uvgrab.x + _HBlur_TexelSize.x * kernelx * size * alpha, i.uvgrab.y, i.uvgrab.z, i.uvgrab.w))) * weight
 
                     sum += GRABPIXEL(0.05, -4.0);
                     sum += GRABPIXEL(0.09, -3.0);
@@ -136,14 +136,14 @@ Shader "Custom/Blur" {
 
                 sampler2D _VBlur;
                 float4 _VBlur_TexelSize;
-                float _Size;
+                float size;
              
                 half4 frag( v2f i ) : COLOR 
                 {
                     float alpha = tex2D(_MainTex, i.uvmain).a;
                     half4 sum = half4(0,0,0,0);
 
-                    #define GRABPIXEL(weight,kernely) tex2Dproj( _VBlur, UNITY_PROJ_COORD(float4(i.uvgrab.x, i.uvgrab.y + _VBlur_TexelSize.y * kernely * _Size * alpha, i.uvgrab.z, i.uvgrab.w))) * weight
+                    #define GRABPIXEL(weight,kernely) tex2Dproj( _VBlur, UNITY_PROJ_COORD(float4(i.uvgrab.x, i.uvgrab.y + _VBlur_TexelSize.y * kernely * size * alpha, i.uvgrab.z, i.uvgrab.w))) * weight
 
                     sum += GRABPIXEL(0.05, -4.0);
                     sum += GRABPIXEL(0.09, -3.0);
