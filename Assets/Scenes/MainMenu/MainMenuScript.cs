@@ -62,24 +62,20 @@ namespace Assets.Scenes.MainMenu {
 		private void InitMainMenu(int i) {
 			Panels[i] = transform.GetChild(i).gameObject;
 
-			// Remove all existing buttons from the scene
 			for (int j = 0; j < Panels[i].transform.childCount; ++j)
 				Destroy(Panels[i].transform.GetChild(j).gameObject);
 
-			// Set panel position and size
 			float ScreenWidth = GetComponent<RectTransform>().rect.width;
 			RectTransform PanelRectTransform = Panels[i].GetComponent<RectTransform>();
-			float PanelWidth = PanelRectTransform.rect.height / ButtonNames[i].Length * 0.82f * 4.2f;
+			float PanelWidth = PanelRectTransform.rect.height / ButtonNames[i].Length * 0.82f * 4;
 			PanelRectTransform.anchorMin = new Vector2((ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMin.y);
 			PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);
 
-			// Button creating
 			Buttons[i] = new GameObject[ButtonNames[i].Length];
 			for (int j = 0; j < ButtonNames[i].Length; ++j) {
 				GameObject ButtonWrapper = Instantiate(ButtonPrefab, Panels[i].transform);
 				ButtonWrapper.name = ButtonNames[i][j] + "Wrapper";
 
-				// Set position and size
 				RectTransform ButtonRectTransform = ButtonWrapper.GetComponent<RectTransform>();
 				ButtonRectTransform.anchorMin = new Vector2(0, (ButtonNames[i].Length - j - 1) / (float)ButtonNames[i].Length);
 				ButtonRectTransform.anchorMax = new Vector2(1, (ButtonNames[i].Length - j) / (float)ButtonNames[i].Length);
@@ -89,7 +85,6 @@ namespace Assets.Scenes.MainMenu {
 
 				AddEventsToButtons(Buttons[i][j]);
 
-				// Set text
 				Buttons[i][j].transform.GetChild(0).GetComponent<Text>().text = ButtonNames[i][j].ToNormalCase();
 			}
 		}
