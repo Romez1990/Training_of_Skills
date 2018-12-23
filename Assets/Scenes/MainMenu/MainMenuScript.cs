@@ -214,7 +214,7 @@ namespace Assets.Scenes.MainMenu {
 			new ButtonClick(ButtonNames[0][0], delegate {
 				Functions.LoadGame("Mixed");
 				PlayingInfo.Score = 0;
-				PlayingInfo.Time = 30;
+				PlayingInfo.Time = Settings.CurrentSettings.TimeIsOn ? 30 : 100000000;
 				PlayingInfo.GameMode = "Mixed";
 			}),
 			new ButtonClick(ButtonNames[0][1], delegate { CurrentPanel = 1; }),

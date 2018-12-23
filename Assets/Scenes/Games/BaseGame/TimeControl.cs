@@ -1,4 +1,5 @@
 ﻿using Assets.Scenes.Games.BaseGame.Sounds;
+using Assets.Scenes.MainMenu;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ namespace Assets.Scenes.Games.BaseGame {
 			This = this;
 			if (PlayingInfo.Time == 0)
 				PlayingInfo.Time = 30;
+			if (!Settings.CurrentSettings.TimeIsOn)
+				PlayingInfo.Time = 100000000;
 
 			Time = GetComponent<Text>();
 			TimeColorLerp = DefaultTimeColor;
@@ -46,12 +49,16 @@ namespace Assets.Scenes.Games.BaseGame {
 				return;
 			}
 
-			IntTime = (int)PlayingInfo.Time;
-			int Second = (int)PlayingInfo.Time % 60;
-			int Minute = (int)PlayingInfo.Time / 60;
-			Time.text = (Minute < 10 ? "0" : string.Empty) + Minute +
-							 ":" +
-							(Second < 10 ? "0" : string.Empty) + Second;
+			if (!Settings.CurrentSettings.TimeIsOn) {
+				Time.text = "∞";
+			} else {
+				IntTime = (int)PlayingInfo.Time;
+				int Second = (int)PlayingInfo.Time % 60;
+				int Minute = (int)PlayingInfo.Time / 60;
+				Time.text = (Minute < 10 ? "0" : string.Empty) + Minute +
+								 ":" +
+								(Second < 10 ? "0" : string.Empty) + Second;
+			}
 		}
 
 		#region Take time
