@@ -30,24 +30,27 @@ namespace Assets.Scenes.Games.BaseGame {
 		public static GameObject[] Buttons;
 
 		private void InitializeMenuButtons() {
-			// Remove all existing buttons from the scene
-			/*for (int i = 0; i < transform.childCount; ++i)
-				Destroy(transform.GetChild(i).gameObject);//*/
-
 			Buttons = new GameObject[ButtonNames.Length];
-			// Set panel position and size
-			RectTransform PanelRectTransform = transform.parent.GetComponent<RectTransform>();
-			float ScreenWidth = PanelRectTransform.rect.width;
-			float PanelWidth = PanelRectTransform.rect.height / ButtonNames.Length * 0.82f * 4.2f;
-			PanelRectTransform.anchorMin = new Vector2((ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMin.y);
-			PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);
 
-			// Button creating
+			float CanvasWidth = transform.root.GetComponent<RectTransform>().rect.width;
+			RectTransform PauseMenuRectTransform = transform.parent.GetComponent<RectTransform>();
+			RectTransform ButtonsRectTransform = GetComponent<RectTransform>();
+
+			float ButtonsWidth = ButtonsRectTransform.rect.height / ButtonNames.Length * 0.78f * 4;
+			float PauseMenuWidth = ButtonsWidth + PauseMenuRectTransform.rect.height * 0.28f;
+
+			float PauseMenuPercent = (1 - PauseMenuWidth / CanvasWidth) / 2;
+			PauseMenuRectTransform.anchorMin = new Vector2(PauseMenuPercent, PauseMenuRectTransform.anchorMin.y);
+			PauseMenuRectTransform.anchorMax = new Vector2(1 - PauseMenuPercent, PauseMenuRectTransform.anchorMax.y);
+
+			float ButtonsPercent = (1 - ButtonsWidth / PauseMenuWidth) / 2;
+			ButtonsRectTransform.anchorMin = new Vector2(ButtonsPercent, ButtonsRectTransform.anchorMin.y);
+			ButtonsRectTransform.anchorMax = new Vector2(1 - ButtonsPercent, ButtonsRectTransform.anchorMax.y);
+
 			for (int i = 0; i < Buttons.Length; ++i) {
 				GameObject ButtonWrapper = Instantiate(ButtonPrefab, transform);
 				ButtonWrapper.name = ButtonNames[i] + "Wrapper";
 
-				// Set position and size
 				RectTransform ButtonRectTransform = ButtonWrapper.GetComponent<RectTransform>();
 				ButtonRectTransform.anchorMin = new Vector2(0, (ButtonNames.Length - i - 1) / (float)ButtonNames.Length);
 				ButtonRectTransform.anchorMax = new Vector2(1, (ButtonNames.Length - i) / (float)ButtonNames.Length);
@@ -55,7 +58,6 @@ namespace Assets.Scenes.Games.BaseGame {
 				Buttons[i] = ButtonWrapper.transform.GetChild(0).gameObject;
 				Buttons[i].name = ButtonNames[i];
 
-				// Set text
 				Buttons[i].transform.GetChild(0).GetComponent<Text>().text = ButtonNames[i].ToNormalCase();
 			}
 		}
