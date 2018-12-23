@@ -8,7 +8,20 @@ namespace Assets.Scenes.MainMenu {
 
 		public static Settings CurrentSettings;
 
+		#region Parameters
+
 		public bool SoundIsOn;
+		public bool TimeIsOn;
+
+		private static void SetDefaultSettings() {
+			CurrentSettings.SoundIsOn = true;
+			CurrentSettings.TimeIsOn = true;
+			CurrentSettings.Save();
+		}
+
+		#endregion
+
+		#region Saving and loading
 
 		private static readonly BinaryFormatter BinaryFormatter = new BinaryFormatter();
 		private static readonly string PathToFile = Path.Combine(Functions.PathToData, "Settings.dat");
@@ -23,11 +36,6 @@ namespace Assets.Scenes.MainMenu {
 		}
 
 		public static void Load() {
-			void SetDefaultSettings() {
-				CurrentSettings.SoundIsOn = true;
-				CurrentSettings.Save();
-			}
-
 			if (!File.Exists(PathToFile)) {
 				SetDefaultSettings();
 				return;
@@ -43,6 +51,8 @@ namespace Assets.Scenes.MainMenu {
 				}
 			}
 		}
+
+		#endregion
 
 	}
 }

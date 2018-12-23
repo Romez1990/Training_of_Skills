@@ -18,7 +18,8 @@ namespace Assets.Scenes.MainMenu {
 			InitMainMenu(0);
 			InitChoosePanel(1);
 			InitSettingsPanel(2);
-			SoundToggle = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Toggle>();
+			TimeToggle = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Toggle>();
+			SoundToggle = transform.GetChild(2).GetChild(1).GetChild(0).GetComponent<Toggle>();
 			Settings.Load();
 		}
 
@@ -144,13 +145,13 @@ namespace Assets.Scenes.MainMenu {
 		private void InitSettingsPanel(int i) {
 			float ScreenWidth = GetComponent<RectTransform>().rect.width;
 			RectTransform PanelRectTransform = Panels[i].GetComponent<RectTransform>();
-			float PanelWidth = PanelRectTransform.rect.height / ButtonNames[i].Length * 0.82f * 4.2f * 0.35f;
+			float PanelWidth = PanelRectTransform.rect.height / ButtonNames[i].Length * 0.82f * 4.2f;
 			PanelRectTransform.anchorMin = new Vector2((ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMin.y);
 			PanelRectTransform.anchorMax = new Vector2(1 - (ScreenWidth - PanelWidth) / 2 / ScreenWidth, PanelRectTransform.anchorMax.y);
 
 			Buttons[i] = new GameObject[2];
-			Buttons[i][0] = Panels[i].transform.GetChild(1).GetChild(0).gameObject;
-			Buttons[i][1] = Panels[i].transform.GetChild(2).GetChild(0).gameObject;
+			Buttons[i][0] = Panels[i].transform.GetChild(2).GetChild(0).gameObject;
+			Buttons[i][1] = Panels[i].transform.GetChild(3).GetChild(0).gameObject;
 
 			foreach (GameObject Button in Buttons[i])
 				AddEventsToButtons(Button);
@@ -256,10 +257,12 @@ namespace Assets.Scenes.MainMenu {
 		#region Settings
 
 		private static Toggle SoundToggle;
+		private static Toggle TimeToggle;
 
 		private static void SetSettings() {
 			Settings.Load();
 			SoundToggle.isOn = Settings.CurrentSettings.SoundIsOn;
+			TimeToggle.isOn = Settings.CurrentSettings.TimeIsOn;
 		}
 
 		private static void CancelSettings() {
@@ -270,7 +273,8 @@ namespace Assets.Scenes.MainMenu {
 			CurrentPanel = 0;
 
 			new Settings {
-				SoundIsOn = SoundToggle.isOn
+				SoundIsOn = SoundToggle.isOn,
+				TimeIsOn = TimeToggle.isOn
 			}.Save();
 		}
 
