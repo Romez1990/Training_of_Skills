@@ -16,7 +16,6 @@ namespace Assets.Scenes {
 		};
 
 		public static void LoadGame(string GameName) {
-			PauseControl.IsPause = false;
 			SceneManager.LoadScene(GameName == "Mixed" || GameName == null ? Games[Random.Range(0, Games.Length)] : GameName);
 		}
 

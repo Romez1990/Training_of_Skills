@@ -22,6 +22,7 @@ namespace Assets.Scenes.Games.BaseGame {
 			BlurSizeLerp = 0;
 			BlurSize = 0;
 			Material.SetFloat("_Size", BlurSizeLerp);
+			_IsPause = false;
 		}
 
 		#endregion
