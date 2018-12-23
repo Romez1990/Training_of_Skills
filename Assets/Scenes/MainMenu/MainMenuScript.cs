@@ -13,7 +13,7 @@ namespace Assets.Scenes.MainMenu {
 
 		[UsedImplicitly]
 		private void Start() {
-			_CurrentPanel = 0;
+			currentPanel = 0;
 			InitPanels();
 			InitMainMenu(0);
 			InitChoosePanel(1);
@@ -161,17 +161,17 @@ namespace Assets.Scenes.MainMenu {
 
 		#region Change current panel
 
-		private static int _CurrentPanel;
+		private static int currentPanel;
 
 		private static int CurrentPanel {
-			get => _CurrentPanel;
+			get => currentPanel;
 			set {
-				if (_CurrentPanel == value) { return; }
+				if (currentPanel == value) { return; }
 
-				Panels[_CurrentPanel].SetActive(false);
+				Panels[currentPanel].SetActive(false);
 				Panels[value].SetActive(true);
 				EventSystem.current.SetSelectedGameObject(Buttons[value][0]);
-				_CurrentPanel = value;
+				currentPanel = value;
 
 				switch (value) {
 					case 2:
