@@ -70,17 +70,16 @@ namespace Assets.Scenes.Games.ExactKeystrokes {
 		private static void GetKeyList() {
 			int Amount = Mathf.RoundToInt(0.008f * Mathf.Pow(PlayingInfo.Score, 0.8f)) + 8;
 
+			System.Func<int, int, bool> CheckTheSame = (Index, i) => {
+				if (i == 0) { return false; }
+				return AllKeys[Index] == CurrentKeys[i - 1];
+			};
+
 			CurrentKeys = new List<KeyCode>();
 			for (int i = 0; i < Amount; ++i) {
-				int Index = Random.Range(0, AllKeys.Count);
-
-				if (i != 0) {
-					if (AllKeys[Index] == CurrentKeys[i - 1]) {
-						--i;
-						continue;
-					}
-				}
-
+				int Index;
+				do Index = Random.Range(0, AllKeys.Count);
+				while (CheckTheSame(Index, i));
 				CurrentKeys.Add(AllKeys[Index]);
 			}
 		}
